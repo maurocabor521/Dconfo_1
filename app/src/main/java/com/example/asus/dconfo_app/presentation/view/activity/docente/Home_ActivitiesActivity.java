@@ -1,4 +1,4 @@
-package com.example.asus.dconfo_app.presentation.view.activity;
+package com.example.asus.dconfo_app.presentation.view.activity.docente;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
