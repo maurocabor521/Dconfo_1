@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +13,12 @@ import com.example.asus.dconfo_app.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link NewDocenteFragment.OnFragmentInteractionListener} interface
+ * {@link ListNewDocenteFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link NewDocenteFragment#newInstance} factory method to
+ * Use the {@link ListNewDocenteFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewDocenteFragment extends Fragment {
+public class ListNewDocenteFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,12 +30,8 @@ public class NewDocenteFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public NewDocenteFragment() {
+    public ListNewDocenteFragment() {
         // Required empty public constructor
-    }
-
-    public static NewDocenteFragment getInstance() {
-        return new NewDocenteFragment();
     }
 
     /**
@@ -45,11 +40,11 @@ public class NewDocenteFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment NewDocenteFragment.
+     * @return A new instance of fragment ListNewDocenteFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static NewDocenteFragment newInstance(String param1, String param2) {
-        NewDocenteFragment fragment = new NewDocenteFragment();
+    public static ListNewDocenteFragment newInstance(String param1, String param2) {
+        ListNewDocenteFragment fragment = new ListNewDocenteFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,9 +65,7 @@ public class NewDocenteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_new_docente, container, false);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.new_docente);
-        return view;
+        return inflater.inflate(R.layout.fragment_list_new_docente, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
