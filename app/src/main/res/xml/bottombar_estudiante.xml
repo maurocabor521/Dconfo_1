@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs xmlns:android="http://schemas.android.com/apk/res/android">
+    <tab
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/home"
+        id="@+id/home_CE"
+        title="Home" />
+    <tab
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/ic_square_30dp"
+        id="@+id/tipo1"
+        title="Mis Deberes" />
+    <tab
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/ic_square_30dp"
+        id="@+id/tipo2"
+        title="Mensajes" />
+>
+
+</tabs>
