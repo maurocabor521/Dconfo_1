@@ -17,7 +17,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".presentation.view.activity.docente.Home_ActivitiesActivity" />
-        <activity android:name=".Home_AppActivity"></activity>
+        <activity android:name=".Home_AppActivity" />
+        <activity
+            android:name=".presentation.view.activity.administrador.Home_AdminActivity"
+            android:label="@string/title_activity_home__admin"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
