@@ -21,6 +21,10 @@
         <activity
             android:name=".presentation.view.activity.administrador.Home_AdminActivity"
             android:label="@string/title_activity_home__admin"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".presentation.view.activity.docente.HomeDocenteActivity"
+            android:label="@string/title_activity_home_docente"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
