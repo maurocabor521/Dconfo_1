@@ -18,10 +18,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.presentation.view.fragment.administrador.ListNewDocenteFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.administrador.NewDocenteFragment;
 
 public class Home_AdminActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,NewDocenteFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, NewDocenteFragment.OnFragmentInteractionListener,
+        ListNewDocenteFragment.OnFragmentInteractionListener {
 
     private NewDocenteFragment newDocenteFragment;
 
@@ -50,7 +52,7 @@ public class Home_AdminActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        newDocenteFragment=new NewDocenteFragment();
+        newDocenteFragment = new NewDocenteFragment();
     }
 
     @Override
@@ -92,14 +94,15 @@ public class Home_AdminActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_newDocente) {
-            Toast.makeText(getApplicationContext(),"docente",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "docente", Toast.LENGTH_SHORT).show();
             replaceFragment(NewDocenteFragment.getInstance(), true);
 
           /*  getSupportFragmentManager().beginTransaction().replace(R.id.content_main, newDocenteFragment)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .addToBackStack(null).commit();*/
-        } else if (id == R.id.nav_gallery) {
-
+        } else if (id == R.id.nav_newListDocente) {
+            Toast.makeText(getApplicationContext(), "lista docente", Toast.LENGTH_SHORT).show();
+            replaceFragment(ListNewDocenteFragment.getInstance(), true);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

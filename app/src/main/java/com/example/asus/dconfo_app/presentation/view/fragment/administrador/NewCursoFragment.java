@@ -28,6 +28,10 @@ public class NewCursoFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    public static NewCursoFragment getInstance() {
+        return new NewCursoFragment();
+    }
+
     private OnFragmentInteractionListener mListener;
 
     public NewCursoFragment() {
