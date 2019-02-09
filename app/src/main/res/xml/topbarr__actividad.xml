@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tabs xmlns:android="http://schemas.android.com/apk/res/android">
-
-
+    <tab
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/gerente"
+        id="@+id/btn_Administrador"
+        title="Administrador" />
+    <tab
+        barColorWhenSelected="@color/colorPrimary"
+        id="@+id/btn_Docente"
+        icon="@drawable/gerente"
+        title="Docente" />
+    <tab
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/estudiante2"
+        id="@+id/btn_Estudiante"
+        title="Estudiante" />
 </tabs>
