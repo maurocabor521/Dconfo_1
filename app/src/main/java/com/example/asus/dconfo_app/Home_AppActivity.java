@@ -12,6 +12,6 @@ public class Home_AppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home__app);
         BottomBar bottomBar=findViewById(R.id.bar_home_access1);
-        bottomBar.setDefaultTab(R.id.icono_id);
+        bottomBar.setDefaultTab(R.id.home_administrador);
     }
 }

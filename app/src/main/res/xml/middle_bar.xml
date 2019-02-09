@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tabs>
-    <tab  barColorWhenSelected="@color/colorPrimary"
-        id="@+id/icono_id"
-        title="Home" />
+    <tab
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/ic_square_30dp"
+        id="@+id/home_administrador"
+        title="Administrador" />
+    <tab
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/ic_square_30dp"
+        id="@+id/home_docente"
+        title="Docente" />
+    <tab
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/ic_square_30dp"
+        id="@+id/home_estudiante"
+        title="Estudiante" />
+    >
 </tabs>
