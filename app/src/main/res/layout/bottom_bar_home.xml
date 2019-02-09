@@ -9,4 +9,4 @@
     android:visibility="visible"
     app:bb_activeTabColor="@color/colorAccent"
     app:bb_inActiveTabColor="@android:color/white"
-    app:bb_tabXmlResource="@xml/bottombar_tabs"/>
+    app:bb_tabXmlResource="@xml/middle_bar"/>

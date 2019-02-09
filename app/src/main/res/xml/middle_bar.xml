@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab  barColorWhenSelected="@color/colorPrimary"
+        id="@+id/icono_id"
+        title="Home" />
+</tabs>
