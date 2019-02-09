@@ -25,12 +25,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         bottomBar = findViewById(R.id.bar_home_access1);
         //bottomBar.setDefaultTab(R.id.home_exercice);
-       cargarBottombar();
+        cargarMiddleBar();
     }
 
-    private void cargarBottombar() {
-
-
+    private void cargarMiddleBar() {
+        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelected(int tabId) {
+                switch (tabId) {
+                    case R.id.home_administrador:
+                        intentAdministrador=new Intent(MainActivity.this,Home_AdminActivity.class);
+                        startActivity(intentAdministrador);
+                        break;
+                        case R.id.home_docente:
+                        intentDocente=new Intent(MainActivity.this,HomeDocenteActivity.class);
+                        startActivity(intentDocente);
+                        break;
+                        case R.id.home_estudiante:
+                        intentEstudiante=new Intent(MainActivity.this,HomeEstudianteActivity.class);
+                        startActivity(intentEstudiante);
+                        break;
+                }
+            }
+        });
     }
 
 

@@ -10,15 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".presentation.view.activity.docente.Home_ActivitiesActivity" />
-        <activity android:name=".Home_AppActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".presentation.view.activity.docente.Home_ActivitiesActivity" />
+        <activity android:name=".Home_AppActivity" >
+
         </activity>
         <activity
             android:name=".presentation.view.activity.administrador.Home_AdminActivity"
