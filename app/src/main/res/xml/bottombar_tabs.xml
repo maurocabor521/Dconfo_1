@@ -8,8 +8,7 @@
     <tab
         barColorWhenSelected="@color/colorPrimary"
         id="@+id/detail_exercice"
-        title="detalle"
-        android:visible="false"/>
+        title="detalle" />
     <tab
         barColorWhenSelected="@color/colorPrimary"
         icon="@drawable/ic_tipo"

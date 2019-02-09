@@ -14,7 +14,7 @@ import com.roughike.bottombar.OnTabSelectListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomBar bottomBar;
+    BottomBar bottomBar;
     private Intent intentAdministrador;
     private Intent intentDocente;
     private Intent intentEstudiante;
@@ -23,48 +23,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bottomBar = findViewById(R.id.bar_home_access);
-        cargarBottombar();
+        bottomBar = findViewById(R.id.bar_home_access1);
+        //bottomBar.setDefaultTab(R.id.home_exercice);
+       cargarBottombar();
     }
 
     private void cargarBottombar() {
 
-        // bottomBar.setDefaultTab(R.id.btn_Administrador);
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelected(int tabId) {
-                switch (tabId) {
-                    case R.id.btn_Administrador:
-                        intentAdministrador = new Intent(MainActivity.this, Home_AdminActivity.class);
-                        startActivity(intentAdministrador);
-                        break;
-                    case R.id.btn_Docente:
 
-                        intentDocente = new Intent(MainActivity.this, HomeDocenteActivity.class);
-                        startActivity(intentDocente);
-                        //Validamos que se trabaja en modo portrait desde un smarthPhone  //video p3
-              /*          if (findViewById(R.id.container_exercice) != null) {
-                            Utilidades.PORTRAIT = true;//video p4 min 1:46
-                            if (savedIS != null) {
-                                return;//retorna ultima instancia
-                            }
-                            homeEjercicioFragment = new HomeEjercicioFragment();
-                            getSupportFragmentManager().beginTransaction().
-                                    replace(R.id.container_exercice, homeEjercicioFragment).commit();//video p3 hasta aqui
-                        } else {//video p4
-                            Utilidades.PORTRAIT = false;
-
-                        }*/
-                        break;
-                    case R.id.btn_Estudiante:
-                        intentEstudiante = new Intent(MainActivity.this, HomeEstudianteActivity.class);
-                        startActivity(intentEstudiante);
-                        break;
-
-
-                }
-            }
-        });
     }
 
 
