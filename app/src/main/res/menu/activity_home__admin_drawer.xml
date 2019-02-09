@@ -13,11 +13,11 @@
             android:icon="@drawable/tipo"
             android:title="Ingresar Docente Lista" />
         <item
-            android:id="@+id/nav_newEstudiante"
+            android:id="@+id/nav_new_Estudiante"
             android:icon="@drawable/estudiante2"
             android:title="Ingresar Estudiante" />
         <item
-            android:id="@+id/nav_newListEstudiante"
+            android:id="@+id/nav_new_ListEstudiante"
             android:icon="@drawable/tipo"
             android:title="Ingresar Estudiante Lista" />
     </group>
@@ -25,7 +25,7 @@
     <item android:title="Cursos">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_new_Curso"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Ingresar Curso" />
             <item

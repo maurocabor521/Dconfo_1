@@ -19,13 +19,20 @@ import android.widget.Toast;
 
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.presentation.view.fragment.administrador.ListNewDocenteFragment;
+import com.example.asus.dconfo_app.presentation.view.fragment.administrador.NewCursoFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.administrador.NewDocenteFragment;
+import com.example.asus.dconfo_app.presentation.view.fragment.administrador.NewEstudianteFragment;
+import com.example.asus.dconfo_app.presentation.view.fragment.administrador.NewListEstudianteFragment;
 
 public class Home_AdminActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, NewDocenteFragment.OnFragmentInteractionListener,
-        ListNewDocenteFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        NewDocenteFragment.OnFragmentInteractionListener,
+        ListNewDocenteFragment.OnFragmentInteractionListener,
+        NewEstudianteFragment.OnFragmentInteractionListener,
+        NewListEstudianteFragment.OnFragmentInteractionListener,
+        NewCursoFragment.OnFragmentInteractionListener {
 
-    private NewDocenteFragment newDocenteFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +59,7 @@ public class Home_AdminActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        newDocenteFragment = new NewDocenteFragment();
+
     }
 
     @Override
@@ -103,12 +110,12 @@ public class Home_AdminActivity extends AppCompatActivity
         } else if (id == R.id.nav_newListDocente) {
             Toast.makeText(getApplicationContext(), "lista docente", Toast.LENGTH_SHORT).show();
             replaceFragment(ListNewDocenteFragment.getInstance(), true);
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
+        } else if (id == R.id.nav_new_Estudiante) {
+            replaceFragment(NewEstudianteFragment.getInstance(), true);
+        } else if (id == R.id.nav_new_ListEstudiante) {
+            replaceFragment(NewListEstudianteFragment.getInstance(), true);
+        } else if (id == R.id.nav_new_Curso) {
+            replaceFragment(NewCursoFragment.getInstance(), true);
         } else if (id == R.id.nav_send) {
 
         }
