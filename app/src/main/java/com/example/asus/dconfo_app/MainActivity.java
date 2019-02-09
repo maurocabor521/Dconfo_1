@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.example.asus.dconfo_app.helpers.Utilidades;
 import com.example.asus.dconfo_app.presentation.view.activity.administrador.Home_AdminActivity;
 import com.example.asus.dconfo_app.presentation.view.activity.docente.HomeDocenteActivity;
+import com.example.asus.dconfo_app.presentation.view.activity.estudiante.HomeEstudianteActivity;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                         }*/
                         break;
                     case R.id.btn_Estudiante:
-                        intentEstudiante = new Intent(MainActivity.this, HomeDocenteActivity.class);
+                        intentEstudiante = new Intent(MainActivity.this, HomeEstudianteActivity.class);
                         startActivity(intentEstudiante);
                         break;
 
