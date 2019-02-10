@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.asus.dconfo_app.helpers.Utilidades;
 import com.example.asus.dconfo_app.presentation.view.activity.administrador.Home_AdminActivity;
@@ -18,16 +20,44 @@ public class MainActivity extends AppCompatActivity {
     private Intent intentAdministrador;
     private Intent intentDocente;
     private Intent intentEstudiante;
+    private Button btn_admin;
+    private Button btn_estudiante;
+    private Button btn_docente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bottomBar = findViewById(R.id.bar_home_access1);
-        //bottomBar.setDefaultTab(R.id.home_exercice);
-        cargarMiddleBar();
-    }
+      //  bottomBar = findViewById(R.id.bar_home_access1);
+      //  bottomBar.setDefaultTab(R.id.home_null);
+        btn_admin=findViewById(R.id.btn_home_admin);
+        btn_docente=findViewById(R.id.btn_home_docente);
+        btn_estudiante=findViewById(R.id.btn_home_estudiante);
 
+        btn_admin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intentAdministrador=new Intent(MainActivity.this,Home_AdminActivity.class);
+                startActivity(intentAdministrador);
+            }
+        });
+        btn_docente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intentDocente=new Intent(MainActivity.this,HomeDocenteActivity.class);
+                startActivity(intentDocente);
+            }
+        });
+        btn_estudiante.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intentEstudiante=new Intent(MainActivity.this,HomeEstudianteActivity.class);
+                startActivity(intentEstudiante);
+            }
+        });
+        //cargarMiddleBar();
+    }
+/*
     private void cargarMiddleBar() {
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
@@ -48,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
+    }*/
 
 
 }

@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,19 +18,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+
         <activity android:name=".presentation.view.activity.docente.Home_ActivitiesActivity" />
+
+
         <activity android:name=".Home_AppActivity" >
 
         </activity>
+
+
         <activity
             android:name=".presentation.view.activity.administrador.Home_AdminActivity"
             android:label="@string/title_activity_home__admin"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
+
         <activity
             android:name=".presentation.view.activity.docente.HomeDocenteActivity"
             android:label="@string/title_activity_home_docente"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
+
+
         <activity android:name=".presentation.view.activity.estudiante.HomeEstudianteActivity"></activity>
+
+
+
     </application>
 
 </manifest>
