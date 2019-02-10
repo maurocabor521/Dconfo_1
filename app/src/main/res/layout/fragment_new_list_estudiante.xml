@@ -23,6 +23,16 @@ tools:context=".presentation.view.fragment.administrador.NewListEstudianteFragme
         android:layout_height="wrap_content"
         android:id="@+id/btn_New_listEstudiantes"
         android:text="Ingresar Lista Estudiantes"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_New_Write_listEstudiantes"
+        android:text="Crear Lista Estudiantes"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_mensaje_list_est"
+        android:hint="Mensaje"/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
