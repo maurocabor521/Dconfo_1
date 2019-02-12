@@ -364,7 +364,9 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
                     Toast.makeText(getContext(), "RUTA" + Environment.getExternalStorageDirectory().getPath(), Toast.LENGTH_LONG).show();
                     Log.e("RUTAS", "RUTA" + Environment.getExternalStorageDirectory().getPath());
 
-                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//sirve
+                    //Intent intent = new Intent(Intent.DownloadManager.ACTION_VIEW_DOWNLOADS);//prueba
+                    //intent.setType("file/*");
                     intent.setType("file/*");
                     startActivityForResult(intent, 0);
 
