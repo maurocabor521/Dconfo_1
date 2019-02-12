@@ -18,8 +18,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +40,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Scanner;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -222,7 +225,7 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
                         ruta_sd = Environment.getExternalStorageDirectory();
 
                         //File f = new File(ruta_sd.getAbsolutePath(), "ficherosd.txt");
-                       // File f = new File(ruta_sd.getAbsolutePath(), "archivo_csv.csv");
+                        // File f = new File(ruta_sd.getAbsolutePath(), "archivo_csv.csv");
                       /*  f = new File(Environment.getExternalStorageDirectory().getPath()
                                 + "/Download/", "archivo_csv_1.csv");   */
 
@@ -242,7 +245,7 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
                             cont++;
                             System.out.println("f: " + f.getAbsolutePath());
                             System.out.println("fin.readline: " + texto);
-                           // txt_mensaje.setText(texto);
+                            // txt_mensaje.setText(texto);
                             Toast.makeText(getContext(), "f: " + f.getAbsolutePath(), Toast.LENGTH_LONG).show();
                         }
                         while ((texto = fin.readLine()) == ";") {
@@ -258,7 +261,7 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
                             System.out.println("next lines: " + nextLine);
                         }
                         fin.close();
-                       // mostrarDialogOpciones();
+                        // mostrarDialogOpciones();
 
                     } catch (Exception ex) {
                         Log.e("Ficheros", "Error al leer fichero desde tarjeta SD");
@@ -280,7 +283,7 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
                      /*   f = new File(Environment.getExternalStorageDirectory().getPath()
                                 + "/Download/", "archivo_csv_1.csv");*/
 
-                                //+ "/Download/", "archivo_csv.csv");
+                        //+ "/Download/", "archivo_csv.csv");
 
                         Toast.makeText(getContext(), "f_write: " + f.getAbsolutePath(), Toast.LENGTH_LONG).show();
 
@@ -291,13 +294,45 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
                                 new OutputStreamWriter(
                                         new FileOutputStream(f));
 
-                        fout.write("carlos mauricio;");
+                        fout.write("juan;");
+                        fout.write("caballo;");
+                        fout.write("4445555");
+                        fout.write("\n");
+                        fout.write("laura;");
+                        fout.write("lopeza;");
+                        fout.write("990000");
+                        fout.write("\n");
+                        fout.write("andres;");
                         fout.write("cabal;");
-                        fout.write("943252561 ");
+                        fout.write("7788888");
+                        fout.write("\n");
+                        fout.write("lina;");
+                        fout.write("juarez;");
+                        fout.write("556666");
+                        fout.write("\n");
+                        fout.write("camilo;");
+                        fout.write("marco;");
+                        fout.write("33444444");
+                        fout.write("\n");
+                        fout.write("juana;");
+                        fout.write("loca;");
+                        fout.write("1111222");
+                        fout.write("\n");
+                        fout.write("gloria;");
+                        fout.write("diaz;");
+                        fout.write("77755533");
+                        fout.write("\n");
+                        fout.write("hugo;");
+                        fout.write("bueno;");
+                        fout.write("88884433");
 
-                        fout1.write(" lorena;");
-                        fout1.write("lopez;");
-                        fout1.write("66757782");
+
+                        String tex = fout.toString();
+                        int cont = 0;
+                        if (tex == "\n") {
+                            cont++;
+                        }
+                        // Toast.makeText(getContext(),"cont: "+cont,Toast.LENGTH_LONG).show();
 
                         fout.close();
                         fout1.close();
@@ -331,13 +366,13 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
 
                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.setType("file/*");
-                    startActivityForResult(intent,0);
+                    startActivityForResult(intent, 0);
 
 
             /*       Intent chooser = new Intent(Intent.ACTION_GET_CONTENT);
                     Uri uri = Uri.parse(Environment.getDownloadCacheDirectory().getPath().toString());
                     chooser.addCategory(Intent.CATEGORY_OPENABLE);*/
-                   // chooser.setDataAndType(uri, "*/*");
+                    // chooser.setDataAndType(uri, "*/*");
                 /*    startActivity(chooser);
                     try {
                         //startActivityForResult(chooser, 0);
@@ -348,7 +383,7 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
                     }*/
 
 
-                 // openFolder();//sirve
+                    // openFolder();//sirve
 
                 } else {
                     if (opciones[i].equals("Elegir de Galeria")) {
@@ -368,22 +403,22 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
         //return flag1;
     }
 
-    public void openFolder(){
+    public void openFolder() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath()
-                +  File.separator + "myFolder" + File.separator);
+                + File.separator + "myFolder" + File.separator);
         intent.setDataAndType(uri, "text/csv");
         startActivity(Intent.createChooser(intent, "Open folder"));
     }
 
-    public void  onActivityResult(int requestCode, int resultCode, Intent data){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch (requestCode) {
             case 0: {
                 //what you want to do
                 //file = new File(uri.getPath());
                 Uri uri = data.getData();
-                fileEscogido=new File(uri.getPath());
+                fileEscogido = new File(uri.getPath());
                 BufferedReader fin1 =
                         null;
                 try {
@@ -401,9 +436,13 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
                         cont++;
                         System.out.println("fileEscogido: " + fileEscogido.getAbsolutePath());
                         System.out.println("fin1.readline: " + texto);
-                        txt_mensaje.setText(texto);
-                        Toast.makeText(getContext(), "fileEscogido: " + fileEscogido.getAbsolutePath(), Toast.LENGTH_LONG).show();
-                        Toast.makeText(getContext(), "texto: " + texto, Toast.LENGTH_LONG).show();
+                        //txt_mensaje.setText(texto);
+                        cuentaSaltos(fileEscogido.toString());
+                        if (texto.equals("\n")) {
+                            cont++;
+                        }
+                        //Toast.makeText(getContext(), "fileEscogido: " + fileEscogido.getAbsolutePath(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(), "cont_: " + cont, Toast.LENGTH_LONG).show();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -415,6 +454,42 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
             }
         }
     }
+
+    public void cuentaSaltos(String archivo) {
+        //String cadena = "MetroBikeShare_2016_Q3_trips.csv";
+        String cadena = archivo;
+        String elemento = null;
+        boolean seguir = true;
+        Scanner entrada = null;
+        ArrayList<String>lisEstudiantes=new ArrayList<>();
+        int cont=0;
+
+        try {
+            entrada = new Scanner(new File(cadena));
+        } catch (FileNotFoundException fnE) {
+            System.out.println(fnE.getMessage());
+            seguir = false;
+        }
+        if (seguir) {
+           //entrada.nextLine();
+            while (entrada.hasNext()) {
+                cont++;
+                elemento = entrada.next();
+                lisEstudiantes.add(elemento);
+                //Toast.makeText(getContext(), "elemento: " + elemento, Toast.LENGTH_LONG).show();
+                System.out.println("ELEMENTO: "+elemento);
+
+                if(entrada.equals("\n")){
+                    cont++;
+                }
+            }
+            ArrayAdapter<String> adapterListView = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, lisEstudiantes);
+            lv_lista_est.setAdapter(adapterListView);
+            System.out.println("ListEstudiantes: "+lisEstudiantes);
+            Toast.makeText(getContext(), "cont: " + cont, Toast.LENGTH_LONG).show();
+        }
+
+    }//pruebas
 
     public void insertContact(String name, String email) {
         Intent intent = new Intent(Intent.ACTION_INSERT);
