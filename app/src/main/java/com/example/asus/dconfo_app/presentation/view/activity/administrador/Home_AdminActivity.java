@@ -31,8 +31,8 @@ public class Home_AdminActivity extends AppCompatActivity
         ListNewDocenteFragment.OnFragmentInteractionListener,
         NewEstudianteFragment.OnFragmentInteractionListener,
         NewListEstudianteFragment.OnFragmentInteractionListener,
-        NewCursoFragment.OnFragmentInteractionListener {
-
+        NewCursoFragment.OnFragmentInteractionListener,
+        AllotDocenteToCursoFragment.OnFragmentInteractionListener {
 
 
     @Override
