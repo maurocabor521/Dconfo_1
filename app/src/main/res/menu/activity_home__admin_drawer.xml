@@ -33,6 +33,10 @@
                 android:icon="@drawable/ic_menu_share"
                 android:title="Asignar Docente Curso" />
             <item
+                android:id="@+id/nav_allocate_estudiante_to_curso"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Asignar Estudiante Curso" />
+            <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Ingresar Grupo de Curso" />
