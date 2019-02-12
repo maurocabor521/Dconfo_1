@@ -26,20 +26,21 @@
         <menu>
             <item
                 android:id="@+id/nav_new_Curso"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_menu_send"
                 android:title="Ingresar Curso" />
             <item
-                android:id="@+id/nav_allocate_docente_to_curso"
+                android:id="@+id/nav_allocate_grupo_to_curso"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Asignar Docente Curso" />
+                android:title="Asignar Grupo a Curso" />
             <item
-                android:id="@+id/nav_allocate_estudiante_to_curso"
+                android:id="@+id/nav_allocate_docente_to_grupo"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Asignar Estudiante Curso" />
+                android:title="Asignar Docente Grupo" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Ingresar Grupo de Curso" />
+                android:id="@+id/nav_allocate_estudiante_to_grupo"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Asignar Estudiante Grupo" />
+
         </menu>
     </item>
 

@@ -13,12 +13,12 @@ import com.example.asus.dconfo_app.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AllotDocenteToCursoFragment.OnFragmentInteractionListener} interface
+ * {@link AllotEstudianteToGrupoFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AllotDocenteToCursoFragment#newInstance} factory method to
+ * Use the {@link AllotEstudianteToGrupoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AllotDocenteToCursoFragment extends Fragment {
+public class AllotEstudianteToGrupoFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,12 +30,12 @@ public class AllotDocenteToCursoFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public static AllotDocenteToCursoFragment getInstance() {
-        return new AllotDocenteToCursoFragment();
+    public AllotEstudianteToGrupoFragment() {
+        // Required empty public constructor
     }
 
-    public AllotDocenteToCursoFragment() {
-        // Required empty public constructor
+    public static AllotEstudianteToGrupoFragment getInstance() {
+        return new AllotEstudianteToGrupoFragment();
     }
 
     /**
@@ -44,11 +44,11 @@ public class AllotDocenteToCursoFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AllotDocenteToCursoFragment.
+     * @return A new instance of fragment AllotEstudianteToGrupoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AllotDocenteToCursoFragment newInstance(String param1, String param2) {
-        AllotDocenteToCursoFragment fragment = new AllotDocenteToCursoFragment();
+    public static AllotEstudianteToGrupoFragment newInstance(String param1, String param2) {
+        AllotEstudianteToGrupoFragment fragment = new AllotEstudianteToGrupoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -69,7 +69,7 @@ public class AllotDocenteToCursoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_allot_docente_to_curso, container, false);
+        return inflater.inflate(R.layout.fragment_allot_estudiante_to_grupo, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

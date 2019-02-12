@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.view.fragment.administrador.AllotDocenteToCursoFragment">
+    tools:context=".presentation.view.fragment.administrador.AllotDocenteToGrupoFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
