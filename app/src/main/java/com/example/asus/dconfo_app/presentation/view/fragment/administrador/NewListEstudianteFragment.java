@@ -483,7 +483,7 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
                     cont++;
                 }
             }
-            ArrayAdapter<String> adapterListView = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, lisEstudiantes);
+            ArrayAdapter<String> adapterListView = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_multiple_choice, lisEstudiantes);
             lv_lista_est.setAdapter(adapterListView);
             System.out.println("ListEstudiantes: "+lisEstudiantes);
             Toast.makeText(getContext(), "cont: " + cont, Toast.LENGTH_LONG).show();

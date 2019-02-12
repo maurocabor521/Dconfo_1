@@ -17,17 +17,31 @@ tools:context=".presentation.view.fragment.administrador.NewListEstudianteFragme
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginTop="50dp">
+    android:layout_marginTop="50dp"
+    android:padding="10dp">
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btn_New_listEstudiantes"
         android:text="Ingresar Lista Estudiantes"/>
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_New_Write_listEstudiantes"
-        android:text="Crear Lista Estudiantes"/>
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_New_Write_listEstudiantes"
+            android:text="Crear Lista (csv) Estudiantes"
+            android:layout_weight="1"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_Upload_listEstudiantes"
+            android:text="Agregar Lista Estudiantes"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
