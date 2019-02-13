@@ -30,7 +30,12 @@
             android:label="@string/title_activity_home_docente"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".presentation.view.activity.estudiante.HomeEstudianteActivity" />
-        <activity android:name=".presentation.view.activity.administrador.Home_NewCursoActivity"></activity>
+        <activity android:name=".presentation.view.activity.administrador.Home_NewCursoActivity"
+            android:parentActivityName=".presentation.view.activity.administrador.Home_AdminActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.view.activity.administrador.Home_AdminActivity" />
+        </activity>
     </application>
 
 </manifest>
