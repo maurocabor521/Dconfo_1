@@ -9,14 +9,7 @@
     tools:showIn="@layout/app_bar_home__admin"
     android:id="@+id/content_main">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ADMINISTRACIÓN"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
-        android:textSize="30dp"
-        android:gravity="center"/>
+
 
     <ImageView
         android:layout_width="wrap_content"
