@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.presentation.view.fragment.administrador.AllCursosFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.administrador.AllotDocenteToGrupoFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.administrador.AllotEstudianteToGrupoFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.administrador.AllotGrupoToCursoFragment;
@@ -37,7 +38,8 @@ public class Home_AdminActivity extends AppCompatActivity
         NewCursoFragment.OnFragmentInteractionListener,
         AllotDocenteToGrupoFragment.OnFragmentInteractionListener,
         AllotEstudianteToGrupoFragment.OnFragmentInteractionListener,
-        AllotGrupoToCursoFragment.OnFragmentInteractionListener {
+        AllotGrupoToCursoFragment.OnFragmentInteractionListener,
+        AllCursosFragment.OnFragmentInteractionListener {
 
 
     @Override
@@ -129,8 +131,11 @@ public class Home_AdminActivity extends AppCompatActivity
         } else if (id == R.id.nav_allocate_estudiante_to_grupo) {
             replaceFragment(AllotEstudianteToGrupoFragment.getInstance(), true);
         } else if (id == R.id.nav_new_Act_Curso) {
-            Intent intent=new Intent(Home_AdminActivity.this,Home_NewCursoActivity.class);
+            Intent intent = new Intent(Home_AdminActivity.this, Home_NewCursoActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_All_Cursos) {
+            replaceFragment(AllotGrupoToCursoFragment.getInstance(), true);
+            ;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

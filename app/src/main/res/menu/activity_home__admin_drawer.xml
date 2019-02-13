@@ -29,6 +29,10 @@
                 android:icon="@drawable/ic_menu_send"
                 android:title="Ingresar Menú Curso" />
             <item
+                android:id="@+id/nav_All_Cursos"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Todos los Cursos" />
+            <item
                 android:id="@+id/nav_new_Curso"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Ingresar Curso" />

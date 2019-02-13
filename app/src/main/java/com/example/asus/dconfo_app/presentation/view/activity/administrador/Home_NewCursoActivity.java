@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.presentation.view.fragment.administrador.AllCursosFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.administrador.NewCursoFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.administrador.NewEstudianteFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.administrador.NewGrupoFragment;
@@ -16,12 +17,14 @@ import com.roughike.bottombar.OnTabSelectListener;
 public class Home_NewCursoActivity extends AppCompatActivity
         implements NewCursoFragment.OnFragmentInteractionListener,
         NewGrupoFragment.OnFragmentInteractionListener,
-        NewEstudianteFragment.OnFragmentInteractionListener {
+        NewEstudianteFragment.OnFragmentInteractionListener,
+        AllCursosFragment.OnFragmentInteractionListener {
 
     private BottomBar bottomBar;
     private NewCursoFragment newCursoFragment;
     private NewGrupoFragment newGrupoFragment;
     private NewEstudianteFragment newEstudianteFragment;
+    private AllCursosFragment allCursosFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +85,12 @@ public class Home_NewCursoActivity extends AppCompatActivity
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
                         break;
-               /*     case R.id.type_exercice:
-                        typeEjercicioFragment = new TypeEjercicioFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container_exercice, typeEjercicioFragment)
+                    case R.id.bott_all_cursos:
+                        allCursosFragment = new AllCursosFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container_Admincurso, allCursosFragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
-                        break;*/
+                        break;
 
                 }
             }

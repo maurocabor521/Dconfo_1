@@ -30,6 +30,10 @@ public class AllCursosFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    public static AllCursosFragment getInstance() {
+        return new AllCursosFragment();
+    }
+
     public AllCursosFragment() {
         // Required empty public constructor
     }
