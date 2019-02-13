@@ -25,8 +25,12 @@
     <item android:title="Cursos">
         <menu>
             <item
-                android:id="@+id/nav_new_Curso"
+                android:id="@+id/nav_new_Act_Curso"
                 android:icon="@drawable/ic_menu_send"
+                android:title="Ingresar Menú Curso" />
+            <item
+                android:id="@+id/nav_new_Curso"
+                android:icon="@drawable/ic_menu_share"
                 android:title="Ingresar Curso" />
             <item
                 android:id="@+id/nav_allocate_grupo_to_curso"

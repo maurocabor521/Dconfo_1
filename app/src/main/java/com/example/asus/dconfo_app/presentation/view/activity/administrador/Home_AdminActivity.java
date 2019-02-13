@@ -1,5 +1,6 @@
 package com.example.asus.dconfo_app.presentation.view.activity.administrador;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -127,6 +128,9 @@ public class Home_AdminActivity extends AppCompatActivity
             replaceFragment(AllotDocenteToGrupoFragment.getInstance(), true);
         } else if (id == R.id.nav_allocate_estudiante_to_grupo) {
             replaceFragment(AllotEstudianteToGrupoFragment.getInstance(), true);
+        } else if (id == R.id.nav_new_Act_Curso) {
+            Intent intent=new Intent(Home_AdminActivity.this,Home_NewCursoActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
