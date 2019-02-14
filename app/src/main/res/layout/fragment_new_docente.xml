@@ -32,10 +32,10 @@
                     android:theme="@style/EditTextBlack">
 
                     <android.support.design.widget.TextInputEditText
-                        android:id="@+id/edt_nombre_Docente"
+                        android:id="@+id/edt_id_Docente"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Nombre Docente">
+                        android:hint="Id Docente">
 
                     </android.support.design.widget.TextInputEditText>
                 </android.support.design.widget.TextInputLayout>
@@ -48,13 +48,13 @@
                     android:theme="@style/EditTextBlack">
 
                     <android.support.design.widget.TextInputEditText
-                        android:id="@+id/edt_apellido_Docente"
+                        android:id="@+id/edt_name_Docente"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Apellido Docente"></android.support.design.widget.TextInputEditText>
+                        android:hint="Nombre Docente"></android.support.design.widget.TextInputEditText>
                 </android.support.design.widget.TextInputLayout>
 
-
+<!--
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
                     </android.support.design.widget.TextInputEditText>
 
                 </android.support.design.widget.TextInputLayout>
-
+-->
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -92,10 +92,10 @@
                     android:theme="@style/EditTextBlack">
 
                     <android.support.design.widget.TextInputEditText
-                        android:id="@+id/edt_telefono_Docente"
+                        android:id="@+id/edt_dni_Docente"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Telefono Docente">
+                        android:hint="DNI Docente">
 
                     </android.support.design.widget.TextInputEditText>
 

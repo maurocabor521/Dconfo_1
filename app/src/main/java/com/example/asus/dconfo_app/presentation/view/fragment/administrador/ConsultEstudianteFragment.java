@@ -48,6 +48,7 @@ public class ConsultEstudianteFragment extends Fragment implements Response.List
     private EditText edt_codigo;
     private TextView txt_nombreEstudiante;
     private TextView txt_codigoEstudiante;
+    private TextView txt_acudienteEstudiante;
     private Button btn_consultar;
     ProgressDialog progreso;
     //******** CONEXIÓN CON WEBSERVICE
@@ -99,6 +100,7 @@ public class ConsultEstudianteFragment extends Fragment implements Response.List
         edt_codigo = (EditText) view.findViewById(R.id.edt_numero_codigo_CU);
         txt_nombreEstudiante = (TextView) view.findViewById(R.id.txv_nombre_estudiante_CU);
         txt_codigoEstudiante = (TextView) view.findViewById(R.id.txv_codigo_estudiante_CU);
+        txt_acudienteEstudiante = (TextView) view.findViewById(R.id.txv_acudiente_estudiante_CU);
         btn_consultar = (Button) view.findViewById(R.id.btn_consultarEstudiante_CU);
         btn_consultar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,6 +154,7 @@ public class ConsultEstudianteFragment extends Fragment implements Response.List
         }
         txt_nombreEstudiante.setText("Nombre: " + estudiante.getNameestudiante());
         txt_codigoEstudiante.setText("Id Est: " + estudiante.getIdestudiante());
+        txt_acudienteEstudiante.setText("Acudiente: " + estudiante.getAcudienteestudiante());
       /*  if (miUsuario.getImagen()!=null) {
             campoImagen.setImageBitmap(miUsuario.getImagen());
         }else {
