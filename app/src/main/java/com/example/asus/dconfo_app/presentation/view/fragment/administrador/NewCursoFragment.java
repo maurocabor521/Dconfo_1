@@ -1,15 +1,31 @@
 package com.example.asus.dconfo_app.presentation.view.fragment.administrador;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.domain.model.VolleySingleton;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +44,18 @@ public class NewCursoFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private EditText edt_codigocurso;
+    private EditText edt_nombrecurso;
+    private EditText edt_codIntcurso;
+    private EditText edt_periodocurso;
+    private Button btn_Newcurso;
+    ProgressDialog progreso;
+
+    //******** CONEXIÓN CON WEBSERVICE
+    //RequestQueue request;
+    JsonObjectRequest jsonObjectRequest;
+
+    StringRequest stringRequest;
 
     public static NewCursoFragment getInstance() {
         return new NewCursoFragment();
@@ -38,7 +66,6 @@ public class NewCursoFragment extends Fragment {
     public NewCursoFragment() {
         // Required empty public constructor
     }
-
 
 
     /**
@@ -73,9 +100,77 @@ public class NewCursoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view=inflater.inflate(R.layout.fragment_new_curso, container, false);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.new_curso);
+        View view = inflater.inflate(R.layout.fragment_new_curso, container, false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.new_curso);
+        edt_codigocurso = (EditText) view.findViewById(R.id.edt_codigo_curso);
+        edt_nombrecurso = (EditText) view.findViewById(R.id.edt_nombre_Curso);
+        edt_codIntcurso = (EditText) view.findViewById(R.id.edt_codigoInst_curso);
+        edt_periodocurso = (EditText) view.findViewById(R.id.edt_periodo_curso);
+        btn_Newcurso = (Button) view.findViewById(R.id.btn_new_curso);
+        btn_Newcurso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cargarWebService();
+            }
+        });
         return view;
+    }
+
+    private void cargarWebService() {
+        progreso = new ProgressDialog(getContext());
+        progreso.setMessage("Cargando...");
+        progreso.show();
+        String url =
+                "http://192.168.0.13/proyecto_dconfo/wsJSONCrearCurso.php?";
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto
+                progreso.hide();
+                if (response.trim().equalsIgnoreCase("registra")) {
+                    edt_codigocurso.setText("");
+                    edt_codIntcurso.setText("");
+                    edt_nombrecurso.setText("");
+                    edt_periodocurso.setText("");
+                    Toast.makeText(getContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "No se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                    Log.i("ERROR","RESPONSE"+response.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "No se ha podido conectar", Toast.LENGTH_LONG).show();
+                progreso.hide();
+            }
+        }) {//enviar para metros a webservice, mediante post
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                String idcurso = edt_codigocurso.getText().toString();
+                String idInstituto = edt_codIntcurso.getText().toString();
+                String namecurso = edt_nombrecurso.getText().toString();
+                String periodocurso = edt_periodocurso.getText().toString();
+
+                Map<String, String> parametros = new HashMap<>();
+                parametros.put("idcurso", idcurso);
+                parametros.put("idInstituto", idInstituto);
+                parametros.put("namecurso", namecurso);
+                parametros.put("periodocurso", periodocurso);
+
+                return parametros;
+            }
+        };
+        //request.add(stringRequest);
+        //p25 duplicar tiempo x defecto
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(stringRequest);//p21
+
+        //reemplazar espacios en blanco del nombre por %20
+        // url = url.replace(" ", "%20");
+
+        //hace el llamado a la url,no usa en p12
+        /*jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        request.add(jsonObjectRequest);*/
     }
 
     // TODO: Rename method, update argument and hook method into UI event

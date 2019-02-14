@@ -63,10 +63,10 @@
                 android:theme="@style/EditTextBlack">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/edt_periodo_curso"
+                    android:id="@+id/edt_codigoInst_curso"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Periodo Curso">
+                    android:hint="Instituto Curso">
 
                 </android.support.design.widget.TextInputEditText>
 
@@ -79,10 +79,10 @@
                 android:theme="@style/EditTextBlack">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/edt_infor_curso"
+                    android:id="@+id/edt_periodo_curso"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Información Curso">
+                    android:hint="Periodo Curso">
 
                 </android.support.design.widget.TextInputEditText>
 
