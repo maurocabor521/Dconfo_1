@@ -23,6 +23,7 @@ import com.example.asus.dconfo_app.presentation.view.fragment.administrador.AllC
 import com.example.asus.dconfo_app.presentation.view.fragment.administrador.AllotDocenteToGrupoFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.administrador.AllotEstudianteToGrupoFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.administrador.AllotGrupoToCursoFragment;
+import com.example.asus.dconfo_app.presentation.view.fragment.administrador.ConsultEstudianteFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.administrador.ListNewDocenteFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.administrador.NewCursoFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.administrador.NewDocenteFragment;
@@ -39,7 +40,8 @@ public class Home_AdminActivity extends AppCompatActivity
         AllotDocenteToGrupoFragment.OnFragmentInteractionListener,
         AllotEstudianteToGrupoFragment.OnFragmentInteractionListener,
         AllotGrupoToCursoFragment.OnFragmentInteractionListener,
-        AllCursosFragment.OnFragmentInteractionListener {
+        AllCursosFragment.OnFragmentInteractionListener,
+        ConsultEstudianteFragment.OnFragmentInteractionListener {
 
 
     @Override
@@ -135,7 +137,8 @@ public class Home_AdminActivity extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.nav_All_Cursos) {
             replaceFragment(AllotGrupoToCursoFragment.getInstance(), true);
-            ;
+        } else if (id == R.id.nav_consult_estudiante) {
+            replaceFragment(ConsultEstudianteFragment.getInstance(), true);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

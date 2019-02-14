@@ -18,4 +18,6 @@
     <dimen name="spacing">10dp</dimen>
     <dimen name="edittext_margin_createaccount">10dp</dimen>
     <dimen name="edittext_textsize_login">16sp</dimen>
+    <dimen name="imagen_width_250dp">250dp</dimen>
+    <dimen name="imagen_height_250dp">250dp</dimen>
 </resources>

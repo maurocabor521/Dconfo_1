@@ -16,4 +16,6 @@
     <string name="new_curso">Nuevo Curso</string>
     <string name="new_estudiante">Nuevo Estudiante</string>
     <string name="new_list_estudiante">Nueva Lista Estudiante</string>
+    <string name="titulo_Consultar_estudiante">Consultar Estudiante</string>
+    <string name="titulo_ingrese_documento">Ingrese Código</string>
 </resources>
