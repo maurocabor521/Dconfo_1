@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,7 +120,7 @@ public class NewDocenteFragment extends Fragment {
         progreso.setMessage("Cargando...");
         progreso.show();
         String url =
-                "http://192.168.0.13/"+"proyecto_dconfo/wsJSONCrearDocente.php?";
+                "http://192.168.0.13/proyecto_dconfo/wsJSONCrearDocente.php?";
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto
@@ -131,6 +132,7 @@ public class NewDocenteFragment extends Fragment {
                     Toast.makeText(getContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getContext(), "No se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                    Log.i("ERROR","RESPONSE"+response.toString());
                 }
             }
         }, new Response.ErrorListener() {
