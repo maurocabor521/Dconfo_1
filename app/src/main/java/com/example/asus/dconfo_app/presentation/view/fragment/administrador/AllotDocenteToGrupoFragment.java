@@ -99,14 +99,14 @@ public class AllotDocenteToGrupoFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_allot_docente_to_grupo, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.allot_docente_to_grupo);
-        edt_idCurso=(EditText)view.findViewById(R.id.edt_id_curso);
-        edt_idGrupo=(EditText)view.findViewById(R.id.edt_id_grupo);
-        edt_idDocente=(EditText)view.findViewById(R.id.edt_id_docente);
-        btn_allotDocente=(Button)view.findViewById(R.id.btn_allot_docente);
+        edt_idCurso = (EditText) view.findViewById(R.id.edt_id_curso);
+        edt_idGrupo = (EditText) view.findViewById(R.id.edt_id_grupo);
+        edt_idDocente = (EditText) view.findViewById(R.id.edt_id_docente);
+        btn_allotDocente = (Button) view.findViewById(R.id.btn_allot_docente);
         btn_allotDocente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                cargarWebService();
             }
         });
         return view;
