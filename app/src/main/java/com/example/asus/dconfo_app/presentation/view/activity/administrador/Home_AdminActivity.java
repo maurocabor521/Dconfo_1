@@ -126,12 +126,16 @@ public class Home_AdminActivity extends AppCompatActivity
             replaceFragment(NewListEstudianteFragment.getInstance(), true);
         } else if (id == R.id.nav_new_Curso) {
             replaceFragment(NewCursoFragment.getInstance(), true);
+
         } else if (id == R.id.nav_allocate_grupo_to_curso) {
             replaceFragment(AllotGrupoToCursoFragment.getInstance(), true);
+
         } else if (id == R.id.nav_allocate_docente_to_grupo) {
             replaceFragment(AllotDocenteToGrupoFragment.getInstance(), true);
+
         } else if (id == R.id.nav_allocate_estudiante_to_grupo) {
             replaceFragment(AllotEstudianteToGrupoFragment.getInstance(), true);
+
         } else if (id == R.id.nav_new_Act_Curso) {
             Intent intent = new Intent(Home_AdminActivity.this, Home_NewCursoActivity.class);
             startActivity(intent);

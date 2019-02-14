@@ -18,4 +18,6 @@
     <string name="new_list_estudiante">Nueva Lista Estudiante</string>
     <string name="titulo_Consultar_estudiante">Consultar Estudiante</string>
     <string name="titulo_ingrese_documento">Ingrese Código</string>
+    <string name="new_grupo">Asignar Grupo a Curso</string>
+    <string name="allot_docente_to_grupo">Asignar Docente a Grupo</string>
 </resources>
