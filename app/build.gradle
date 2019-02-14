@@ -36,4 +36,5 @@ dependencies {
     implementation 'com.zoonref:simple-view-behavior:1.0'
 
     implementation 'com.opencsv:opencsv:3.9'
+    implementation 'com.android.volley:volley:1.1.1'
 }
