@@ -118,9 +118,8 @@ public class NewDocenteFragment extends Fragment {
         progreso = new ProgressDialog(getContext());
         progreso.setMessage("Cargando...");
         progreso.show();
-        String url = "http://192.168.0.13/" +
-                //"ejemploBDRemota/wsJSONConsultarUsuario.php?documento=" + campoDocumento.getText().toString();
-                "proyecto_dconfo/wsJSONCrearDocente.php?iddocente=" + edt_iddocente.getText().toString();
+        String url =
+                "http://192.168.0.13/"+"proyecto_dconfo/wsJSONCrearDocente.php?";
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto
