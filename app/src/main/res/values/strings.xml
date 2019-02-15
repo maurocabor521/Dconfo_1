@@ -21,4 +21,12 @@
     <string name="new_grupo">Asignar Grupo a Curso</string>
     <string name="allot_docente_to_grupo">Asignar Docente a Grupo</string>
     <string name="AllotEstToGrupo_">Asignar Estudiante a Grupo</string>
+    <string name="new_grupo_">Nuevo Grupo</string>
+    <string name="list_cursos">Lista de Cursos</string>
+    <string name="titulo_Consultar_lista_cursos">Consultar lista de Cursos</string>
+    <string name="idCurso">ID Curso</string>
+    <string name="nameCurso">Nombre</string>
+    <string name="NombreCurso">Nombre Curso</string>
+    <string name="IDinstituto_CL">ID Instituto</string>
+    <string name="periodo_CL">Periodo</string>
 </resources>

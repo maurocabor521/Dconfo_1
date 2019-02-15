@@ -125,7 +125,7 @@ public class AllotEstudianteToGrupoFragment extends Fragment {
                 progreso.hide();
                 if (response.trim().equalsIgnoreCase("registra")) {
                     edt_id_grupo.setText("");
-                    edt_id_grupo.setText("");
+                    edt_estudiante.setText("");
                     Toast.makeText(getContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getContext(), "No se ha cargado con éxito", Toast.LENGTH_LONG).show();

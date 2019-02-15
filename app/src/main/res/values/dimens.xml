@@ -20,4 +20,5 @@
     <dimen name="edittext_textsize_login">16sp</dimen>
     <dimen name="imagen_width_250dp">250dp</dimen>
     <dimen name="imagen_height_250dp">250dp</dimen>
+    <dimen name="tsize_documento">17sp</dimen>
 </resources>
