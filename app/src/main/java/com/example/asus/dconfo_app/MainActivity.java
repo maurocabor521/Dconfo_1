@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.asus.dconfo_app.presentation.view.activity.administrador.Home_AdminActivity;
-import com.example.asus.dconfo_app.presentation.view.activity.docente.LoginActivity;
+import com.example.asus.dconfo_app.presentation.view.activity.docente.LoginDocenteActivity;
 import com.example.asus.dconfo_app.presentation.view.activity.estudiante.HomeEstudianteActivity;
 import com.roughike.bottombar.BottomBar;
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                // intentDocente=new Intent(MainActivity.this,HomeDocenteActivity.class);
                 //startActivity(intentDocente);
-                loginDocente=new Intent(MainActivity.this,LoginActivity.class);
+                loginDocente=new Intent(MainActivity.this,LoginDocenteActivity.class);
                 startActivity(loginDocente);
             }
         });

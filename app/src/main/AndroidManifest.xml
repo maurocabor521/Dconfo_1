@@ -43,7 +43,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".presentation.view.activity.administrador.Home_AdminActivity" />
         </activity>
-        <activity android:name=".presentation.view.activity.docente.LoginActivity"></activity>
+        <activity android:name=".presentation.view.activity.docente.LoginDocenteActivity"></activity>
     </application>
 
 </manifest>
