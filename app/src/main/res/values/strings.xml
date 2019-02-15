@@ -20,4 +20,5 @@
     <string name="titulo_ingrese_documento">Ingrese Código</string>
     <string name="new_grupo">Asignar Grupo a Curso</string>
     <string name="allot_docente_to_grupo">Asignar Docente a Grupo</string>
+    <string name="AllotEstToGrupo_">Asignar Estudiante a Grupo</string>
 </resources>

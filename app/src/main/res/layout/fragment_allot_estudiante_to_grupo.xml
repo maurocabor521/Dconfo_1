@@ -35,20 +35,7 @@
             </android.support.design.widget.TextInputEditText>
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/edittext_margin_createaccount"
-            android:theme="@style/EditTextBlack">
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/edt_id_grupo_AEG"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Id Grupo">
-
-            </android.support.design.widget.TextInputEditText>
-        </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -71,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-            android:id="@+id/btn_allot_docente_AEG"
+            android:id="@+id/btn_allot_estudiante_AEG"
             android:layout_margin="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

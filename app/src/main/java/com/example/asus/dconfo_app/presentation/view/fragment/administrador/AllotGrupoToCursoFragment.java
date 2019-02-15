@@ -129,7 +129,7 @@ public class AllotGrupoToCursoFragment extends Fragment {
         progreso.setMessage("Cargando...");
         progreso.show();
         String url =
-                "http://192.168.0.13/proyecto_dconfo/wsJSONCrearGrupo.php?";
+                "http://192.168.0.13/proyecto_dconfo/wsJSONAsignarEstudianteToGrupo.php?";
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto
