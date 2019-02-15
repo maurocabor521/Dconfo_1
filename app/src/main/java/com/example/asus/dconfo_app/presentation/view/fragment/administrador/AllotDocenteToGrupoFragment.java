@@ -127,6 +127,7 @@ public class AllotDocenteToGrupoFragment extends Fragment {
                     edt_idGrupo.setText("");
                     edt_idDocente.setText("");
                     Toast.makeText(getContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                    Log.i("Éxito", "RESPONSE" + response.toString());
                 } else {
                     Toast.makeText(getContext(), "No se ha cargado con éxito", Toast.LENGTH_LONG).show();
                     Log.i("ERROR", "RESPONSE" + response.toString());
@@ -144,6 +145,7 @@ public class AllotDocenteToGrupoFragment extends Fragment {
                 String idgrupo = edt_idGrupo.getText().toString();
                 String idcurso = edt_idCurso.getText().toString();
                 String iddocente = edt_idDocente.getText().toString();
+                //String iddocente = "20181";
 
                 Map<String, String> parametros = new HashMap<>();
                 parametros.put("idgrupo", idgrupo);
