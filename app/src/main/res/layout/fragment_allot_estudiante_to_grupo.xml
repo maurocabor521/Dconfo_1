@@ -27,10 +27,10 @@
             android:theme="@style/EditTextBlack">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/edt_id_curso_AEG"
+                android:id="@+id/edt_id_grupo_AEG"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Id Curso">
+                android:hint="Id Grupo">
 
             </android.support.design.widget.TextInputEditText>
         </android.support.design.widget.TextInputLayout>
