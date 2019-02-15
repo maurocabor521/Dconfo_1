@@ -140,7 +140,7 @@ public class AllCursosFragment extends Fragment implements Response.Listener<JSO
     public void onResponse(JSONObject response) {
         //lectura del Json
         // progreso.hide();
-        Toast.makeText(getContext(), "onResponse: " + response.toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "onResponse: " + response.toString(), Toast.LENGTH_SHORT).show();
         Curso curso = null;
         JSONArray json = response.optJSONArray("curso");
         try {
