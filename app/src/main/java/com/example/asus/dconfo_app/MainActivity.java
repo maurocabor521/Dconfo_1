@@ -1,18 +1,15 @@
 package com.example.asus.dconfo_app;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.asus.dconfo_app.helpers.Utilidades;
 import com.example.asus.dconfo_app.presentation.view.activity.administrador.Home_AdminActivity;
-import com.example.asus.dconfo_app.presentation.view.activity.docente.HomeDocenteActivity;
+import com.example.asus.dconfo_app.presentation.view.activity.docente.LoginActivity;
 import com.example.asus.dconfo_app.presentation.view.activity.estudiante.HomeEstudianteActivity;
 import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private Intent intentAdministrador;
     private Intent intentDocente;
     private Intent intentEstudiante;
+    private Intent loginDocente;
     private Button btn_admin;
     private Button btn_estudiante;
     private Button btn_docente;
@@ -44,8 +42,10 @@ public class MainActivity extends AppCompatActivity {
         btn_docente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intentDocente=new Intent(MainActivity.this,HomeDocenteActivity.class);
-                startActivity(intentDocente);
+               // intentDocente=new Intent(MainActivity.this,HomeDocenteActivity.class);
+                //startActivity(intentDocente);
+                loginDocente=new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(loginDocente);
             }
         });
         btn_estudiante.setOnClickListener(new View.OnClickListener() {

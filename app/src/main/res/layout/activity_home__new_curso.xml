@@ -11,16 +11,23 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/container_Admincurso">
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/container_Admincurso"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="70dp">
 
 
-        </FrameLayout>
+            </FrameLayout>
+        </LinearLayout>
 
         <include layout="@layout/bottombar" />
     </RelativeLayout>

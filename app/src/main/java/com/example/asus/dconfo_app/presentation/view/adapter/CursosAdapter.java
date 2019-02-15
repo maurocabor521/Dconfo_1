@@ -55,7 +55,7 @@ public class CursosAdapter extends RecyclerView.Adapter<CursosAdapter.UsuariosHo
             super(itemView);
             txtidCurso=(TextView)itemView.findViewById(R.id.txtIDcurso_CL);
             txtNombreCurso=(TextView)itemView.findViewById(R.id.txtNombreCurso_CL);
-            txtidInst=(TextView)itemView.findViewById(R.id.txtIDcurso_CL);
+            txtidInst=(TextView)itemView.findViewById(R.id.txtInstituto_CL);
             txtPeriodoCurso=(TextView)itemView.findViewById(R.id.txtPeriodo_CL);
         }
     }
