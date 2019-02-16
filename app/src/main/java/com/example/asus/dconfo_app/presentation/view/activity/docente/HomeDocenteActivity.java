@@ -1,8 +1,11 @@
 package com.example.asus.dconfo_app.presentation.view.activity.docente;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,10 +16,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.domain.model.Grupo;
+
+import java.util.ArrayList;
 
 public class HomeDocenteActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +92,8 @@ public class HomeDocenteActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_misgrupos) {
-            // Handle the camera action
+            Intent intent=new Intent(HomeDocenteActivity.this,ManageCursosDocenteActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_actividades) {
 
         } else if (id == R.id.nav_misejercicios) {

@@ -19,11 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".presentation.view.activity.docente.Home_ActivitiesActivity" />
         <activity android:name=".Home_AppActivity" />
@@ -34,7 +30,25 @@
         <activity
             android:name=".presentation.view.activity.docente.HomeDocenteActivity"
             android:label="@string/title_activity_home_docente"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
+
+        </activity>
+
+
+
+
+
+
+
         <activity android:name=".presentation.view.activity.estudiante.HomeEstudianteActivity" />
         <activity
             android:name=".presentation.view.activity.administrador.Home_NewCursoActivity"
@@ -44,7 +58,9 @@
                 android:value=".presentation.view.activity.administrador.Home_AdminActivity" />
         </activity>
         <activity android:name=".presentation.view.activity.docente.LoginDocenteActivity" />
-        <activity android:name=".presentation.view.activity.docente.ManageCursosDocenteActivity"></activity>
+        <activity android:name=".presentation.view.activity.docente.ManageCursosDocenteActivity">
+
+        </activity>
     </application>
 
 </manifest>

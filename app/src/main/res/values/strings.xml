@@ -42,4 +42,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="idGrupo">IDGrupo</string>
+    <string name="NombreGrupo">Nombre Grupo</string>
+    <string name="idGrupoCurso">ID Curso</string>
 </resources>

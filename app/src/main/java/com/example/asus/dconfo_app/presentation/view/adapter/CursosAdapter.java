@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.Curso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,9 +20,9 @@ import java.util.List;
 
 public class CursosAdapter extends RecyclerView.Adapter<CursosAdapter.UsuariosHolder> {
 
-    List<Curso> listaCursos;
+    ArrayList<Curso> listaCursos;
 
-    public CursosAdapter(List<Curso> listaUsuarios) {
+    public CursosAdapter(ArrayList<Curso> listaUsuarios) {
         this.listaCursos = listaUsuarios;
     }
 
