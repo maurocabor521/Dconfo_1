@@ -82,7 +82,7 @@ public class HomeDocenteActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_miscursos) {
+        if (id == R.id.nav_misgrupos) {
             // Handle the camera action
         } else if (id == R.id.nav_actividades) {
 
