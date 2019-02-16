@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +28,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class ManageCursosDocenteActivity extends AppCompatActivity implements Response.Listener<JSONObject>,
-        Response.ErrorListener  {
+        Response.ErrorListener {
 
     private RecyclerView rvListaCursos;
     ArrayList<Grupo> listaGrupos;
@@ -46,7 +47,8 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
         rvListaCursos.setLayoutManager(new LinearLayoutManager(this));
         rvListaCursos.setHasFixedSize(true);
         progreso = new ProgressDialog(this);
-        txtiddoc=findViewById(R.id.txt_iddocente);
+        txtiddoc = findViewById(R.id.txt_iddocente);
+
         cargarWebService();
     }
 
@@ -56,9 +58,9 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
         progreso.show();
         // String ip = getString(R.string.ip);
         //int iddoc=20181;
-        String iddoc="20181";
+        String iddoc = "20181";
 
-        String url = "http://192.168.0.13/proyecto_dconfo/wsJSONConsultarListaCursosDocente.php?iddocente="+ txtiddoc.getText().toString();
+        String url = "http://192.168.0.13/proyecto_dconfo/wsJSONConsultarListaCursosDocente.php?iddocente=" + txtiddoc.getText().toString();
 ///wsJSONConsultarEstudiante.php?documento=" + edt_codigo.getText().toString();
         url = url.replace(" ", "%20");
         //hace el llamado a la url
@@ -90,7 +92,7 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
                 grupo = new Grupo();
                 JSONObject jsonObject = null;
                 jsonObject = json.getJSONObject(i);
-               // jsonObject = new JSONObject(response);
+                // jsonObject = new JSONObject(response);
                 grupo.setIdGrupo(jsonObject.optInt("idgrupo"));
                 grupo.setNameGrupo(jsonObject.optString("namegrupo"));
                 grupo.setCurso_idCurso(jsonObject.optInt("curso_idcurso"));
@@ -100,14 +102,29 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
 //idgrupo,namegrupo,curso_idcurso,curso_Instituto_idInstituto
             }
             Toast.makeText(getApplicationContext(), "listagrupos: " + listaGrupos.size(), Toast.LENGTH_LONG).show();
-            Log.i("size","lista: "+listaGrupos.size());
+            Log.i("size", "lista: " + listaGrupos.size());
             GruposDocenteAdapter gruposDocenteAdapter = new GruposDocenteAdapter(listaGrupos);
+
+            gruposDocenteAdapter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getApplicationContext(), "Seleccion: " +
+                            listaGrupos.get(rvListaCursos.
+                                    getChildAdapterPosition(view)).getNameGrupo(), Toast.LENGTH_SHORT).show();//video p1
+
+                  /*  interfaceComunicaFragments.
+                            enviarEjercicio
+                                    (listaEjercicios.get(recyclerView.getChildAdapterPosition(view)));//video p2 detalle envia el objeto completo
+                                    */
+
+                }
+            });
             rvListaCursos.setAdapter(gruposDocenteAdapter);
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.d("error" ,response.toString());
+            Log.d("error", response.toString());
 
-           Toast.makeText(getApplicationContext(), "No se ha podido establecer conexión: " + response.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "No se ha podido establecer conexión: " + response.toString(), Toast.LENGTH_LONG).show();
 
             progreso.hide();
         }

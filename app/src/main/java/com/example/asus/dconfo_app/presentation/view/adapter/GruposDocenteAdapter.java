@@ -20,9 +20,10 @@ import java.util.List;
  * Created by Andrés Cabal on 20/12/2018.
  */
 
-public class GruposDocenteAdapter extends RecyclerView.Adapter<GruposDocenteAdapter.GruposHolder> {
+public class GruposDocenteAdapter extends RecyclerView.Adapter<GruposDocenteAdapter.GruposHolder> implements View.OnClickListener {
 
     List<Grupo> listaGrupos;
+    private View.OnClickListener listener;
 
     public GruposDocenteAdapter(List<Grupo> listaGrupos) {
         this.listaGrupos = listaGrupos;
@@ -36,28 +37,41 @@ public class GruposDocenteAdapter extends RecyclerView.Adapter<GruposDocenteAdap
         RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         vista.setLayoutParams(layoutParams);
+        vista.setOnClickListener(this);
         return new GruposHolder(vista);
     }
 
     @Override
     public void onBindViewHolder(GruposHolder holder, int position) {
         // holder.txtidGrupo.setText(listaGrupos.get(position).getIdGrupo().toString());
-        Log.i("size","lista_: "+listaGrupos.size());
-        if (listaGrupos.size()!=0) {
+        Log.i("size", "lista_: " + listaGrupos.size());
+        if (listaGrupos.size() != 0) {
             holder.txtidGrupo.setText(listaGrupos.get(position).getIdGrupo().toString());
             holder.txtNombreGrupo.setText(listaGrupos.get(position).getNameGrupo().toString());
-            holder.txtidCurso.setText(listaGrupos.get(position).getIdGrupo().toString());
+            holder.txtidCurso.setText(listaGrupos.get(position).getCurso_idCurso().toString());
             holder.txtidInst.setText(listaGrupos.get(position).getIdInstituto().toString());
 
-        }else{
+        } else {
 
         }
 
     }
 
+    public void setOnClickListener(View.OnClickListener listener) {
+        this.listener = listener;
+    }
+
+
     @Override
     public int getItemCount() {
         return listaGrupos.size();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (listener != null) {
+            listener.onClick(v);
+        }
     }
 
     public class GruposHolder extends RecyclerView.ViewHolder {
@@ -65,9 +79,9 @@ public class GruposDocenteAdapter extends RecyclerView.Adapter<GruposDocenteAdap
 
         public GruposHolder(View itemView) {
             super(itemView);
-            txtidGrupo = (TextView) itemView.findViewById(R.id.txtIDcurso_LCD);
+            txtidGrupo = (TextView) itemView.findViewById(R.id.txtIDgrupo_LCD);
             txtNombreGrupo = (TextView) itemView.findViewById(R.id.txtNombreGrupo_LCD);
-            txtidCurso = (TextView) itemView.findViewById(R.id.txtIDcurso_LCD);
+            txtidCurso = (TextView) itemView.findViewById(R.id.txtID_Curso_LCD);
             txtidInst = (TextView) itemView.findViewById(R.id.txtInstituto_LCD);
 
         }

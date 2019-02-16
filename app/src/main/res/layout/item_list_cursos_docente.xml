@@ -26,7 +26,7 @@
                 android:textColor="@android:color/white"/>
 
             <TextView
-                android:id="@+id/txtIDcurso_LCD"
+                android:id="@+id/txtIDgrupo_LCD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/idGrupo"
@@ -82,7 +82,7 @@
                 android:textColor="@android:color/white"/>
 
             <TextView
-                android:id="@+id/txtIDCurso_LCD"
+                android:id="@+id/txtID_Curso_LCD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/idGrupoCurso"
