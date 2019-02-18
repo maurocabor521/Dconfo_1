@@ -11,5 +11,15 @@ public class GrupoDocenteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grupo_docente);
+      showToolbar("Mi Grupo",true);
+    }
+
+    public void showToolbar(String tittle, boolean upButton) {
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar_ejercicio);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(tittle);
+        //getSupportActionBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(upButton);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 }

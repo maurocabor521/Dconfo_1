@@ -1,6 +1,7 @@
 package com.example.asus.dconfo_app.presentation.view.activity.docente;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -111,7 +112,8 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
                     Toast.makeText(getApplicationContext(), "Seleccion: " +
                             listaGrupos.get(rvListaCursos.
                                     getChildAdapterPosition(view)).getNameGrupo(), Toast.LENGTH_SHORT).show();//video p1
-
+                    Intent intent = new Intent(ManageCursosDocenteActivity.this, GrupoDocenteActivity.class);
+                    startActivity(intent);
                   /*  interfaceComunicaFragments.
                             enviarEjercicio
                                     (listaEjercicios.get(recyclerView.getChildAdapterPosition(view)));//video p2 detalle envia el objeto completo
