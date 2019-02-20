@@ -44,7 +44,7 @@ public class GruposDocenteAdapter extends RecyclerView.Adapter<GruposDocenteAdap
     @Override
     public void onBindViewHolder(GruposHolder holder, int position) {
         // holder.txtidGrupo.setText(listaGrupos.get(position).getIdGrupo().toString());
-        Log.i("size", "lista_: " + listaGrupos.size());
+       // Log.i("size", "lista_: " + listaGrupos.size());
         if (listaGrupos.size() != 0) {
             holder.txtidGrupo.setText(listaGrupos.get(position).getIdGrupo().toString());
             holder.txtNombreGrupo.setText(listaGrupos.get(position).getNameGrupo().toString());

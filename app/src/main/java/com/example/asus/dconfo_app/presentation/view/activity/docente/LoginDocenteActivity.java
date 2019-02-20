@@ -146,6 +146,8 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
             //objeto como tal en posicion 0
             jsonObject = json.getJSONObject(0);
             login.setIddocente(jsonObject.optInt("iddocente"));
+            Log.i("iddocente","iddco"+login);
+
 
         } catch (JSONException e) {
             e.printStackTrace();

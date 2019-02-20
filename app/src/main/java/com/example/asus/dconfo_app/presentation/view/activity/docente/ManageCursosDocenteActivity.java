@@ -84,7 +84,7 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
     @Override
     public void onResponse(JSONObject response) {
         progreso.hide();
-        Toast.makeText(getApplicationContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
         Grupo grupo = null;
         JSONArray json = response.optJSONArray("grupo");
 
@@ -102,8 +102,8 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
 
 //idgrupo,namegrupo,curso_idcurso,curso_Instituto_idInstituto
             }
-            Toast.makeText(getApplicationContext(), "listagrupos: " + listaGrupos.size(), Toast.LENGTH_LONG).show();
-            Log.i("size", "lista: " + listaGrupos.size());
+            //Toast.makeText(getApplicationContext(), "listagrupos: " + listaGrupos.size(), Toast.LENGTH_LONG).show();
+           // Log.i("size", "lista: " + listaGrupos.size());
             GruposDocenteAdapter gruposDocenteAdapter = new GruposDocenteAdapter(listaGrupos);
 
             gruposDocenteAdapter.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +112,22 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
                     Toast.makeText(getApplicationContext(), "Seleccion: " +
                             listaGrupos.get(rvListaCursos.
                                     getChildAdapterPosition(view)).getNameGrupo(), Toast.LENGTH_SHORT).show();//video p1
+
+                    Bundle parametros = new Bundle();
+                    int idgrupo= listaGrupos.get(rvListaCursos.
+                            getChildAdapterPosition(view)).getIdGrupo();
+                    parametros.putInt("idgrupo", idgrupo);
+
+                    Toast.makeText(getApplicationContext(), "idgrupos: " + idgrupo, Toast.LENGTH_LONG).show();
+
+                    int idcurso=listaGrupos.get(rvListaCursos.
+                            getChildAdapterPosition(view)).getCurso_idCurso();
+                    parametros.putInt("idcurso", idcurso);
+
                     Intent intent = new Intent(ManageCursosDocenteActivity.this, GrupoDocenteActivity.class);
+                    //intent.putExtras(parametros);
+                    intent.putExtra("idgrupo", idgrupo);
+                    intent.putExtra("idcurso", idcurso);
                     startActivity(intent);
                   /*  interfaceComunicaFragments.
                             enviarEjercicio

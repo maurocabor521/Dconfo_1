@@ -47,7 +47,12 @@
         </activity>
         <activity android:name=".presentation.view.activity.docente.LoginDocenteActivity" />
         <activity android:name=".presentation.view.activity.docente.ManageCursosDocenteActivity"></activity>
-        <activity android:name=".presentation.view.activity.docente.GrupoDocenteActivity"></activity>
+        <activity android:name=".presentation.view.activity.docente.GrupoDocenteActivity"
+            android:parentActivityName=".presentation.view.activity.docente.ManageCursosDocenteActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.view.activity.docente.ManageCursosDocenteActivity" />
+        </activity>
     </application>
 
 </manifest>
