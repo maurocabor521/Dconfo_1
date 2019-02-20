@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.asus.dconfo_app.R;
@@ -24,7 +25,6 @@ import java.util.ArrayList;
 
 public class HomeDocenteActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
 
 
     @Override
@@ -49,8 +49,15 @@ public class HomeDocenteActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view1);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Bundle datos = this.getIntent().getExtras();
+        int idgrupo = datos.getInt("idgrupo");
+        int idcurso = datos.getInt("idcurso");
+
+        Toast.makeText(getApplicationContext(), "idgrupo: " + idgrupo, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "idcurso: " + idcurso, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -90,9 +97,11 @@ public class HomeDocenteActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        NavigationView nv = (NavigationView) findViewById(R.id.nav_view1);
+        Menu m = nv.getMenu();
 
         if (id == R.id.nav_misgrupos) {
-            Intent intent=new Intent(HomeDocenteActivity.this,ManageCursosDocenteActivity.class);
+            Intent intent = new Intent(HomeDocenteActivity.this, ManageCursosDocenteActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_actividades) {
 
@@ -104,10 +113,21 @@ public class HomeDocenteActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
+        } else if (id == R.id.nav_con_fonica) {
+            // Handle the camera action
+            boolean b = !m.findItem(R.id.nav_con_fonica_actividades).isVisible();
+            //setting submenus visible state
+            m.findItem(R.id.nav_con_fonica_actividades).setVisible(b);
+            m.findItem(R.id.nav_con_fonica_ejercicios).setVisible(b);
+            m.findItem(R.id.nav_con_fonica_asignar).setVisible(b);
+            m.findItem(R.id.nav_con_fonica_estudiantes).setVisible(b);
+            return true;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
+    }//menuitem
+
+
 }

@@ -124,7 +124,7 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
                             getChildAdapterPosition(view)).getCurso_idCurso();
                     parametros.putInt("idcurso", idcurso);
 
-                    Intent intent = new Intent(ManageCursosDocenteActivity.this, GrupoDocenteActivity.class);
+                    Intent intent = new Intent(ManageCursosDocenteActivity.this, HomeDocenteActivity.class);
                     //intent.putExtras(parametros);
                     intent.putExtra("idgrupo", idgrupo);
                     intent.putExtra("idcurso", idcurso);

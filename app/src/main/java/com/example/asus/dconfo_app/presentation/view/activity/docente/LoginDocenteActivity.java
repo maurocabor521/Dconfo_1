@@ -79,7 +79,7 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
                     Bundle parmetros = new Bundle();
                     parmetros.putInt("iddocente", iddconte_bundle);
 
-                    Intent intent = new Intent(LoginDocenteActivity.this, HomeDocenteActivity.class);
+                    Intent intent = new Intent(LoginDocenteActivity.this, ManageCursosDocenteActivity.class);
                    // intent.putExtras(parmetros);
                     startActivity(intent);
 
