@@ -16,10 +16,7 @@
             android:id="@+id/nav_misejercicios"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Mis Ejercicios" />
-        <item
-            android:id="@+id/nav_asignardeber"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Asignar Deberes" />
+
         <item
             android:id="@+id/nav_con_fonica"
             android:icon="@drawable/ic_conciencia_fonica"
@@ -48,6 +45,18 @@
             android:title="Estudiantes"
             android:gravity="center"
             android:visible="false" />
+        <item
+            android:id="@+id/nav_con_lexica"
+            android:icon="@drawable/ic_conciencia_lexica"
+            android:title="Conciencia Léxica" />
+        <item
+            android:id="@+id/nav_con_silabica"
+            android:icon="@drawable/ic_conciencia_silabica"
+            android:title="Conciencia Silábica" />
+        <item
+            android:id="@+id/nav_asignardeber"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Asignar Deberes" />
     </group>
 
     <item android:title="Communicate">

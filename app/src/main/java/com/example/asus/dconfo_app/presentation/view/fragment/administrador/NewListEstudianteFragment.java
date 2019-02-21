@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.domain.model.Estudiante;
 import com.example.asus.dconfo_app.helpers.POIFSFileSystem;
 import com.opencsv.CSVReader;
 
@@ -463,8 +464,8 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
         String elemento = null;
         boolean seguir = true;
         Scanner entrada = null;
-        ArrayList<String>lisEstudiantes=new ArrayList<>();
-        int cont=0;
+        ArrayList<String> lisEstudiantes = new ArrayList<>();
+        int cont = 0;
 
         try {
             entrada = new Scanner(new File(cadena));
@@ -473,25 +474,111 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
             seguir = false;
         }
         if (seguir) {
-           //entrada.nextLine();
+            //entrada.nextLine();
             while (entrada.hasNext()) {
-                cont++;
+                //cont++;
                 elemento = entrada.next();
                 lisEstudiantes.add(elemento);
                 //Toast.makeText(getContext(), "elemento: " + elemento, Toast.LENGTH_LONG).show();
-                System.out.println("ELEMENTO: "+elemento);
 
-                if(entrada.equals("\n")){
+                //  String palabra = "sql";
+                //  String texto = "lenguaje sql";
+                boolean resultado = elemento.contains(";");
+                //ContarCharUnicos(elemento);
+
+                cuentcv(elemento);
+                if (resultado) {
+                    System.out.println("palabra encontrada");
                     cont++;
+                } else {
+                    System.out.println("palabra no encontrada");
                 }
             }
+            // cuentcv("caballo;;;");
             ArrayAdapter<String> adapterListView = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_multiple_choice, lisEstudiantes);
             lv_lista_est.setAdapter(adapterListView);
-            System.out.println("ListEstudiantes: "+lisEstudiantes);
-            Toast.makeText(getContext(), "cont: " + cont, Toast.LENGTH_LONG).show();
+            System.out.println("ListEstudiantes: " + lisEstudiantes);
+            System.out.println("cont: " + cont);
+            //Toast.makeText(getContext(), "cont: " + cont, Toast.LENGTH_LONG).show();
         }
 
     }//pruebas
+
+    public void cuentcv(String cadena) {
+
+        char[] Arraycadena;
+        //char caracter;
+        char caracter = ';';
+        //System.out.println("Introduce una palabra");
+        // cadena=Leer.dato();
+        Arraycadena = cadena.toCharArray();
+
+        char[] caracteres = new char[cadena.length()];
+        int[] cuantasVeces = new int[cadena.length()];
+        int cont = 0;
+
+        //  for(int i =0;i<Arraycadena.length;i++){
+        //caracter = Arraycadena[i];
+        // caracteres[i] = caracter;
+        // for(int j = i; j < Arraycadena.length; j++)   {
+        for (int j = 0; j < Arraycadena.length; j++) {
+            if (Arraycadena[j] == caracter) {
+                // cuantasVeces[j]++;
+                // Arraycadena[j] = ' ';
+                cont++;
+            }
+            // if(caracteres[j] != ' ')
+            // System.out.println(caracteres[i] +" "+cuantasVeces[i]+" veces.");
+
+        }
+        System.out.println(cont + " veces.");
+
+        //}
+    }
+
+
+
+  /*  public static int ContarCharUnicos(String input) {
+        boolean[] comprobarChar = new boolean[Character.MAX_VALUE];
+        for (int i = 0; i < input.length(); i++) {
+            comprobarChar[input.charAt(i)] = true;
+        }
+
+        int cuenta = 0;
+        for (int i = 0; i < comprobarChar.length; i++) {
+            if (comprobarChar[i] == true) {
+                cuenta++;
+            }
+        }
+        System.out.println("cuenta: " + cuenta);
+        return cuenta;
+
+    }*/
+
+
+    public void crearEstudiante(ArrayList<String> lista) {
+        Estudiante estudiante = null;
+        Scanner entrada1 = null;
+        for (int i = 0; i <= lista.size(); i++) {
+            estudiante = new Estudiante();
+            estudiante.setIdestudiante(lista.indexOf(i));
+/*
+            BufferedReader in = new BufferedReader(your csv file source here);
+            String reader = "";
+            while ((reader = in.readLine()) != null) {
+                String[] RowData = reader.split(",");
+                date = RowData[0];
+                value = RowData[1];
+                ContentValues values = new ContentValues();
+                values.put(CsvProvider.DATE, date);
+                values.put(CsvProvider.VALUE, value);
+                getContentResolver().insert(CsvProvider.CONTENT_URI, values);
+            }
+            in.close();
+*/
+        }
+
+    }
 
     public void insertContact(String name, String email) {
         Intent intent = new Intent(Intent.ACTION_INSERT);

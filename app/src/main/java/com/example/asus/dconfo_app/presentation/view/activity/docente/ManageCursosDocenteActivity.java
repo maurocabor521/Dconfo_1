@@ -124,10 +124,22 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
                             getChildAdapterPosition(view)).getCurso_idCurso();
                     parametros.putInt("idcurso", idcurso);
 
+                    String namegrupo=listaGrupos.get(rvListaCursos.
+                            getChildAdapterPosition(view)).getNameGrupo();
+
+
+                    parametros.putInt("idcurso", idcurso);
+
+                    String idDocente=String.valueOf(listaGrupos.get(rvListaCursos.
+                            getChildAdapterPosition(view)).getIdDocente());
+                    parametros.putInt("idcurso", idcurso);
+
                     Intent intent = new Intent(ManageCursosDocenteActivity.this, HomeDocenteActivity.class);
                     //intent.putExtras(parametros);
                     intent.putExtra("idgrupo", idgrupo);
                     intent.putExtra("idcurso", idcurso);
+                    intent.putExtra("idDoc", idDocente);
+                    intent.putExtra("namegrupo", namegrupo);
                     startActivity(intent);
                   /*  interfaceComunicaFragments.
                             enviarEjercicio

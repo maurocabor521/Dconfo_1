@@ -32,6 +32,7 @@ public class HomeDocenteActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_docente);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -55,6 +56,10 @@ public class HomeDocenteActivity extends AppCompatActivity
         Bundle datos = this.getIntent().getExtras();
         int idgrupo = datos.getInt("idgrupo");
         int idcurso = datos.getInt("idcurso");
+        String namegrupo = datos.getString("namegrupo");
+        int iddocente = datos.getInt("idDoc");
+        //toolbar.setLabelFor();
+        this.setTitle("Id Docente: "+iddocente+" - Id Curso: "+idcurso+" - "+namegrupo);
 
         Toast.makeText(getApplicationContext(), "idgrupo: " + idgrupo, Toast.LENGTH_LONG).show();
         Toast.makeText(getApplicationContext(), "idcurso: " + idcurso, Toast.LENGTH_LONG).show();
