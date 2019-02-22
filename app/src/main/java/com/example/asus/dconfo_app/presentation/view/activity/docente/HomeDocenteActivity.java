@@ -26,6 +26,7 @@ import java.util.ArrayList;
 public class HomeDocenteActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    Intent intentCED;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class HomeDocenteActivity extends AppCompatActivity
         String namegrupo = datos.getString("namegrupo");
         int iddocente = datos.getInt("idDoc");
         //toolbar.setLabelFor();
-        this.setTitle("Id Docente: "+iddocente+" - Id Curso: "+idcurso+" - "+namegrupo);
+        this.setTitle("Id Docente: " + iddocente + " - Id Curso: " + idcurso + " - " + namegrupo);
 
         Toast.makeText(getApplicationContext(), "idgrupo: " + idgrupo, Toast.LENGTH_LONG).show();
         Toast.makeText(getApplicationContext(), "idcurso: " + idcurso, Toast.LENGTH_LONG).show();
@@ -135,6 +136,9 @@ public class HomeDocenteActivity extends AppCompatActivity
             m.findItem(R.id.nav_con_fonica_asignar).setVisible(b);
             m.findItem(R.id.nav_con_fonica_estudiantes).setVisible(b);
             return true;
+        } else if (id == R.id.nav_con_lexica_ejercicios) {
+            intentCED = new Intent(HomeDocenteActivity.this, CreateEjercicioDocenteActivity.class);
+            startActivity(intentCED);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
