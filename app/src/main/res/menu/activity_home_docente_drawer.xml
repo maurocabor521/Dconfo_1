@@ -50,6 +50,29 @@
             android:icon="@drawable/ic_conciencia_lexica"
             android:title="Conciencia Léxica" />
         <item
+            android:id="@+id/nav_con_lexica_actividades"
+            android:icon="@drawable/ic_flecha_der_20dp"
+            android:title="Actividades"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_con_lexica_ejercicios"
+            android:icon="@drawable/ic_flecha_der_20dp"
+            android:title="Ejercicios"
+            android:gravity="center"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_con_lexica_asignar"
+            android:icon="@drawable/ic_flecha_der_20dp"
+            android:title="Asignar Actividad"
+            android:gravity="center"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_con_lexica_estudiantes"
+            android:icon="@drawable/ic_flecha_der_20dp"
+            android:title="Estudiantes"
+            android:gravity="center"
+            android:visible="false" />
+        <item
             android:id="@+id/nav_con_silabica"
             android:icon="@drawable/ic_conciencia_silabica"
             android:title="Conciencia Silábica" />

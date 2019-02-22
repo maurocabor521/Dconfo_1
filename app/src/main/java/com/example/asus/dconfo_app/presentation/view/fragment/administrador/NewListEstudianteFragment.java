@@ -1,6 +1,7 @@
 package com.example.asus.dconfo_app.presentation.view.fragment.administrador;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,8 +26,16 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.Estudiante;
+import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.POIFSFileSystem;
 import com.opencsv.CSVReader;
 
@@ -39,8 +48,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -73,6 +86,14 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
     File ruta_sd;
     File f;
     File fileEscogido;
+
+    ProgressDialog progreso;
+
+    //******** CONEXIÓN CON WEBSERVICE
+    //RequestQueue request;
+    JsonObjectRequest jsonObjectRequest;
+
+    StringRequest stringRequest;
 
     public static NewListEstudianteFragment getInstance() {
         return new NewListEstudianteFragment();
@@ -127,6 +148,9 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
         lv_lista_est = (ListView) view.findViewById(R.id.lv_NewListEstudiantes);
         txt_mensaje = (TextView) view.findViewById(R.id.txt_mensaje_list_est);
         context = getContext();
+
+        progreso = new ProgressDialog(this.getContext());
+
         // Código que me comprueba si existe SD y si puedo escribir o no
         String estado = Environment.getExternalStorageState();
 
@@ -486,55 +510,200 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
                 boolean resultado = elemento.contains(";");
                 //ContarCharUnicos(elemento);
 
-                cuentcv(elemento);
+                //cuentcv(elemento);
                 if (resultado) {
-                    System.out.println("palabra encontrada");
+                    //  System.out.println("palabra encontrada");
                     cont++;
                 } else {
                     System.out.println("palabra no encontrada");
                 }
             }
             // cuentcv("caballo;;;");
+            cuentcv(lisEstudiantes);
             ArrayAdapter<String> adapterListView = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_multiple_choice, lisEstudiantes);
             lv_lista_est.setAdapter(adapterListView);
             System.out.println("ListEstudiantes: " + lisEstudiantes);
-            System.out.println("cont: " + cont);
+            //System.out.println("cont: " + cont);
             //Toast.makeText(getContext(), "cont: " + cont, Toast.LENGTH_LONG).show();
         }
 
     }//pruebas
 
-    public void cuentcv(String cadena) {
+    public void cuentcv(ArrayList<String> cadena) {
 
         char[] Arraycadena;
         //char caracter;
         char caracter = ';';
-        //System.out.println("Introduce una palabra");
-        // cadena=Leer.dato();
-        Arraycadena = cadena.toCharArray();
+        char caracter1 = ',';
 
-        char[] caracteres = new char[cadena.length()];
-        int[] cuantasVeces = new int[cadena.length()];
+
+        //Arraycadena = cadena.toCharArray();
+        String[] arrayCadena = cadena.toArray(new String[cadena.size()]);
+
+
+       /* char[] caracteres = new char[cadena.length()];
+        int[] cuantasVeces = new int[cadena.length()];     */
+        char[] caracteres = new char[cadena.size()];
+        int[] cuantasVeces = new int[cadena.size()];
         int cont = 0;
 
         //  for(int i =0;i<Arraycadena.length;i++){
         //caracter = Arraycadena[i];
         // caracteres[i] = caracter;
         // for(int j = i; j < Arraycadena.length; j++)   {
-        for (int j = 0; j < Arraycadena.length; j++) {
-            if (Arraycadena[j] == caracter) {
-                // cuantasVeces[j]++;
-                // Arraycadena[j] = ' ';
-                cont++;
-            }
+
+        // for (int j = 0; j < Arraycadena.length; j++) {
+
+        String elem = "";
+        ArrayList<String> listElem = new ArrayList<>();
+        ArrayList<String> listCad = new ArrayList<>();
+        for (int j = 0; j < cadena.size(); j++) {
+            // if (Arraycadena[j] == caracter) {
+            char[] array1;
+            array1 = cadena.get(j).toCharArray();
+            // if (cadena.get(j).contentEquals(";") ) {
+            for (int i = 0; i < array1.length; i++) {
+                if (array1[i] == caracter) {
+                    // cuantasVeces[j]++;
+                    // Arraycadena[j] = ' ';
+                    listElem.add(elem);
+                    elem = "";
+                    cont++;
+                } else {
+
+                    elem = elem + array1[i];
+
+
+                }
+            }//2do for
+            listCad.add(cadena.get(j));
+            separaElem(cadena.get(j));
+            //System.out.println(" cadena : " + j + ": j : " + cadena.get(j));
+
+
             // if(caracteres[j] != ' ')
             // System.out.println(caracteres[i] +" "+cuantasVeces[i]+" veces.");
+        }//1er for
 
-        }
-        System.out.println(cont + " veces.");
+      /*  System.out.println(" cadena lst : " + listCad.get(0));
+        System.out.println(" elem : " + elem);
+        System.out.println(" lstelems : " + listElem);
+        System.out.println(Arrays.toString(arrayCadena));
+        System.out.println(cont + " veces");*/
 
-        //}
+
     }
+
+    public void separaElem(String cadena) {
+        char[] Arraycadena;
+        Arraycadena = cadena.toCharArray();
+        //String[] cadenaArray = new String[] {cadena};
+        String[] cadenaArray = cadena.split("");
+        char caracter = ';';
+        int cont = 0;
+        String elem = "";
+        String elem1 = "";
+        ArrayList<String> listElem = new ArrayList<>();
+        ArrayList<String> listCad = new ArrayList<>();
+        Estudiante estudiante = new Estudiante();
+
+        for (int i = 0; i < Arraycadena.length; i++) {
+            if (Arraycadena[i] == caracter) {
+                // cuantasVeces[j]++;
+                // Arraycadena[j] = ' ';
+                listElem.add(elem);
+
+
+
+                System.out.println(" el elemento : " + elem);
+                elem = "";
+                cont++;
+                if (cont == 3 && (Arraycadena[i] < Arraycadena.length)) {
+                    elem = elem + Arraycadena[i];
+                }
+                if (cont == 3 && (Arraycadena[i] == (Arraycadena.length - 1))) {
+                    listElem.add(elem);
+                }
+            } else {
+                elem = elem + Arraycadena[i];
+                /*if (cont == 3 && Arraycadena[i] < Arraycadena.length) {
+                    elem = elem + Arraycadena[i];
+                }*/
+                //estudiante.setIdestudiante(Arraycadena[i]);
+            }
+
+        }//2do for
+
+
+        System.out.println(" separa elems : " + listElem);
+        creaEstudiante(listElem);//***********************************************
+        System.out.println(" elemento1 : " + elem);
+        System.out.println(" contador : " + cont);
+    }
+
+    public Estudiante creaEstudiante(ArrayList<String> lista) {
+        Estudiante estudiante = null;
+        estudiante = new Estudiante();
+        estudiante.setIdestudiante(Integer.parseInt(lista.get(0).toString()));
+        estudiante.setNameestudiante(lista.get(1).toString());
+        estudiante.setDniestudiante(Integer.parseInt(lista.get(2).toString()));
+        System.out.println("estudiante id: " + estudiante.getIdestudiante());
+        System.out.println("estudiante nombre: " + estudiante.getNameestudiante());
+        System.out.println("lista enviada: " + lista.size());
+        cargarWebServiceEstudiante(estudiante);
+        return estudiante;
+    }
+
+    private void cargarWebServiceEstudiante(final Estudiante estudiante) {
+
+        progreso.setMessage("Cargando...");
+        progreso.show();
+        String url =
+                "http://192.168.0.13/proyecto_dconfo/wsJSONCrearEstudiante.php?";
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto
+                progreso.hide();
+                if (response.trim().equalsIgnoreCase("registra")) {
+
+                    Toast.makeText(getContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                    System.out.println("cargado con éxito estudiante en BBDD: " );
+                } else {
+                    System.out.println("carga fallida estudiante en BBDD: " );
+                    Log.i("ERROR","RESPONSE"+response.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "No se ha podido conectar", Toast.LENGTH_LONG).show();
+                progreso.hide();
+            }
+        }) {//enviar para metros a webservice, mediante post
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                String idestudiante = estudiante.getIdestudiante().toString();
+                String nameestudiante = estudiante.getNameestudiante().toString();
+                String dniestudiante = estudiante.getDniestudiante().toString();
+                String acudienteestudiante = "N/A";
+
+
+
+                Map<String, String> parametros = new HashMap<>();
+                parametros.put("idestudiante", idestudiante);
+                parametros.put("nameestudiante", nameestudiante);
+                parametros.put("dniestudiante", dniestudiante);
+                parametros.put("acudienteestudiante", acudienteestudiante);
+
+
+                return parametros;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(stringRequest);//p21
+
+    }//cargarwebserviceestudiante
 
 
 
@@ -556,29 +725,7 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
     }*/
 
 
-    public void crearEstudiante(ArrayList<String> lista) {
-        Estudiante estudiante = null;
-        Scanner entrada1 = null;
-        for (int i = 0; i <= lista.size(); i++) {
-            estudiante = new Estudiante();
-            estudiante.setIdestudiante(lista.indexOf(i));
-/*
-            BufferedReader in = new BufferedReader(your csv file source here);
-            String reader = "";
-            while ((reader = in.readLine()) != null) {
-                String[] RowData = reader.split(",");
-                date = RowData[0];
-                value = RowData[1];
-                ContentValues values = new ContentValues();
-                values.put(CsvProvider.DATE, date);
-                values.put(CsvProvider.VALUE, value);
-                getContentResolver().insert(CsvProvider.CONTENT_URI, values);
-            }
-            in.close();
-*/
-        }
 
-    }
 
     public void insertContact(String name, String email) {
         Intent intent = new Intent(Intent.ACTION_INSERT);

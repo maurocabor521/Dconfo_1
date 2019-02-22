@@ -116,7 +116,15 @@ public class HomeDocenteActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_con_lexica) {
+            // Handle the camera action
+            boolean b = !m.findItem(R.id.nav_con_lexica_actividades).isVisible();
+            //setting submenus visible state
+            m.findItem(R.id.nav_con_lexica_actividades).setVisible(b);
+            m.findItem(R.id.nav_con_lexica_ejercicios).setVisible(b);
+            m.findItem(R.id.nav_con_lexica_asignar).setVisible(b);
+            m.findItem(R.id.nav_con_lexica_estudiantes).setVisible(b);
+            return true;
 
         } else if (id == R.id.nav_con_fonica) {
             // Handle the camera action
