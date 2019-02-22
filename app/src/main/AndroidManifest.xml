@@ -18,7 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".presentation.view.activity.docente.Home_ActivitiesActivity" />
         <activity android:name=".Home_AppActivity" />
         <activity
@@ -28,7 +28,7 @@
         <activity
             android:name=".presentation.view.activity.docente.HomeDocenteActivity"
             android:label="@string/title_activity_home_docente"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".presentation.view.activity.estudiante.HomeEstudianteActivity" />
         <activity
             android:name=".presentation.view.activity.administrador.Home_NewCursoActivity"
@@ -52,7 +52,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".presentation.view.activity.docente.ManageCursosDocenteActivity" />
         </activity>
-        <activity android:name=".presentation.view.activity.docente.ManageEjercicioDocenteActivity"></activity>
+        <activity android:name=".presentation.view.activity.docente.ManageEjercicioDocenteActivity" />
+        <activity android:name=".presentation.view.activity.docente.NewEjercicioDocenteActivity"></activity>
     </application>
 
 </manifest>
