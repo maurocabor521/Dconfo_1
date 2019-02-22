@@ -45,4 +45,7 @@
     <string name="idGrupo">IDGrupo</string>
     <string name="NombreGrupo">Nombre Grupo</string>
     <string name="idGrupoCurso">ID Curso</string>
+    <string name="home_tipo">Todo los Tipos</string>
+    <string name="home_tipo1">Tipo 1</string>
+    <string name="home_tipo2">Tipo 2</string>
 </resources>
