@@ -30,6 +30,10 @@ public class Tipo1Fragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    public static Tipo1Fragment getInstance(){
+        return new Tipo1Fragment();
+    }
+
     public Tipo1Fragment() {
         // Required empty public constructor
     }

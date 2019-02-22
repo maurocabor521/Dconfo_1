@@ -20,7 +20,7 @@ tools:context=".presentation.view.activity.docente.NewEjercicioDocenteActivity">
         android:orientation="vertical">
 
         <FrameLayout
-            android:id="@+id/container_DocenteEjercicios"
+            android:id="@+id/container_Tipos_CED"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="70dp">

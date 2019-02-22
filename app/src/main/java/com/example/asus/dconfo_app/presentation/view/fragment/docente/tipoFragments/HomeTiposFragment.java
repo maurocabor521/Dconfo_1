@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.presentation.view.fragment.administrador.NewCursoFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +30,10 @@ public class HomeTiposFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    public static HomeTiposFragment getInstance() {
+        return new HomeTiposFragment();
+    }
 
     public HomeTiposFragment() {
         // Required empty public constructor
