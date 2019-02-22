@@ -1,11 +1,9 @@
 package com.example.asus.dconfo_app.presentation.view.activity.docente;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,11 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.asus.dconfo_app.R;
-import com.example.asus.dconfo_app.domain.model.Grupo;
-
-import java.util.ArrayList;
 
 public class HomeDocenteActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -137,7 +131,7 @@ public class HomeDocenteActivity extends AppCompatActivity
             m.findItem(R.id.nav_con_fonica_estudiantes).setVisible(b);
             return true;
         } else if (id == R.id.nav_con_lexica_ejercicios) {
-            intentCED = new Intent(HomeDocenteActivity.this, CreateEjercicioDocenteActivity.class);
+            intentCED = new Intent(HomeDocenteActivity.this, ManageEjercicioDocenteActivity.class);
             startActivity(intentCED);
         }
 

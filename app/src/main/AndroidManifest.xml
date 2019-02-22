@@ -52,7 +52,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".presentation.view.activity.docente.ManageCursosDocenteActivity" />
         </activity>
-        <activity android:name=".presentation.view.activity.docente.CreateEjercicioDocenteActivity"></activity>
+        <activity android:name=".presentation.view.activity.docente.ManageEjercicioDocenteActivity"></activity>
     </application>
 
 </manifest>

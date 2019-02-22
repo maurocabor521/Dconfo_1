@@ -1,26 +1,20 @@
 package com.example.asus.dconfo_app.presentation.view.activity.docente;
 
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.example.asus.dconfo_app.R;
-import com.example.asus.dconfo_app.presentation.view.fragment.administrador.AllCursosFragment;
-import com.example.asus.dconfo_app.presentation.view.fragment.administrador.NewCursoFragment;
-import com.example.asus.dconfo_app.presentation.view.fragment.administrador.NewEstudianteFragment;
-import com.example.asus.dconfo_app.presentation.view.fragment.administrador.NewGrupoFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
-public class CreateEjercicioDocenteActivity extends AppCompatActivity {
+public class ManageEjercicioDocenteActivity extends AppCompatActivity {
 
     private BottomBar bottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_ejercicio_docente);
+        setContentView(R.layout.activity_manage_ejercicio_docente);
         showToolbar("Gestionar Ejercicios Léxicos", true);
         bottomBar = findViewById(R.id.bottombar_CED);
     }
