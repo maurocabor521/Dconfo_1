@@ -20,11 +20,18 @@
         android:layout_height="match_parent">
 
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:background="@color/colorAccent"
+
             android:orientation="vertical">
 
 
@@ -37,7 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -59,12 +66,14 @@
                         android:layout_weight="1"
                         android:gravity="center">
 
-                        <Button
+                        <TextView
                             android:id="@+id/btn_tipo1_bell"
-                            android:layout_width="96dp"
-                            android:layout_height="96dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="@drawable/bell_96px" />
+                            android:text="Ingrese Imagen Ejercicio"
+                            android:textStyle="bold"
+                            android:gravity="center"/>
                     </LinearLayout>
 
 
@@ -75,101 +84,75 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
                     android:gravity="center"
-                    android:padding="15dp">
+                    android:padding="15dp"
+                    android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/btn_tipo1_listenRecord"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        android:background="@drawable/recording_96" />
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/edittext_margin_createaccount"
+                        android:theme="@style/EditTextBlack">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_tipo1_nameEjercicio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Ingrese nombre Ejercicio">
+
+                        </android.support.design.widget.TextInputEditText>
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/edittext_margin_createaccount"
+                        android:theme="@style/EditTextBlack">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_tipo1_codigoEjercicio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Ingrese Código Ejercicio">
+
+                        </android.support.design.widget.TextInputEditText>
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/edittext_margin_createaccount"
+                        android:theme="@style/EditTextBlack">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_tipo1_oracion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Ingrese oración a trabajar">
+
+                        </android.support.design.widget.TextInputEditText>
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/edittext_margin_createaccount"
+                        android:theme="@style/EditTextBlack">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_tipo1_cant_partes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Ingrese Cantidad de Léxemas Correctas">
+
+                        </android.support.design.widget.TextInputEditText>
+                    </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/btn_circle1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".2"
-                        android:background="@drawable/ic_square_30dp" />
 
-                    <Button
-                        android:id="@+id/btn_circle2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".2"
-                        android:background="@drawable/ic_square_30dp" />
 
-                    <Button
-                        android:id="@+id/btn_circle3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".2"
-                        android:background="@drawable/ic_square_30dp" />
-
-                    <Button
-                        android:id="@+id/btn_circle4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".2"
-                        android:background="@drawable/ic_square_30dp" />
-
-                    <Button
-                        android:id="@+id/btn_circle5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".2"
-                        android:background="@drawable/ic_square_30dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btn_circle6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".2"
-                        android:background="@drawable/ic_square_30dp" />
-
-                    <Button
-                        android:id="@+id/btn_circle7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".2"
-                        android:background="@drawable/ic_square_30dp" />
-
-                    <Button
-                        android:id="@+id/btn_circle8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".2"
-                        android:background="@drawable/ic_square_30dp" />
-
-                    <Button
-                        android:id="@+id/btn_circle9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".2"
-                        android:background="@drawable/ic_square_30dp" />
-
-                    <Button
-                        android:id="@+id/btn_circle10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".2"
-                        android:background="@drawable/ic_square_30dp" />
-                </LinearLayout>
 
             </LinearLayout>
-
 
 
         </LinearLayout>
@@ -183,11 +166,12 @@
                 android:id="@+id/btn_tipo1_send_ejercicio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Enviar"
+                android:text="Crear Ejercicio"
                 android:textStyle="bold"
                 android:theme="@style/RaisedButtonDark" />
         </LinearLayout>
 
+    </LinearLayout>
     </ScrollView>
 
 </LinearLayout>
