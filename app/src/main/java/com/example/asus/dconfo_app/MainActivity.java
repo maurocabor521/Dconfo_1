@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 intentAdministrador=new Intent(MainActivity.this,Home_AdminActivity.class);
+                Bundle parametros = new Bundle();
+                String usuarioa="administrador";
+                intentAdministrador.putExtra("usuario", usuarioa);
                 startActivity(intentAdministrador);
             }
         });
@@ -44,7 +47,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                // intentDocente=new Intent(MainActivity.this,HomeDocenteActivity.class);
                 //startActivity(intentDocente);
-                loginDocente=new Intent(MainActivity.this,LoginDocenteActivity.class);
+                //loginDocente=new Intent(MainActivity.this,LoginDocenteActivity.class);
+                loginDocente=new Intent(MainActivity.this,LoginMainActivity.class);
+                Bundle parametros = new Bundle();
+                String usuariod="docente";
+                loginDocente.putExtra("usuario", usuariod);
                 startActivity(loginDocente);
             }
         });
@@ -52,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 intentEstudiante=new Intent(MainActivity.this,HomeEstudianteActivity.class);
+                Bundle parametros = new Bundle();
+                String usuarioe="estudiante";
+                intentEstudiante.putExtra("usuario", usuarioe);
                 startActivity(intentEstudiante);
             }
         });

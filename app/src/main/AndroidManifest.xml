@@ -18,7 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,9 +44,7 @@
                 android:value=".presentation.view.activity.administrador.Home_AdminActivity" />
         </activity>
         <activity android:name=".presentation.view.activity.docente.LoginDocenteActivity" />
-        <activity android:name=".presentation.view.activity.docente.ManageCursosDocenteActivity">
-
-        </activity>
+        <activity android:name=".presentation.view.activity.docente.ManageCursosDocenteActivity"></activity>
         <activity
             android:name=".presentation.view.activity.docente.GrupoDocenteActivity"
             android:parentActivityName=".presentation.view.activity.docente.ManageCursosDocenteActivity">
@@ -55,7 +53,6 @@
                 android:value=".presentation.view.activity.docente.ManageCursosDocenteActivity" />
         </activity>
         <activity android:name=".presentation.view.activity.docente.ManageEjercicioDocenteActivity" />
-
         <activity
             android:name=".presentation.view.activity.docente.NewEjercicioDocenteActivity"
             android:parentActivityName=".presentation.view.activity.docente.ManageEjercicioDocenteActivity">
@@ -63,7 +60,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".presentation.view.activity.docente.ManageEjercicioDocenteActivity" />
         </activity>
-
+        <activity android:name=".LoginMainActivity"></activity>
     </application>
 
 </manifest>
