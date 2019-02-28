@@ -20,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.Login;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
+import com.example.asus.dconfo_app.helpers.Globals;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,8 +65,10 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
 
         progreso.setMessage("Cargando...");
         progreso.show();
+        String url_lh=Globals.url;
         String url =
-                "http://192.168.0.13/proyecto_dconfo/wsJSONLogin.php?";
+                "http://"+url_lh+"/proyecto_dconfo/wsJSONLogin.php?";
+               // "http://192.168.0.13/proyecto_dconfo/wsJSONLogin.php?";
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto
@@ -87,7 +90,7 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
                     Toast.makeText(getApplicationContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
                     Toast.makeText(getApplicationContext(), "iddocente: "+iddconte_bundle, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "No se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "No se ha cargado ", Toast.LENGTH_LONG).show();
                     Log.i("ERROR", "RESPONSE" + response.toString());
                 }
             }

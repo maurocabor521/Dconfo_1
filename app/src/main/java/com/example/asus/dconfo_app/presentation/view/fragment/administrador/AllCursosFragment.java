@@ -22,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.Curso;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
+import com.example.asus.dconfo_app.helpers.Globals;
 import com.example.asus.dconfo_app.presentation.view.adapter.CursosAdapter;
 
 import org.json.JSONArray;
@@ -113,9 +114,11 @@ public class AllCursosFragment extends Fragment implements Response.Listener<JSO
         progreso = new ProgressDialog(getContext());
         progreso.setMessage("Cargando...");
         progreso.show();
+        String url_lh=Globals.url;
         // String ip = getString(R.string.ip);
 
-        String url = "http://192.168.0.13/proyecto_dconfo/wsJSONConsultarListaCursos.php";
+        //String url = "http://192.168.0.13/proyecto_dconfo/wsJSONConsultarListaCursos.php";
+        String url = "http://"+url_lh+"/proyecto_dconfo/wsJSONConsultarListaCursos.php";
         //String url = ip+"ejemploBDRemota/wsJSONConsultarLista.php";
         //reemplazar espacios en blanco del nombre por %20
         url = url.replace(" ", "%20");

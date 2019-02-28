@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -19,6 +20,7 @@ import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.Curso;
 import com.example.asus.dconfo_app.domain.model.Grupo;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
+import com.example.asus.dconfo_app.helpers.Globals;
 import com.example.asus.dconfo_app.presentation.view.adapter.CursosAdapter;
 import com.example.asus.dconfo_app.presentation.view.adapter.GruposDocenteAdapter;
 
@@ -60,21 +62,31 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
         // String ip = getString(R.string.ip);
         //int iddoc=20181;
         String iddoc = "20181";
+        String url_lh=Globals.url;
 
-        String url = "http://192.168.0.13/proyecto_dconfo/wsJSONConsultarListaCursosDocente.php?iddocente=" + txtiddoc.getText().toString();
+        //String url = "http://192.168.0.13/proyecto_dconfo/wsJSONConsultarListaCursosDocente.php?iddocente=" + txtiddoc.getText().toString();
+        String url = "http://"+url_lh+"/proyecto_dconfo/wsJSONConsultarListaCursosDocente.php?iddocente=" + txtiddoc.getText().toString();
+        // http://localhost/proyecto_dconfo/
 ///wsJSONConsultarEstudiante.php?documento=" + edt_codigo.getText().toString();
         url = url.replace(" ", "%20");
         //hace el llamado a la url
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+
+        final int MY_DEFAULT_TIMEOUT = 15000;
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_DEFAULT_TIMEOUT,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         // request.add(jsonObjectRequest);
         VolleySingleton.getIntanciaVolley(getApplicationContext()).addToRequestQueue(jsonObjectRequest);//p21
-        Toast.makeText(getApplicationContext(), "web service", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "web service 1111", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         progreso.hide();
-        Toast.makeText(getApplicationContext(), "No se puede conectar exitosamente" + error.toString(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "No se puede cone , grupo doc" + error.toString(), Toast.LENGTH_LONG).show();
         System.out.println();
         Log.d("ERROR", error.toString());
         progreso.hide();
@@ -103,7 +115,7 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
 //idgrupo,namegrupo,curso_idcurso,curso_Instituto_idInstituto
             }
             //Toast.makeText(getApplicationContext(), "listagrupos: " + listaGrupos.size(), Toast.LENGTH_LONG).show();
-           // Log.i("size", "lista: " + listaGrupos.size());
+            // Log.i("size", "lista: " + listaGrupos.size());
             GruposDocenteAdapter gruposDocenteAdapter = new GruposDocenteAdapter(listaGrupos);
 
             gruposDocenteAdapter.setOnClickListener(new View.OnClickListener() {
@@ -114,23 +126,23 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
                                     getChildAdapterPosition(view)).getNameGrupo(), Toast.LENGTH_SHORT).show();//video p1
 
                     Bundle parametros = new Bundle();
-                    int idgrupo= listaGrupos.get(rvListaCursos.
+                    int idgrupo = listaGrupos.get(rvListaCursos.
                             getChildAdapterPosition(view)).getIdGrupo();
                     parametros.putInt("idgrupo", idgrupo);
 
                     Toast.makeText(getApplicationContext(), "idgrupos: " + idgrupo, Toast.LENGTH_LONG).show();
 
-                    int idcurso=listaGrupos.get(rvListaCursos.
+                    int idcurso = listaGrupos.get(rvListaCursos.
                             getChildAdapterPosition(view)).getCurso_idCurso();
                     parametros.putInt("idcurso", idcurso);
 
-                    String namegrupo=listaGrupos.get(rvListaCursos.
+                    String namegrupo = listaGrupos.get(rvListaCursos.
                             getChildAdapterPosition(view)).getNameGrupo();
 
 
                     parametros.putInt("idcurso", idcurso);
 
-                    String idDocente=String.valueOf(listaGrupos.get(rvListaCursos.
+                    String idDocente = String.valueOf(listaGrupos.get(rvListaCursos.
                             getChildAdapterPosition(view)).getIdDocente());
                     parametros.putInt("idcurso", idcurso);
 

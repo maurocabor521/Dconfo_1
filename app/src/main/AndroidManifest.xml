@@ -18,7 +18,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".presentation.view.activity.docente.Home_ActivitiesActivity" />
         <activity android:name=".Home_AppActivity" />
         <activity
@@ -39,11 +45,7 @@
         </activity>
         <activity android:name=".presentation.view.activity.docente.LoginDocenteActivity" />
         <activity android:name=".presentation.view.activity.docente.ManageCursosDocenteActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".presentation.view.activity.docente.GrupoDocenteActivity"

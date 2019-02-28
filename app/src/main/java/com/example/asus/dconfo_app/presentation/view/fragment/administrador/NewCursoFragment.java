@@ -23,6 +23,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
+import com.example.asus.dconfo_app.helpers.Globals;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -120,8 +121,10 @@ public class NewCursoFragment extends Fragment {
         progreso = new ProgressDialog(getContext());
         progreso.setMessage("Cargando...");
         progreso.show();
+        String url_lh=Globals.url;
         String url =
-                "http://192.168.0.13/proyecto_dconfo/wsJSONCrearCurso.php?";
+                //"http://192.168.0.13/proyecto_dconfo/wsJSONCrearCurso.php?";
+                "http://"+url_lh+"/proyecto_dconfo/wsJSONCrearCurso.php?";
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto

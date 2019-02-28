@@ -36,6 +36,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.Estudiante;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
+import com.example.asus.dconfo_app.helpers.Globals;
 import com.example.asus.dconfo_app.helpers.POIFSFileSystem;
 import com.opencsv.CSVReader;
 
@@ -658,8 +659,10 @@ public class NewListEstudianteFragment extends Fragment implements View.OnClickL
 
         progreso.setMessage("Cargando...");
         progreso.show();
+        String url_lh=Globals.url;
         String url =
-                "http://192.168.0.13/proyecto_dconfo/wsJSONCrearEstudiante.php?";
+               // "http://192.168.0.13/proyecto_dconfo/wsJSONCrearEstudiante.php?";
+                "http://"+url_lh+"/proyecto_dconfo/wsJSONCrearEstudiante.php?";
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto

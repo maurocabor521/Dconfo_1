@@ -21,6 +21,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.Estudiante;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
+import com.example.asus.dconfo_app.helpers.Globals;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -115,9 +116,11 @@ public class ConsultEstudianteFragment extends Fragment implements Response.List
         progreso = new ProgressDialog(getContext());
         progreso.setMessage("Consultando...");
         progreso.show();
+        String url_lh=Globals.url;
         // String ip = getString(R.string.ip);
 
-        String url = "http://192.168.0.13/" +
+        //String url = "http://192.168.0.13/" +
+        String url = "http://"+url_lh+"/" +
                 //"ejemploBDRemota/wsJSONConsultarUsuario.php?documento=" + campoDocumento.getText().toString();
                 "proyecto_dconfo/wsJSONConsultarEstudiante.php?documento=" + edt_codigo.getText().toString();
         // String url = ip+"ejemploBDRemota/wsJSONConsultarUsuarioImagen.php?documento=" + campoDocumento.getText().toString();
