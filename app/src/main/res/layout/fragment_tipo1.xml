@@ -52,8 +52,8 @@
                         android:layout_weight="1"
                         android:gravity="center">
 
-                        <ImageView
-                            android:id="@+id/imv_tipo1_pic"
+                        <Button
+                            android:id="@+id/btn_tipo1_pic"
                             android:layout_width="96dp"
                             android:layout_height="96dp"
                             android:layout_gravity="center"
@@ -139,7 +139,7 @@
                         android:theme="@style/EditTextBlack">
 
                         <android.support.design.widget.TextInputEditText
-                            android:id="@+id/edt_tipo1_cant_partes"
+                            android:id="@+id/edt_tipo1_cant_lex_corr"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Ingrese Cantidad de Léxemas Correctas">

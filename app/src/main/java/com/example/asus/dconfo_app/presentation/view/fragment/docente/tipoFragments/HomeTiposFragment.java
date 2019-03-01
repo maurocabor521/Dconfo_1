@@ -1,16 +1,22 @@
 package com.example.asus.dconfo_app.presentation.view.fragment.docente.tipoFragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.domain.model.Curso;
 import com.example.asus.dconfo_app.presentation.view.fragment.administrador.NewCursoFragment;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +35,12 @@ public class HomeTiposFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private RecyclerView rv_tipos;
+    ArrayList<Curso> listaCursos;
+    ProgressDialog progreso;
+    //******** CONEXIÓN CON WEBSERVICE
+    //RequestQueue request;
+    JsonObjectRequest jsonObjectRequest;
 
     private OnFragmentInteractionListener mListener;
 

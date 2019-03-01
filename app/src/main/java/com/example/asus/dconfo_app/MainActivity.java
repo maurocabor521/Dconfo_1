@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                // intentDocente=new Intent(MainActivity.this,HomeDocenteActivity.class);
                 //startActivity(intentDocente);
                 //loginDocente=new Intent(MainActivity.this,LoginDocenteActivity.class);
-                loginDocente=new Intent(MainActivity.this,LoginMainActivity.class);
+                loginDocente=new Intent(MainActivity.this,LoginDocenteActivity.class);
                 Bundle parametros = new Bundle();
                 String usuariod="docente";
                 loginDocente.putExtra("usuario", usuariod);

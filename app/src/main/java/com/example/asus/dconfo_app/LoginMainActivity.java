@@ -72,10 +72,13 @@ public class LoginMainActivity extends AppCompatActivity implements Response.Lis
         //int iddoc=20181;
         String iddoc = "20181";
         String url_lh = Globals.url;
-        int password=Integer.parseInt(edt_pass.getText().toString());
-        int email=Integer.parseInt(edt_email.getText().toString());
+        int p=20181;
+        int e=20181;
+       // int password=Integer.parseInt(edt_pass.getText().toString());
+       // int email=Integer.parseInt(edt_email.getText().toString());
         String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONLogin1.php?" +
-                "password="+password+"&email="+email;
+                "password="+p+"&email="+e;
+               // "password="+password+"&email="+email;
         // url = url.replace(" ", "%20");
         //hace el llamado a la url
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
