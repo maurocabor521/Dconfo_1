@@ -148,6 +148,7 @@ public class NewGrupoFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 String idgrupo = edt_idGrupo.getText().toString();
                 String namegrupo = edt_nombreGrupo.getText().toString();
+                System.out.println("namegroup"+namegrupo);
                 String idcurso = edt_idCurso.getText().toString();
                 String idInstituto = edt_idInstituto.getText().toString();
 
