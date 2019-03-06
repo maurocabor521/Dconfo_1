@@ -41,6 +41,9 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
     //RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
 
+    String nameDocente="";
+    int idDocente=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,12 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
         rvListaCursos.setHasFixedSize(true);
         progreso = new ProgressDialog(this);
         txtiddoc = findViewById(R.id.txt_iddocente);
+
+        Intent intent = this.getIntent();
+        Bundle extra = intent.getExtras();
+
+        nameDocente = extra.getString("nameDocente");
+        idDocente= extra.getInt("iddocente");
 
         cargarWebService();
     }
@@ -65,7 +74,9 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
         String url_lh=Globals.url;
 
         //String url = "http://192.168.0.13/proyecto_dconfo/wsJSONConsultarListaCursosDocente.php?iddocente=" + txtiddoc.getText().toString();
-        String url = "http://"+url_lh+"/proyecto_dconfo/wsJSONConsultarListaCursosDocente.php?iddocente=" + txtiddoc.getText().toString();
+
+       // String url = "http://"+url_lh+"/proyecto_dconfo/wsJSONConsultarListaCursosDocente.php?iddocente=" + txtiddoc.getText().toString();
+        String url = "http://"+url_lh+"/proyecto_dconfo/wsJSONConsultarListaCursosDocente.php?iddocente=" + idDocente;
         // http://localhost/proyecto_dconfo/
 ///wsJSONConsultarEstudiante.php?documento=" + edt_codigo.getText().toString();
         url = url.replace(" ", "%20");

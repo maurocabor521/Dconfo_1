@@ -18,6 +18,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.domain.model.Docente;
+import com.example.asus.dconfo_app.domain.model.Estudiante;
 import com.example.asus.dconfo_app.domain.model.Login;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
@@ -43,6 +45,7 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
     JsonObjectRequest jsonObjectRequest;
 
     StringRequest stringRequest;
+    JsonObjectRequest jsonObjectRequest1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,32 +56,60 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
         edt_pass = (EditText) findViewById(R.id.edt_login_doc_password);
         btn_ingresar = (Button) findViewById(R.id.btn_Login_Docente);
         progreso = new ProgressDialog(this);
+        progreso = new ProgressDialog(getApplicationContext());
         btn_ingresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cargarWebService();
+                //cargarWebService();
+                cargarWebService1();
             }
         });
+
+
+    }
+
+    private void cargarWebService1() {
+
+      /*  progreso.setMessage("Consultando...");
+        progreso.show();*/
+
+        //int cod=Integer.parseInt(edt_codigo.getText().toString());
+        String email = edt_email.getText().toString();
+        String password = edt_pass.getText().toString();
+
+        String url_lh=Globals.url;
+        // String ip = getString(R.string.ip);
+
+        //String url = "http://192.168.0.13/" +
+        String url = "http://"+url_lh+"/" +
+                //"ejemploBDRemota/wsJSONConsultarUsuario.php?documento=" + campoDocumento.getText().toString();
+                "proyecto_dconfo/wsJSONConsultarDocente.php?password="+password+"&email="+email;
+       // Toast.makeText(getApplicationContext(), "Mensaje: " + cod, Toast.LENGTH_SHORT).show();
+        // String url = ip+"ejemploBDRemota/wsJSONConsultarUsuarioImagen.php?documento=" + campoDocumento.getText().toString();
+
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        // request.add(jsonObjectRequest);
+        VolleySingleton.getIntanciaVolley(getApplicationContext()).addToRequestQueue(jsonObjectRequest);//p21
     }
 
     private void cargarWebService() {
 
-        progreso.setMessage("Cargando...");
-        progreso.show();
+      //  progreso.setMessage("Cargando...");
+//        progreso.show();
         String url_lh=Globals.url;
         String url =
-                "http://"+url_lh+"/proyecto_dconfo/wsJSONLogin.php?";
+                "http://"+url_lh+"/proyecto_dconfo/wsJSONLogin1.php?";
                // "http://192.168.0.13/proyecto_dconfo/wsJSONLogin.php?";
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto
                 progreso.hide();
                 if (response.trim().equalsIgnoreCase("registra")) {
+
                 //if (response.contentEquals("registra")) {
                     edt_email.setText("");
                     edt_pass.setText("");
                     //Login miLogin = new Login();
-
                     Bundle parmetros = new Bundle();
                     parmetros.putInt("iddocente", iddconte_bundle);
 
@@ -135,28 +166,42 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
 
     @Override
     public void onErrorResponse(VolleyError error) {
-
+        progreso.hide();
+        Toast.makeText(getApplicationContext(), "No se ha realizado la consulta de usuario" + error.toString(), Toast.LENGTH_LONG).show();
+        Log.i("ERROR", error.toString());
     }
 
     @Override
     public void onResponse(JSONObject response) {
         progreso.hide();
-        //Toast.makeText(getContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
         Login login = new Login();
-        JSONArray json = response.optJSONArray("login");
+        Docente docente=new Docente();
+        JSONArray json = response.optJSONArray("docente");
         JSONObject jsonObject = null;
         try {
             //objeto como tal en posicion 0
             jsonObject = json.getJSONObject(0);
-            login.setIddocente(jsonObject.optInt("iddocente"));
-            Log.i("iddocente","iddco"+login);
+            docente.setIddocente(jsonObject.optInt("iddocente"));
+            Log.i("iddocente","iddco"+docente);
 
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        iddconte_bundle=login.getIddocente();
-        Toast.makeText(getApplicationContext(), "Login: "+login.getIddocente(), Toast.LENGTH_LONG).show();
-        Log.e("info","info: "+login.getIddocente());
+
+        int idDocente=docente.getIddocente();
+        String nameDocente=docente.getNamedocente();
+
+        Bundle parametros = new Bundle();
+        parametros.putInt("iddocente", idDocente);
+        parametros.putString("namedocente", nameDocente);
+
+        Intent intent = new Intent(LoginDocenteActivity.this, ManageCursosDocenteActivity.class);
+        intent.putExtras(parametros);
+        startActivity(intent);
+       // iddconte_bundle=login.getIddocente();
+        Toast.makeText(getApplicationContext(), "Login: "+docente.getIddocente(), Toast.LENGTH_LONG).show();
+        Log.e("info","info: "+docente.getIddocente());
     }
 }

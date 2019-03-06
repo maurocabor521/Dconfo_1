@@ -11,7 +11,7 @@
         android:id="@+id/txt_iddocente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="20181" />
+        android:text="220" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_misCursosDocente_MCD"

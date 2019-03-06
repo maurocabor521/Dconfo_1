@@ -14,9 +14,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.Estudiante;
@@ -26,6 +29,8 @@ import com.example.asus.dconfo_app.helpers.Globals;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +46,7 @@ public class ConsultEstudianteFragment extends Fragment implements Response.List
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String PROTOCOL_CHARSET = "protol";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -116,13 +122,17 @@ public class ConsultEstudianteFragment extends Fragment implements Response.List
         progreso = new ProgressDialog(getContext());
         progreso.setMessage("Consultando...");
         progreso.show();
+
+        int cod=Integer.parseInt(edt_codigo.getText().toString());
+
         String url_lh=Globals.url;
         // String ip = getString(R.string.ip);
 
         //String url = "http://192.168.0.13/" +
         String url = "http://"+url_lh+"/" +
                 //"ejemploBDRemota/wsJSONConsultarUsuario.php?documento=" + campoDocumento.getText().toString();
-                "proyecto_dconfo/wsJSONConsultarEstudiante.php?documento=" + edt_codigo.getText().toString();
+                "proyecto_dconfo/wsJSONConsultarEstudiante.php?documento="+cod;
+        Toast.makeText(getContext(), "Mensaje: " + cod, Toast.LENGTH_SHORT).show();
         // String url = ip+"ejemploBDRemota/wsJSONConsultarUsuarioImagen.php?documento=" + campoDocumento.getText().toString();
 
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
@@ -135,13 +145,17 @@ public class ConsultEstudianteFragment extends Fragment implements Response.List
         progreso.hide();
         Toast.makeText(getContext(), "No se ha realizado la consulta de usuario" + error.toString(), Toast.LENGTH_LONG).show();
         Log.i("ERROR", error.toString());
+       // Log.i("tagconvertstr", "["+error+"]");
     }
+
+
 
     @Override
     public void onResponse(JSONObject response) {
         //lectura del Json
         progreso.hide();
         Toast.makeText(getContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
+        System.out.println("mes"+response.toString());
         Estudiante estudiante = new Estudiante();
         JSONArray json = response.optJSONArray("estudiante");
         JSONObject jsonObject = null;
@@ -164,6 +178,7 @@ public class ConsultEstudianteFragment extends Fragment implements Response.List
             campoImagen.setImageResource(R.drawable.imagen_no_disponible);
         }*/
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

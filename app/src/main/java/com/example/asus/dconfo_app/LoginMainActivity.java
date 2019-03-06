@@ -77,11 +77,12 @@ public class LoginMainActivity extends AppCompatActivity implements Response.Lis
        // int password=Integer.parseInt(edt_pass.getText().toString());
        // int email=Integer.parseInt(edt_email.getText().toString());
         String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONLogin1.php?" +
-                "password="+p+"&email="+e;
+                "password="+edt_pass.getText().toString()+"&email="+edt_email.getText().toString();
+                //"password="+p+"&email="+e;
                // "password="+password+"&email="+email;
         // url = url.replace(" ", "%20");
         //hace el llamado a la url
-        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, this, this);
 
    /*     final int MY_DEFAULT_TIMEOUT = 15000;
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
@@ -112,7 +113,7 @@ public class LoginMainActivity extends AppCompatActivity implements Response.Lis
         //Toast.makeText(getApplicationContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
 
 
-        JSONArray json = response.optJSONArray("login");
+        JSONArray json = response.optJSONArray("docente");
         JSONObject jsonObject = null;
 
         try {
