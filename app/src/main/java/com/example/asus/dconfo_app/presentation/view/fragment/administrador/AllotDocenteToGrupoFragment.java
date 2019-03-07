@@ -22,7 +22,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.asus.dconfo_app.Connection;
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.domain.model.Curso;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
 
@@ -53,7 +55,8 @@ public class AllotDocenteToGrupoFragment extends Fragment {
     private EditText edt_idDocente;
     private Button btn_allotDocente;
     private Spinner sp_curso;
-    private List<String> lstNombreCurso;
+    private List<Curso> lstNombreCurso;
+    View view;
     ProgressDialog progreso;
 
     //******** CONEXIÓN CON WEBSERVICE
@@ -61,6 +64,7 @@ public class AllotDocenteToGrupoFragment extends Fragment {
     JsonObjectRequest jsonObjectRequest;
 
     StringRequest stringRequest;
+    StringRequest stringRequest1;
 
     private OnFragmentInteractionListener mListener;
 
@@ -103,7 +107,7 @@ public class AllotDocenteToGrupoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_allot_docente_to_grupo, container, false);
+        view = inflater.inflate(R.layout.fragment_allot_docente_to_grupo, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.allot_docente_to_grupo);
         edt_idCurso = (EditText) view.findViewById(R.id.edt_id_curso);
         edt_idGrupo = (EditText) view.findViewById(R.id.edt_id_grupo);
@@ -116,11 +120,18 @@ public class AllotDocenteToGrupoFragment extends Fragment {
             }
         });
         sp_curso=(Spinner)view.findViewById(R.id.sp_idCurso);
-        lstNombreCurso=new ArrayList<String>();
+        lstNombreCurso=new ArrayList<>();
+        listaCursos();
         return view;
     }
 
     public void listaCursos(){
+       Connection connection=new Connection(getContext(),view);
+        //lstNombreCurso=connection.getListaCursos();
+        System.out.println("lista cursos: "+lstNombreCurso);
+        Toast.makeText(getContext(), "lista cursos: "+lstNombreCurso, Toast.LENGTH_LONG).show();
+      //  String url_lh = Globals.url;
+      //  String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaCursos.php";
 
     }
 

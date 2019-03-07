@@ -3,6 +3,9 @@ package com.example.asus.dconfo_app;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,15 +23,26 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Connection implements Response.Listener<JSONObject>,
         Response.ErrorListener {
+
     JsonObjectRequest jsonObjectRequest;
-    ArrayList<Curso> listaCursos;
+   // ArrayList<Curso> listaCursos;
+    ArrayList<Curso> listaCursos1;
+    Context context;
+    View view;
 
     StringRequest stringRequest;
 
-    private void cargarWebService(Context context) {
+    public Connection(Context context, View view) {
+        this.context = context;
+        this.view = view;
+        cargarWebService(context);
+    }
+
+    public void cargarWebService(Context context) {
 
         String url_lh = Globals.url;
         // String ip = getString(R.string.ip);
@@ -57,11 +71,16 @@ public class Connection implements Response.Listener<JSONObject>,
     // si esta bien el llamado a la url entonces entra a este metodo
     @Override
     public void onResponse(JSONObject response) {
+        // public ArrayList<Curso> onResponse(JSONObject response) {
         //lectura del Json
 
         //Toast.makeText(getContext(), "onResponse: " + response.toString(), Toast.LENGTH_SHORT).show();
         Curso curso = null;
         JSONArray json = response.optJSONArray("curso");
+
+        ArrayList<Curso>listaDCursos = new ArrayList<>();
+        listaCursos1 = new ArrayList<>();
+
         try {
             for (int i = 0; i < json.length(); i++) {
                 curso = new Curso();
@@ -71,12 +90,29 @@ public class Connection implements Response.Listener<JSONObject>,
                 curso.setIdInstitutoCurso(jsonObject.optInt("Instituto_idInstituto"));
                 curso.setNameCurso(jsonObject.optString("namecurso"));
                 curso.setPeriodoCurso(jsonObject.optString("periodocurso"));
-                listaCursos.add(curso);
+                listaCursos1.add(curso);
 
             }
+            Spinner spinner=(Spinner)this.view.findViewById(R.id.sp_idCurso);
+            List<String>listanombreCurso=new ArrayList<>();
+            for (int i=0;i<listaCursos1.size();i++){
+                listanombreCurso.add(listaCursos1.get(i).getNameCurso());
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listanombreCurso);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+
+            //spinner.s
+            //setListaCursos(listaCursos1);
+           listaDCursos = listaCursos1;
+            setListadeCursos(listaDCursos);
+
+            System.out.println("la lista:" + listaCursos1.size());
+//            System.out.println("la lista1:"+listaCursos1.get(0).getNameCurso());
+            // return listaCursos;
             // CursosAdapter cursosAdapter = new CursosAdapter(listaCursos);
             // rvListaCursos.setAdapter(cursosAdapter);
-            getListaCursos();
+            // getListaCursos();
         } catch (JSONException e) {
             e.printStackTrace();
             //Toast.makeText(getContext(), "No se ha podido establecer conexión: " + response.toString(), Toast.LENGTH_LONG).show();
@@ -84,7 +120,18 @@ public class Connection implements Response.Listener<JSONObject>,
         }
     }
 
-    public ArrayList<Curso> getListaCursos(){
-        return listaCursos;
+    public void setListadeCursos(ArrayList<Curso> listaCursos1) {
+        this.listaCursos1 = listaCursos1;
     }
+
+    public ArrayList<Curso> getListaCursos1() {
+       /* Curso curso=new Curso();
+        curso.setIdCurso(03);
+        listaCursos1.add(curso);*/
+        return listaCursos1;
+    }
+
+
+
+
 }
