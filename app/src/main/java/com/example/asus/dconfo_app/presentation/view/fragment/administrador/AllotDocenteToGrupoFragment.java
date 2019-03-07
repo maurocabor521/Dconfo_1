@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -25,7 +26,9 @@ import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,6 +52,8 @@ public class AllotDocenteToGrupoFragment extends Fragment {
     private EditText edt_idGrupo;
     private EditText edt_idDocente;
     private Button btn_allotDocente;
+    private Spinner sp_curso;
+    private List<String> lstNombreCurso;
     ProgressDialog progreso;
 
     //******** CONEXIÓN CON WEBSERVICE
@@ -110,7 +115,13 @@ public class AllotDocenteToGrupoFragment extends Fragment {
                 cargarWebService();
             }
         });
+        sp_curso=(Spinner)view.findViewById(R.id.sp_idCurso);
+        lstNombreCurso=new ArrayList<String>();
         return view;
+    }
+
+    public void listaCursos(){
+
     }
 
     private void cargarWebService() {

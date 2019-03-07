@@ -15,6 +15,11 @@
         android:gravity="center"
         android:text="Asignar Docente a Curso" />
 
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sp_idCurso"></Spinner>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
