@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -140,7 +141,7 @@ public class Tipo1Fragment extends Fragment {
         edt_OrtacionEjercicio = (EditText) view.findViewById(R.id.edt_tipo1_oracion);
         btn_NewTipo1_Ejercicio = (Button) view.findViewById(R.id.btn_tipo1_send_ejercicio);
         btn_Tipo1_pic_Ejercicio = (Button) view.findViewById(R.id.btn_tipo1_pic);
-
+        imgFoto = new ImageView(getContext());
         btn_Tipo1_pic_Ejercicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,7 +200,9 @@ public class Tipo1Fragment extends Fragment {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                cargarImagen();
                 break;
+
             case COD_FOTO://p10
                 MediaScannerConnection.scanFile(getContext(), new String[]{path}, null,
                         new MediaScannerConnection.OnScanCompletedListener() {
@@ -216,6 +219,15 @@ public class Tipo1Fragment extends Fragment {
         }
         bitmap = redimensionarImagen(bitmap, 600, 800);//part 14 redimencionar imágen,guarde en carpeta y BD
     }
+
+
+
+    private void cargarImagen() {
+        Drawable drawable = imgFoto.getDrawable();
+        btn_Tipo1_pic_Ejercicio.setBackground(drawable);
+    }
+
+
 
     private Bitmap redimensionarImagen(Bitmap bitmap, float anchoNuevo, float altoNuevo) {//part 14
 
