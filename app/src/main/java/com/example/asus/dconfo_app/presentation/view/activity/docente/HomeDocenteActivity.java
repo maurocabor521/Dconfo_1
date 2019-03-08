@@ -21,6 +21,9 @@ public class HomeDocenteActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Intent intentCED;
+    String namegrupo;
+    String namedocente;
+    int iddocente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +54,12 @@ public class HomeDocenteActivity extends AppCompatActivity
         Bundle datos = this.getIntent().getExtras();
         int idgrupo = datos.getInt("idgrupo");
         int idcurso = datos.getInt("idcurso");
-        String namegrupo = datos.getString("namegrupo");
-        int iddocente = datos.getInt("idDoc");
+        namegrupo = datos.getString("namegrupo");
+
+        namedocente = datos.getString("nameDoc");
+        iddocente = datos.getInt("idDoc");
         //toolbar.setLabelFor();
-        this.setTitle("Id Docente: " + iddocente + " - Id Curso: " + idcurso + " - " + namegrupo);
+        this.setTitle("Docente: " + namedocente + " - Id Curso: " + idcurso + " - " + namegrupo);
 
         Toast.makeText(getApplicationContext(), "idgrupo: " + idgrupo, Toast.LENGTH_LONG).show();
         Toast.makeText(getApplicationContext(), "idcurso: " + idcurso, Toast.LENGTH_LONG).show();
@@ -131,7 +136,11 @@ public class HomeDocenteActivity extends AppCompatActivity
             m.findItem(R.id.nav_con_fonica_estudiantes).setVisible(b);
             return true;
         } else if (id == R.id.nav_con_lexica_ejercicios) {
+            Bundle parametros = new Bundle();
+            parametros.putInt("iddocente", iddocente);
+            parametros.putString("namedocente", namedocente);
             intentCED = new Intent(HomeDocenteActivity.this, ManageEjercicioDocenteActivity.class);
+            intentCED.putExtras(parametros);
             startActivity(intentCED);
         }
 

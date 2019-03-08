@@ -38,6 +38,7 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
     private EditText edt_pass;
     private Button btn_ingresar;
     private int iddconte_bundle=0;
+    private String namedocente_bundle;
     ProgressDialog progreso;
 
     //******** CONEXIÓN CON WEBSERVICE
@@ -112,6 +113,7 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
                     //Login miLogin = new Login();
                     Bundle parmetros = new Bundle();
                     parmetros.putInt("iddocente", iddconte_bundle);
+                    parmetros.putString("namedocente", namedocente_bundle);
 
                     Intent intent = new Intent(LoginDocenteActivity.this, ManageCursosDocenteActivity.class);
                    // intent.putExtras(parmetros);
@@ -183,6 +185,7 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
             //objeto como tal en posicion 0
             jsonObject = json.getJSONObject(0);
             docente.setIddocente(jsonObject.optInt("iddocente"));
+            docente.setNamedocente(jsonObject.optString("namedocente"));
             Log.i("iddocente","iddco"+docente);
 
 
@@ -196,12 +199,13 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
         Bundle parametros = new Bundle();
         parametros.putInt("iddocente", idDocente);
         parametros.putString("namedocente", nameDocente);
+        Toast.makeText(getApplicationContext(), "name Doc: "+nameDocente, Toast.LENGTH_LONG).show();
 
         Intent intent = new Intent(LoginDocenteActivity.this, ManageCursosDocenteActivity.class);
         intent.putExtras(parametros);
         startActivity(intent);
        // iddconte_bundle=login.getIddocente();
-        Toast.makeText(getApplicationContext(), "Login: "+docente.getIddocente(), Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(), "Login: "+docente.getIddocente(), Toast.LENGTH_LONG).show();
         Log.e("info","info: "+docente.getIddocente());
     }
 }

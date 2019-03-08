@@ -58,7 +58,7 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
         Intent intent = this.getIntent();
         Bundle extra = intent.getExtras();
 
-        nameDocente = extra.getString("nameDocente");
+        nameDocente = extra.getString("namedocente");
         idDocente= extra.getInt("iddocente");
 
         cargarWebService();
@@ -153,7 +153,7 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
 
                     parametros.putInt("idcurso", idcurso);
 
-                    String idDocente = String.valueOf(listaGrupos.get(rvListaCursos.
+                    String idDocente1 = String.valueOf(listaGrupos.get(rvListaCursos.
                             getChildAdapterPosition(view)).getIdDocente());
                     parametros.putInt("idcurso", idcurso);
 
@@ -162,6 +162,8 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
                     intent.putExtra("idgrupo", idgrupo);
                     intent.putExtra("idcurso", idcurso);
                     intent.putExtra("idDoc", idDocente);
+                    intent.putExtra("nameDoc", nameDocente);
+                    Toast.makeText(getApplicationContext(), "id Doc MCDA: " + idDocente, Toast.LENGTH_LONG).show();
                     intent.putExtra("namegrupo", namegrupo);
                     startActivity(intent);
                   /*  interfaceComunicaFragments.
