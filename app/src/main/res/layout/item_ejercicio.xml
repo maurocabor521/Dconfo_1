@@ -26,10 +26,37 @@
             android:textColor="@android:color/white"/>
 
         <TextView
-            android:id="@+id/txt_ejercicioId"
+            android:id="@+id/txt_ejercicioId_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="id Ejercicio"
+            android:text=""
+            android:textSize="@dimen/tsize_documento"
+            android:textStyle="bold"
+            android:layout_weight=".8"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="id Docente"
+            android:textSize="@dimen/tsize_documento"
+            android:textStyle="bold"
+            android:layout_weight="1.5"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/txt_docenteId_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="id Docente"
             android:text=""
             android:textSize="@dimen/tsize_documento"
             android:textStyle="bold"
@@ -53,7 +80,7 @@
             android:textColor="@android:color/white"/>
 
         <TextView
-            android:id="@+id/txt_ejercicioNombre"
+            android:id="@+id/txt_ejercicioNombre_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre Ejercicio"
@@ -80,7 +107,7 @@
             android:textColor="@android:color/white"/>
 
         <TextView
-            android:id="@+id/txt_ejercicioActividad"
+            android:id="@+id/txt_ejercicioActividad_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Actividad"
@@ -107,7 +134,7 @@
             android:textColor="@android:color/white"/>
 
         <TextView
-            android:id="@+id/txt_ejercicioTipo"
+            android:id="@+id/txt_ejercicioTipo_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Tipo"

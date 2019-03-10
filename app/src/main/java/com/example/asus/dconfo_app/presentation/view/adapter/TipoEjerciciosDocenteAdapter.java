@@ -23,7 +23,7 @@ public class TipoEjerciciosDocenteAdapter extends RecyclerView.Adapter<TipoEjerc
     List<EjercicioG1> listaEjerciciosG1;
     private View.OnClickListener listener;
 
-    public TipoEjerciciosDocenteAdapter(List<Grupo> listaGrupos) {
+    public TipoEjerciciosDocenteAdapter(List<EjercicioG1> listaEjerciciosG1) {
         this.listaEjerciciosG1 = listaEjerciciosG1;
     }
 
@@ -45,6 +45,7 @@ public class TipoEjerciciosDocenteAdapter extends RecyclerView.Adapter<TipoEjerc
        // Log.i("size", "lista_: " + listaGrupos.size());
         if (listaEjerciciosG1.size() != 0) {
             holder.txtidEjercicio.setText(listaEjerciciosG1.get(position).getIdEjercicio().toString());
+            holder.txtidDocente.setText(listaEjerciciosG1.get(position).getIdDocente().toString());
             holder.txtnameEjercicio.setText(listaEjerciciosG1.get(position).getNameEjercicio().toString());
             holder.txtidActividad.setText(listaEjerciciosG1.get(position).getIdActividad().toString());
             holder.txtidTipo.setText(listaEjerciciosG1.get(position).getIdTipo().toString());
@@ -73,14 +74,15 @@ public class TipoEjerciciosDocenteAdapter extends RecyclerView.Adapter<TipoEjerc
     }
 
     public class EjerciciosHolder extends RecyclerView.ViewHolder {
-        TextView txtidEjercicio, txtnameEjercicio, txtidActividad, txtidTipo;
+        TextView txtidEjercicio,txtidDocente, txtnameEjercicio, txtidActividad, txtidTipo;
 
         public EjerciciosHolder(View itemView) {
             super(itemView);
-            txtidEjercicio = (TextView) itemView.findViewById(R.id.txtIDgrupo_LCD);
-            txtnameEjercicio = (TextView) itemView.findViewById(R.id.txtNombreGrupo_LCD);
-            txtidActividad = (TextView) itemView.findViewById(R.id.txtID_Curso_LCD);
-            txtidTipo = (TextView) itemView.findViewById(R.id.txtInstituto_LCD);
+            txtidEjercicio = (TextView) itemView.findViewById(R.id.txt_ejercicioId_home);
+            txtidDocente = (TextView) itemView.findViewById(R.id.txt_docenteId_home);
+            txtnameEjercicio = (TextView) itemView.findViewById(R.id.txt_ejercicioNombre_home);
+            txtidActividad = (TextView) itemView.findViewById(R.id.txt_ejercicioActividad_home);
+            txtidTipo = (TextView) itemView.findViewById(R.id.txt_ejercicioTipo_home);
 
         }
     }
