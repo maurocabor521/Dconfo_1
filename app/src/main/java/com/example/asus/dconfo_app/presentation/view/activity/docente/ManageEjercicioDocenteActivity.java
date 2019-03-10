@@ -20,12 +20,21 @@ public class ManageEjercicioDocenteActivity extends AppCompatActivity implements
     private BottomBar bottomBar;
     private HomeEjerciciosDocenteFragment homeEjerciciosDocenteFragment;
     private NewEjercicioDocenteFragment newEjercicioDocenteFragment;
+    String nameDocente="";
+    int idDocente=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_ejercicio_docente);
-        showToolbar("Gestionar Ejercicios Léxicos", true);
+
+
+        Intent intent = this.getIntent();
+        Bundle extra = intent.getExtras();
+
+        nameDocente = extra.getString("namedocente");
+        idDocente= extra.getInt("iddocente");
+        showToolbar("Gestionar Ejercicios Léxicos, Docente: "+nameDocente, true);
         bottomBar = findViewById(R.id.bottombar_CED);
         cargarBottombar();
     }
@@ -45,7 +54,13 @@ public class ManageEjercicioDocenteActivity extends AppCompatActivity implements
                         //Toast.makeText(getApplicationContext(), "Ejercicios Home", Toast.LENGTH_LONG).show();
                         break;
                     case R.id.bott_new_CED:
+                        Bundle parametros = new Bundle();
+                        parametros.putInt("iddocente", idDocente);
+                        parametros.putString("namedocente", nameDocente);
+
                         Intent intentNewEjercicio = new Intent(ManageEjercicioDocenteActivity.this, NewEjercicioDocenteActivity.class);
+
+                        intentNewEjercicio.putExtras(parametros);
                         startActivity(intentNewEjercicio);
                      /*   newEjercicioDocenteFragment = new NewEjercicioDocenteFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_DocenteEjercicios, newEjercicioDocenteFragment)

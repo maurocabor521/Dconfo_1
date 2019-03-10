@@ -139,6 +139,7 @@ public class HomeDocenteActivity extends AppCompatActivity
             Bundle parametros = new Bundle();
             parametros.putInt("iddocente", iddocente);
             parametros.putString("namedocente", namedocente);
+
             intentCED = new Intent(HomeDocenteActivity.this, ManageEjercicioDocenteActivity.class);
             intentCED.putExtras(parametros);
             startActivity(intentCED);

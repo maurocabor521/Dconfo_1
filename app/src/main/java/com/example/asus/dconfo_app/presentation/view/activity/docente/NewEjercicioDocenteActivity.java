@@ -1,5 +1,6 @@
 package com.example.asus.dconfo_app.presentation.view.activity.docente;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -22,12 +23,20 @@ public class NewEjercicioDocenteActivity extends AppCompatActivity implements
     private HomeTiposFragment homeTiposFragment;
     private Tipo1Fragment tipo1Fragment;
     private Tipo2Fragment tipo2Fragment;
+    String nameDocente="";
+    int idDocente=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_ejercicio_docente);
-        showToolbar("Nuevo Ejercicio Léxico", true);
+        Intent intent = this.getIntent();
+        Bundle extra = intent.getExtras();
+
+        nameDocente = extra.getString("namedocente");
+        idDocente= extra.getInt("iddocente");
+
+        showToolbar("Nuevo Ejercicio Léxico, Docente: "+nameDocente, true);
         bottomBar = findViewById(R.id.bottombar_CED_activity);
         cargarBottombar();
     }
@@ -47,7 +56,16 @@ public class NewEjercicioDocenteActivity extends AppCompatActivity implements
                         //Toast.makeText(getApplicationContext(), "Ejercicios Home", Toast.LENGTH_LONG).show();
                         break;
                     case R.id.bott_tipo1_CED:
+                        //enviar datos activity a fragment
+                        Bundle args = new Bundle();
+
+                        //  String
+                        args.putString("namedocente", nameDocente);
+                        args.putInt("iddocente", idDocente);
+
                         tipo1Fragment = new Tipo1Fragment();
+                        tipo1Fragment.setArguments(args);
+
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_Tipos_CED, tipo1Fragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();

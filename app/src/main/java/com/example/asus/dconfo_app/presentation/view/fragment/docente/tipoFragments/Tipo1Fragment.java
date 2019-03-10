@@ -82,6 +82,9 @@ public class Tipo1Fragment extends Fragment {
     private static final String DIRECTORIO_IMAGEN = CARPETA_PRINCIPAL + CARPETA_IMAGEN;//ruta carpeta de directorios
     private String path;//almacena la ruta de la imagen
 
+    String nameDocente="";
+    int idDocente=0;
+
 
     //******** CONEXIÓN CON WEBSERVICE
     //RequestQueue request;
@@ -134,6 +137,10 @@ public class Tipo1Fragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tipo1, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.home_tipo1);
+
+        nameDocente=getArguments().getString("namedocente");
+        idDocente=getArguments().getInt("iddocente");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Docente Tipo 1: "+nameDocente);
 
         edt_CantLexCorEjercicio = (EditText) view.findViewById(R.id.edt_tipo1_cant_lex_corr);
         edt_CodigoEjercicio = (EditText) view.findViewById(R.id.edt_tipo1_codigoEjercicio);
@@ -284,19 +291,27 @@ public class Tipo1Fragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 //String idejercicio = edt_CodigoEjercicio.getText().toString();
-                String idejercicio = "";
+                //String idejercicio = "";
                 String nameejercicio = edt_nameEjercicio.getText().toString();
-                String iddocente = "20181";
+                String iddocente = String.valueOf(idDocente);
                 String idactividad = "2";
-                String idtipo = "1";
-                // String imagen = convertirImgString(bitmap);
+                String idtipo = "3";
+                String imagen = convertirImgString(bitmap);
+                System.out.println("dconfo imagen: "+imagen);
+                String cantidadValida = edt_CantLexCorEjercicio.getText().toString();
+                String oracion = edt_OrtacionEjercicio.getText().toString();
+                //System.out.println("cantidadvalida"+cantidadValida);
+                //System.out.println("oracion"+oracion);
 
                 Map<String, String> parametros = new HashMap<>();
-                parametros.put("idEjercicio", idejercicio);
+               // parametros.put("idEjercicio", idejercicio);
                 parametros.put("nameEjercicio", nameejercicio);
                 parametros.put("docente_iddocente", iddocente);
                 parametros.put("Actividad_idActividad", idactividad);
                 parametros.put("Tipo_idTipo", idtipo);
+                parametros.put("imagen", imagen);
+                parametros.put("cantidadValidaEG1", cantidadValida);
+                parametros.put("oracion", oracion);
                 // parametros.put("imagen", imagen);
 
                 return parametros;

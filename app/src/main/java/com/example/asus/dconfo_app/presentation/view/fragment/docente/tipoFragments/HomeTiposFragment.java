@@ -85,7 +85,8 @@ public class HomeTiposFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view=inflater.inflate(R.layout.fragment_home_tipos, container, false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.home_tipo);
+        //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.home_tipo);
+        rv_tipos=(RecyclerView)view.findViewById(R.id.rv_tipos_docente);
         return view;
     }
 
