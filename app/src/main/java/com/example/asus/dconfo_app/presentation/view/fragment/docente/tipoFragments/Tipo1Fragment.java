@@ -12,6 +12,7 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +24,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -41,6 +44,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -67,6 +71,8 @@ public class Tipo1Fragment extends Fragment {
     private EditText edt_CantLexCorEjercicio;
     private Button btn_NewTipo1_Ejercicio;
     private Button btn_Tipo1_pic_Ejercicio;
+    private LinearLayout ll_tipo_ejercicio;
+    private ImageView imageView_muestra;
 
     ProgressDialog progreso;
     ImageView imgFoto;
@@ -84,6 +90,11 @@ public class Tipo1Fragment extends Fragment {
 
     String nameDocente="";
     int idDocente=0;
+
+    private TextToSpeech mTTS;
+    private Button mButtonSpeak;
+    private SeekBar mSeekBarPitch;
+    private SeekBar mSeekBarSpeed;
 
 
     //******** CONEXIÓN CON WEBSERVICE
@@ -142,6 +153,39 @@ public class Tipo1Fragment extends Fragment {
         idDocente=getArguments().getInt("iddocente");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Docente Tipo 1: "+nameDocente);
 
+        ll_tipo_ejercicio=(LinearLayout)view.findViewById(R.id.ll_tipo_muestra_ejercicio);
+        imageView_muestra=(ImageView)view.findViewById(R.id.iv_imagen_muestra);
+
+        mSeekBarPitch = (SeekBar)view.findViewById(R.id.seek_bar_pitch);
+        mSeekBarSpeed = (SeekBar)view.findViewById(R.id.seek_bar_speed);
+
+        mButtonSpeak=(Button)view.findViewById(R.id.btn_tipo1_textToS);
+        mButtonSpeak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speak();
+            }
+        });
+
+        mTTS = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    //int result = mTTS.setLanguage(Locale.getDefault());
+                    int result = mTTS.setLanguage(new Locale("spa","ESP"));
+
+                    if (result == TextToSpeech.LANG_MISSING_DATA
+                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "Language not supported");
+                    } else {
+                       // mButtonSpeak.setEnabled(true);
+                    }
+                } else {
+                    Log.e("TTS", "Initialization failed");
+                }
+            }
+        });
+
         edt_CantLexCorEjercicio = (EditText) view.findViewById(R.id.edt_tipo1_cant_lex_corr);
         edt_CodigoEjercicio = (EditText) view.findViewById(R.id.edt_tipo1_codigoEjercicio);
         edt_nameEjercicio = (EditText) view.findViewById(R.id.edt_tipo1_nameEjercicio);
@@ -160,10 +204,24 @@ public class Tipo1Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 cargarWebService();
+
             }
         });
         return view;
 
+    }
+
+    private void speak() {
+        String text = edt_OrtacionEjercicio.getText().toString();
+        float pitch = (float) mSeekBarPitch.getProgress() / 50;
+        if (pitch < 0.1) pitch = 0.1f;
+        float speed = (float) mSeekBarSpeed.getProgress() / 50;
+        if (speed < 0.1) speed = 0.1f;
+
+        mTTS.setPitch(pitch);
+        mTTS.setSpeechRate(speed);
+
+        mTTS.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     private void mostrarDialogOpciones() {//part 9
@@ -232,6 +290,7 @@ public class Tipo1Fragment extends Fragment {
     private void cargarImagen() {
         Drawable drawable = imgFoto.getDrawable();
         btn_Tipo1_pic_Ejercicio.setBackground(drawable);
+        imageView_muestra.setBackground(drawable);
     }
 
 
@@ -272,7 +331,8 @@ public class Tipo1Fragment extends Fragment {
                     edt_CantLexCorEjercicio.setText("");
                     edt_CodigoEjercicio.setText("");
                     edt_nameEjercicio.setText("");
-                    edt_OrtacionEjercicio.setText("");
+                   // edt_OrtacionEjercicio.setText("");
+                    ll_tipo_ejercicio.setVisibility(View.VISIBLE);
                     Toast.makeText(getContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getContext(), "No se ha cargado con éxito", Toast.LENGTH_LONG).show();

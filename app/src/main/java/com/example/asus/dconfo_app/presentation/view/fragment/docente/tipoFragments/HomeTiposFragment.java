@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,6 +59,9 @@ public class HomeTiposFragment extends Fragment implements Response.Listener<JSO
     private String mParam1;
     private String mParam2;
     private RecyclerView rv_tipos;
+    private TextToSpeech mTTS;
+    String nameDocente="";
+    int idDocente=0;
     ArrayList<EjercicioG1> listaEjercicios;
     ProgressDialog progreso;
     //******** CONEXIÓN CON WEBSERVICE
@@ -106,7 +112,19 @@ public class HomeTiposFragment extends Fragment implements Response.Listener<JSO
 
         View view=inflater.inflate(R.layout.fragment_home_tipos, container, false);
         //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.home_tipo);
+        listaEjercicios = new ArrayList<>();
+
         rv_tipos=(RecyclerView)view.findViewById(R.id.rv_tipos_docente);
+        rv_tipos.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_tipos.setHasFixedSize(true);
+
+
+
+        nameDocente=getArguments().getString("namedocente");
+        idDocente=getArguments().getInt("iddocente");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Docente Home: "+nameDocente);
+
+        cargarWebService();
         return view;
     }
 
@@ -114,22 +132,22 @@ public class HomeTiposFragment extends Fragment implements Response.Listener<JSO
 
     private void cargarWebService() {
 
-        progreso.setMessage("Cargando...");
-        progreso.show();
+       // progreso.setMessage("Cargando...");
+      //  progreso.show();
         // String ip = getString(R.string.ip);
         //int iddoc=20181;
         String iddoc = "20181";
         String url_lh= Globals.url;
 
-        //String url = "http://192.168.0.13/proyecto_dconfo/wsJSONConsultarListaCursosDocente.php?iddocente=" + txtiddoc.getText().toString();
+       // String url = "http://192.168.0.13/proyecto_dconfo/wsJSONConsultarListaEjerciciosDocente.php?iddocente=" + idDocente;
 
-        // String url = "http://"+url_lh+"/proyecto_dconfo/wsJSONConsultarListaCursosDocente.php?iddocente=" + txtiddoc.getText().toString();
+        String url = "http://"+url_lh+"/proyecto_dconfo/wsJSONConsultarListaEjerciciosDocente.php?iddocente=" + idDocente;
         //String url = "http://"+url_lh+"/proyecto_dconfo/wsJSONConsultarListaCursosDocente.php?iddocente=" + idDocente;
         // http://localhost/proyecto_dconfo/
 ///wsJSONConsultarEstudiante.php?documento=" + edt_codigo.getText().toString();
        // url = url.replace(" ", "%20");
         //hace el llamado a la url
-       // jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
 
         final int MY_DEFAULT_TIMEOUT = 15000;
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
@@ -139,12 +157,12 @@ public class HomeTiposFragment extends Fragment implements Response.Listener<JSO
 
         // request.add(jsonObjectRequest);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);//p21
-       // Toast.makeText(getContext(), "web service 1111", Toast.LENGTH_LONG).show();
+       Toast.makeText(getContext(), "LISTA EJERCICIOS DOC.", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        progreso.hide();
+       // progreso.hide();
        // Toast.makeText(getContext(), "No se puede cone , grupo doc" + error.toString(), Toast.LENGTH_LONG).show();
         System.out.println();
         Log.d("ERROR", error.toString());
@@ -154,10 +172,10 @@ public class HomeTiposFragment extends Fragment implements Response.Listener<JSO
     // si esta bien el llamado a la url entonces entra a este metodo
     @Override
     public void onResponse(JSONObject response) {
-        progreso.hide();
+//        progreso.hide();
         //Toast.makeText(getApplicationContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
         EjercicioG1 ejercicioG1 = null;
-        JSONArray json = response.optJSONArray("ejercicioG1");
+        JSONArray json = response.optJSONArray("ejerciciog1");
 
         try {
             for (int i = 0; i < json.length(); i++) {
@@ -165,63 +183,20 @@ public class HomeTiposFragment extends Fragment implements Response.Listener<JSO
                 JSONObject jsonObject = null;
                 jsonObject = json.getJSONObject(i);
                 // jsonObject = new JSONObject(response);
-                ejercicioG1.setIdEjercicio(jsonObject.optInt("idejercicio"));
-                ejercicioG1.setNameEjercicio(jsonObject.optString("nameejercicio"));
-                ejercicioG1.setIdDocente(jsonObject.optInt("iddocente"));
-                ejercicioG1.setIdActividad(jsonObject.optInt("idactividad"));
-                ejercicioG1.setIdTipo(jsonObject.optInt("idtipo"));
+                ejercicioG1.setIdEjercicio(jsonObject.optInt("idEjercicioG1"));
+                ejercicioG1.setNameEjercicio(jsonObject.optString("nameEjercicioG1"));
+                ejercicioG1.setIdDocente(jsonObject.optInt("docente_iddocente"));
+                ejercicioG1.setIdTipo(jsonObject.optInt("Tipo_idTipo"));
+                ejercicioG1.setIdActividad(jsonObject.optInt("Tipo_Actividad_idActividad"));
+
                 listaEjercicios.add(ejercicioG1);
 
 //idgrupo,namegrupo,curso_idcurso,curso_Instituto_idInstituto
             }
             //Toast.makeText(getApplicationContext(), "listagrupos: " + listaGrupos.size(), Toast.LENGTH_LONG).show();
-            // Log.i("size", "lista: " + listaGrupos.size());
+             Log.i("size", "lista: " + listaEjercicios.toString());
             TipoEjerciciosDocenteAdapter tipoEjerciciosDocenteAdapter = new TipoEjerciciosDocenteAdapter(listaEjercicios);
 
-        /*    tipoEjerciciosDocenteAdapter.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //Toast.makeText(getApplicationContext(), "Seleccion: " +
-                            listaEjercicios.get(rv_tipos.
-                                    getChildAdapterPosition(view)).getNameGrupo(), Toast.LENGTH_SHORT).show();//video p1
-
-                    Bundle parametros = new Bundle();
-                    int idgrupo = listaGrupos.get(rvListaCursos.
-                            getChildAdapterPosition(view)).getIdGrupo();
-                    parametros.putInt("idgrupo", idgrupo);
-
-                    Toast.makeText(getApplicationContext(), "idgrupos: " + idgrupo, Toast.LENGTH_LONG).show();
-
-                    int idcurso = listaGrupos.get(rvListaCursos.
-                            getChildAdapterPosition(view)).getCurso_idCurso();
-                    parametros.putInt("idcurso", idcurso);
-
-                    String namegrupo = listaGrupos.get(rvListaCursos.
-                            getChildAdapterPosition(view)).getNameGrupo();
-
-
-                    parametros.putInt("idcurso", idcurso);
-
-                    String idDocente1 = String.valueOf(listaGrupos.get(rvListaCursos.
-                            getChildAdapterPosition(view)).getIdDocente());
-                    parametros.putInt("idcurso", idcurso);
-
-                    Intent intent = new Intent(ManageCursosDocenteActivity.this, HomeDocenteActivity.class);
-                    //intent.putExtras(parametros);
-                    intent.putExtra("idgrupo", idgrupo);
-                    intent.putExtra("idcurso", idcurso);
-                    intent.putExtra("idDoc", idDocente);
-                    intent.putExtra("nameDoc", nameDocente);
-                    Toast.makeText(getApplicationContext(), "id Doc MCDA: " + idDocente, Toast.LENGTH_LONG).show();
-                    intent.putExtra("namegrupo", namegrupo);
-                    startActivity(intent);
-                  /*  interfaceComunicaFragments.
-                            enviarEjercicio
-                                    (listaEjercicios.get(recyclerView.getChildAdapterPosition(view)));//video p2 detalle envia el objeto completo
-                                    */
-
-               // }
-          //  });
             rv_tipos.setAdapter(tipoEjerciciosDocenteAdapter);
         } catch (JSONException e) {
             e.printStackTrace();

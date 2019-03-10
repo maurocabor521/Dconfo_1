@@ -49,7 +49,15 @@ public class NewEjercicioDocenteActivity extends AppCompatActivity implements
             public void onTabSelected(int tabId) {
                 switch (tabId) {
                     case R.id.bott_home_tipo_CED:
+                        Bundle args1 = new Bundle();
+
+                        //  String
+                        args1.putString("namedocente", nameDocente);
+                        args1.putInt("iddocente", idDocente);
+
                         homeTiposFragment = new HomeTiposFragment();
+                        homeTiposFragment.setArguments(args1);
+
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_Tipos_CED, homeTiposFragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();

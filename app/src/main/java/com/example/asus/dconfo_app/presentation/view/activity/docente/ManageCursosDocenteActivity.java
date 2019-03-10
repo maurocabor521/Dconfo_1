@@ -49,9 +49,11 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_cursos_docente);
         listaGrupos = new ArrayList<>();
+
         rvListaCursos = (RecyclerView) findViewById(R.id.rv_misCursosDocente_MCD);
         rvListaCursos.setLayoutManager(new LinearLayoutManager(this));
         rvListaCursos.setHasFixedSize(true);
+
         progreso = new ProgressDialog(this);
         txtiddoc = findViewById(R.id.txt_iddocente);
 
