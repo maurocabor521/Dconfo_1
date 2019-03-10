@@ -21,6 +21,7 @@ public class HomeDocenteActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Intent intentCED;
+    Intent intentAsignarDeber;
     String namegrupo;
     String namedocente;
     int iddocente;
@@ -113,6 +114,8 @@ public class HomeDocenteActivity extends AppCompatActivity
         } else if (id == R.id.nav_misejercicios) {
 
         } else if (id == R.id.nav_asignardeber) {
+            intentAsignarDeber=new Intent(HomeDocenteActivity.this,AsignarDeberDocenteActivity.class);
+            startActivity(intentAsignarDeber);
 
         } else if (id == R.id.nav_share) {
 
