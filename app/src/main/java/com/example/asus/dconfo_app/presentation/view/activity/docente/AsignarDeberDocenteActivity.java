@@ -48,7 +48,7 @@ public class AsignarDeberDocenteActivity extends AppCompatActivity {
         btnAsignar = findViewById(R.id.btn_Asignar_asignar);
         progreso = new ProgressDialog(this);
         LayoutInflater inflater = LayoutInflater.from(this);
-        view = this.view;
+        view = findViewById(android.R.id.content);
         listaEstudiantes();
     }
 
