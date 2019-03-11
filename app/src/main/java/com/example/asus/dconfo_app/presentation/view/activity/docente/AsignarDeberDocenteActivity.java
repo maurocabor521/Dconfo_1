@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.Connection;
+import com.example.asus.dconfo_app.ConnectionEjercicios;
 import com.example.asus.dconfo_app.ConnectionEstudiantes;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
@@ -36,6 +37,8 @@ public class AsignarDeberDocenteActivity extends AppCompatActivity {
     ProgressDialog progreso;
     JsonObjectRequest jsonObjectRequest;
     View view;
+    Integer idEstudianteDeber=null;
+    Integer idEjercicioDeber=null;
 
     StringRequest stringRequest;
 
@@ -50,15 +53,24 @@ public class AsignarDeberDocenteActivity extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         view = findViewById(android.R.id.content);
         listaEstudiantes();
+        listaEjercicios();
+        if(!(idEstudianteDeber.equals(null)&&(idEjercicioDeber.equals(null)))){
+            Toast.makeText(getApplicationContext(),"llamar webservice",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void listaEjercicios() {
+        ConnectionEjercicios connectionEje=new ConnectionEjercicios(getApplicationContext(),view,220);
     }
 
     public void listaEstudiantes(){
         ConnectionEstudiantes connectionE=new ConnectionEstudiantes(getApplicationContext(),view,1);
-        //lstNombreCurso=connection.getListaCursos();
-       // System.out.println("lista cursos: "+lstNombreCurso);
-        //Toast.makeText(getContext(), "lista cursos: "+lstNombreCurso, Toast.LENGTH_LONG).show();
-        //  String url_lh = Globals.url;
-        //  String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaCursos.php";
+    }
 
+    public void setIdEstudiante(Integer idEstudiante){
+        idEstudianteDeber=idEstudiante;
+    }
+    public void setIdEjercicio(Integer idEjercicio){
+        idEjercicioDeber=idEjercicio;
     }
 }

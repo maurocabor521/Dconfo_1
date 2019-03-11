@@ -114,8 +114,8 @@ public class HomeDocenteActivity extends AppCompatActivity
         } else if (id == R.id.nav_misejercicios) {
 
         } else if (id == R.id.nav_asignardeber) {
-            intentAsignarDeber = new Intent(HomeDocenteActivity.this, AsignarDeberDocenteActivity.class);
-            //intentAsignarDeber = new Intent(HomeDocenteActivity.this, AsignarEstudianteDeberActivity.class);
+            //intentAsignarDeber = new Intent(HomeDocenteActivity.this, AsignarDeberDocenteActivity.class);
+            intentAsignarDeber = new Intent(HomeDocenteActivity.this, AsignarEstudianteDeberActivity.class);
             startActivity(intentAsignarDeber);
 
         } else if (id == R.id.nav_share) {

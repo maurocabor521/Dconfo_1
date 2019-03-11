@@ -3,6 +3,7 @@ package com.example.asus.dconfo_app;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -16,6 +17,7 @@ import com.example.asus.dconfo_app.domain.model.EjercicioG1;
 import com.example.asus.dconfo_app.domain.model.Estudiante;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
+import com.example.asus.dconfo_app.presentation.view.activity.docente.AsignarEstudianteDeberActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,11 +30,13 @@ public class ConnectionEjercicios implements Response.Listener<JSONObject>,
         Response.ErrorListener {
 
     JsonObjectRequest jsonObjectRequest;
-   // ArrayList<Curso> listaCursos;
+
     ArrayList<EjercicioG1> listaEjerciciosg1;
     Context context;
     View view;
     Integer iddocente;
+    List<String> listaNombreEjerciciog1;
+    List<Integer> listaidEjerciciog1;
 
     StringRequest stringRequest;
 
@@ -49,7 +53,7 @@ public class ConnectionEjercicios implements Response.Listener<JSONObject>,
         // String ip = getString(R.string.ip);
 
         //String url = "http://192.168.0.13/proyecto_dconfo/wsJSONConsultarListaCursos.php";
-        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjerciciosDocente.php?docente_iddocente="+iddocente;
+        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjerciciosDocente.php?iddocente=" + iddocente;
         //String url = ip+"ejemploBDRemota/wsJSONConsultarLista.php";
         //reemplazar espacios en blanco del nombre por %20
         url = url.replace(" ", "%20");
@@ -79,7 +83,7 @@ public class ConnectionEjercicios implements Response.Listener<JSONObject>,
         EjercicioG1 ejercicioG1 = null;
         JSONArray json = response.optJSONArray("ejerciciog1");
 
-        ArrayList<EjercicioG1>listaDEjerciciosg1 = new ArrayList<>();
+        ArrayList<EjercicioG1> listaDEjerciciosg1 = new ArrayList<>();
         listaDEjerciciosg1 = new ArrayList<>();
 
         try {
@@ -87,27 +91,47 @@ public class ConnectionEjercicios implements Response.Listener<JSONObject>,
                 ejercicioG1 = new EjercicioG1();
                 JSONObject jsonObject = null;
                 jsonObject = json.getJSONObject(i);
-                ejercicioG1.setNameEjercicio(jsonObject.optString("estudiante_idestudiante"));
+                ejercicioG1.setNameEjercicio(jsonObject.optString("nameEjercicioG1"));
+                ejercicioG1.setIdEjercicio(jsonObject.optInt("idEjercicioG1"));
 
                 listaDEjerciciosg1.add(ejercicioG1);
 
             }
-            Spinner spinner=(Spinner)this.view.findViewById(R.id.sp_Ejercicios_asignar);
-            List<String>listaNombreEjerciciog1=new ArrayList<>();
+            Spinner spinner = (Spinner) this.view.findViewById(R.id.sp_Ejercicios_asignar);
+            listaNombreEjerciciog1 = new ArrayList<>();
+            listaidEjerciciog1 = new ArrayList<>();
+            //listaNombreEjerciciog1.add(" ");
 
-            for (int i=0;i<listaDEjerciciosg1.size();i++){
-                listaNombreEjerciciog1.add(String.valueOf(listaDEjerciciosg1.get(i).getNameEjercicio()) );
+            for (int i = 0; i < listaDEjerciciosg1.size(); i++) {
+
+                listaNombreEjerciciog1.add(String.valueOf(listaDEjerciciosg1.get(i).getNameEjercicio()));
+                listaidEjerciciog1.add(listaDEjerciciosg1.get(i).getIdEjercicio());
+
+                System.out.println("Ejercicio:" + i + listaDEjerciciosg1.get(i).getIdEjercicio());
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listaNombreEjerciciog1);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    System.out.println("ejericio seleccionado: "+listaNombreEjerciciog1.get(position));
+                    AsignarEstudianteDeberActivity asignarEstudianteDeberActivity=new AsignarEstudianteDeberActivity();
+                    //asignarEstudianteDeberActivity.
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
 
             //spinner.s
             //setListaCursos(listaCursos1);
-          // listaDCursos = listaCursos1;
-           // setListadeCursos(listaDCursos);
+            // listaDCursos = listaCursos1;
+            // setListadeCursos(listaDCursos);
 
-            System.out.println("la lista Ejercicios:" + listaNombreEjerciciog1);
+            System.out.println("la lista Ejercicios:" + listaNombreEjerciciog1.size());
 //            System.out.println("la lista1:"+listaCursos1.get(0).getNameCurso());
             // return listaCursos;
             // CursosAdapter cursosAdapter = new CursosAdapter(listaCursos);
@@ -128,10 +152,8 @@ public class ConnectionEjercicios implements Response.Listener<JSONObject>,
        /* Curso curso=new Curso();
         curso.setIdCurso(03);
         listaCursos1.add(curso);*/
-       // return listaCursos1;
+    // return listaCursos1;
     //}*/
-
-
 
 
 }
