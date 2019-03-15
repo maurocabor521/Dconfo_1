@@ -86,7 +86,7 @@ public class LoginEstudianteActivity extends AppCompatActivity implements Respon
         //String url = "http://192.168.0.13/" +
         String url = "http://"+url_lh+"/" +
                 //"ejemploBDRemota/wsJSONConsultarUsuario.php?documento=" + campoDocumento.getText().toString();
-                "proyecto_dconfo/wsJSONConsultarEstudiante.php?password="+password+"&email="+email;
+                "proyecto_dconfo/wsJSONConsultarEstudiante.php?passwork_estudiante="+password+"&emailAcudienteestudiante="+email;
        // Toast.makeText(getApplicationContext(), "Mensaje: " + cod, Toast.LENGTH_SHORT).show();
         // String url = ip+"ejemploBDRemota/wsJSONConsultarUsuarioImagen.php?documento=" + campoDocumento.getText().toString();
 
@@ -181,7 +181,7 @@ public class LoginEstudianteActivity extends AppCompatActivity implements Respon
         //Toast.makeText(getApplicationContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
 
 
-        JSONArray json = response.optJSONArray("docente");
+        JSONArray json = response.optJSONArray("estudiante");
         JSONObject jsonObject = null;
 
         try {

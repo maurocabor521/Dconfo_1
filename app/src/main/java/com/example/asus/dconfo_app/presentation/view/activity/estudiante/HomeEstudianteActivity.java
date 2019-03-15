@@ -4,13 +4,18 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.example.asus.dconfo_app.LoginMainEstudianteActivity;
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.presentation.view.activity.docente.ManageEjercicioDocenteActivity;
+import com.example.asus.dconfo_app.presentation.view.activity.docente.NewEjercicioDocenteActivity;
+import com.example.asus.dconfo_app.presentation.view.fragment.docente.HomeEjerciciosDocenteFragment;
 import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabSelectListener;
 
 public class HomeEstudianteActivity extends AppCompatActivity {
     private BottomBar bottomBar;
@@ -20,31 +25,38 @@ public class HomeEstudianteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_estudiante);
         bottomBar = findViewById(R.id.bottombar_estudiante);
-        showToolbar("Mis deberes ", true);
+        Intent intent = this.getIntent();
+        Bundle extra = intent.getExtras();
+
+        String nameestudiante = extra.getString("nameestudiante");
+        int idestudiante= extra.getInt("idestudiante");
+        showToolbar("Est: "+nameestudiante+" ,id: "+idestudiante, true);
     }
 
+    private void cargarBottombar() {
 
-  /*  public void showNotification() {
+        bottomBar.setDefaultTab(R.id.bo);
+        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelected(int tabId) {
+                switch (tabId) {
+                    case R.id.bott__deber_home_deberes:
+                        homeEjerciciosDocenteFragment = new HomeEjerciciosDocenteFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container_DocenteEjercicios, homeEjerciciosDocenteFragment)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                                .addToBackStack(null).commit();
+                        //Toast.makeText(getApplicationContext(), "Ejercicios Home", Toast.LENGTH_LONG).show();
+                        break;
+                    case R.id.bott_deber_t1:
 
-        NotificationManager notificationManager = (NotificationManager) getSystemService(getApplicationContext().NOTIFICATION_SERVICE);
+                        break;
+                        case R.id.bott_deber_t2:
 
-// Podrás mostrar el icono de la notificación, en este caso una alerta
-        Notification notification = new Notification(android.R.drawable.stat_sys_warning,
-                "Notificación", System.currentTimeMillis());
-
-        CharSequence titulo = "Alerta";
-
-// Clase de Notification
-        Intent notificationIntent = new Intent(this, LoginMainEstudianteActivity.class);
-        PendingIntent contIntent = PendingIntent.getActivity(this, , notificationIntent, );
-        notification.getSettingsText(this, "Aviso de notificación", "Esto es un ejemplo de notificación", contIntent);
-
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-
-//importante
-        int not_id = 1;
-        notificationManager.notify(not_id, notification);
-    }*/
+                        break;
+                }
+            }
+        });
+    }
 
     public void showToolbar(String tittle, boolean upButton) {
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar_ejercicio);

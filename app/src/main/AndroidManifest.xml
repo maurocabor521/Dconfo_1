@@ -26,24 +26,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".presentation.view.activity.docente.Home_ActivitiesActivity" />
+
         <activity android:name=".Home_AppActivity" />
+
         <activity
             android:name=".presentation.view.activity.administrador.Home_AdminActivity"
             android:label="@string/title_activity_home__admin"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".presentation.view.activity.docente.HomeDocenteActivity"
             android:label="@string/title_activity_home_docente"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".presentation.view.activity.estudiante.HomeEstudianteActivity" />
+        <activity android:name=".presentation.view.activity.estudiante.LoginEstudianteActivity" />
+
         <activity
             android:name=".presentation.view.activity.administrador.Home_NewCursoActivity"
             android:parentActivityName=".presentation.view.activity.administrador.Home_AdminActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".presentation.view.activity.administrador.Home_AdminActivity" />
+
         </activity>
+
         <activity android:name=".presentation.view.activity.docente.LoginDocenteActivity" />
         <activity android:name=".presentation.view.activity.docente.ManageCursosDocenteActivity" />
         <activity

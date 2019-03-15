@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tabs>
-    <tab id="@+id/bott_home_tipo_CED"
+    <tab id="@+id/bot_deber_home_deberes"
         title="deberes"
         barColorWhenSelected="@color/colorPrimary"
         icon="@drawable/home"/>
-    <tab id="@+id/bott_tipo1_CED"
+    <tab id="@+id/bot_deber_t1"
         title="tipo 1"
         barColorWhenSelected="@color/colorPrimary"
         icon="@drawable/ic_square_30dp"/>
-    <tab id="@+id/bott_tipo2_CED"
+    <tab id="@+id/bot_deber_t2"
         title="tipo 2"
         barColorWhenSelected="@color/colorPrimary"
         icon="@drawable/ic_square_30dp"/>
