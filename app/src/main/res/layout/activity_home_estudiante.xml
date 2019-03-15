@@ -20,7 +20,7 @@
             android:orientation="vertical">
 
             <FrameLayout
-                android:id="@+id/container_Admincurso"
+                android:id="@+id/container_HomeEstudiante"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingBottom="70dp">

@@ -5,7 +5,7 @@
         barColorWhenSelected="@color/colorPrimary"
         icon="@drawable/home"/>
     <tab id="@+id/bott_tipo1_CED"
-        title="mis grupos"
+        title="tipo 1"
         barColorWhenSelected="@color/colorPrimary"
         icon="@drawable/ic_square_30dp"/>
     <tab id="@+id/bott_tipo2_CED"

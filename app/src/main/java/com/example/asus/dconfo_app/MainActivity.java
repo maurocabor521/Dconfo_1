@@ -9,6 +9,7 @@ import android.widget.Button;
 import com.example.asus.dconfo_app.presentation.view.activity.administrador.Home_AdminActivity;
 import com.example.asus.dconfo_app.presentation.view.activity.docente.LoginDocenteActivity;
 import com.example.asus.dconfo_app.presentation.view.activity.estudiante.HomeEstudianteActivity;
+import com.example.asus.dconfo_app.presentation.view.activity.estudiante.LoginEstudianteActivity;
 import com.roughike.bottombar.BottomBar;
 
 public class MainActivity extends AppCompatActivity {
@@ -58,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
         btn_estudiante.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intentEstudiante=new Intent(MainActivity.this,HomeEstudianteActivity.class);
+                intentEstudiante=new Intent(MainActivity.this, LoginEstudianteActivity.class);
                 Bundle parametros = new Bundle();
                 String usuarioe="estudiante";
-                intentEstudiante.putExtra("usuario", usuarioe);
+               // intentEstudiante.putExtra("usuario", usuarioe);
                 startActivity(intentEstudiante);
             }
         });

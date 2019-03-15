@@ -72,7 +72,7 @@ public class LoginMainEstudianteActivity extends AppCompatActivity implements Re
         int e=20181;
        // int password=Integer.parseInt(edt_pass.getText().toString());
        // int email=Integer.parseInt(edt_email.getText().toString());
-        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONLogin1.php?" +
+        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONLoginEst.php?" +
                 "password="+edt_pass.getText().toString()+"&email="+edt_email.getText().toString();
                 //"password="+p+"&email="+e;
                // "password="+password+"&email="+email;
@@ -119,23 +119,23 @@ public class LoginMainEstudianteActivity extends AppCompatActivity implements Re
         }
         // jsonObject = new JSONObject(response);
 
-        if (usuario == "administrador") {
+    /*    if (usuario == "administrador") {
 
-        } else if (usuario == "docente") {
-            Docente docente = new Docente();
-            docente.setIddocente(jsonObject.optInt("iddocente"));
+        } else if (usuario == "docente") {*/
+            Estudiante estudiante = new Estudiante();
+            estudiante.setIdestudiante(jsonObject.optInt("idestudiante"));
 
             Intent intent = new Intent(LoginMainEstudianteActivity.this, ManageCursosDocenteActivity.class);
-            int iddocente = docente.getIddocente();
-            intent.putExtra("iddocente", iddocente);
+            int idestudiante = estudiante.getIdestudiante();
+            intent.putExtra("idestudiante", idestudiante);
             startActivity(intent);
-            Toast.makeText(getApplicationContext(), "DOCENTE: " + docente.getIddocente().toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "ESTUDIANTE: " + estudiante.getIdestudiante().toString(), Toast.LENGTH_SHORT).show();
 
-        } else if (usuario == "estudiante") {
+      /*  } else if (usuario == "estudiante") {
             Estudiante estudiante = new Estudiante();
             estudiante.setDniestudiante(jsonObject.optInt("dniestudiante"));
 
-        }
+        }*/
 
     }
 
