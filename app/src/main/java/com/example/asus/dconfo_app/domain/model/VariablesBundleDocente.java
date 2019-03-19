@@ -1,7 +1,7 @@
 package com.example.asus.dconfo_app.domain.model;
 
 public class VariablesBundleDocente {
-    Integer idDocente;
+    Integer idDocente=0;
     String nameDocente;
 
     public Integer getIdDocente() {

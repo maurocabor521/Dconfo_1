@@ -39,6 +39,14 @@ public class ManageEjercicioDocenteActivity extends AppCompatActivity implements
         cargarBottombar();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+     /*   Bundle bundle=new Bundle();
+        bundle.putInt("iddocente",idDocente);
+        bundle.putString("namedocente",nameDocente);*/
+    }
+
     private void cargarBottombar() {
 
         bottomBar.setDefaultTab(R.id.bott_home_CED);

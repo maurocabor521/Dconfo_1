@@ -21,6 +21,7 @@ import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.Docente;
 import com.example.asus.dconfo_app.domain.model.Estudiante;
 import com.example.asus.dconfo_app.domain.model.Login;
+import com.example.asus.dconfo_app.domain.model.VariablesBundleDocente;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
 
@@ -40,6 +41,7 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
     private int iddconte_bundle = 0;
     private String namedocente_bundle;
     ProgressDialog progreso;
+    VariablesBundleDocente variablesBundleDocente=new VariablesBundleDocente();
 
     int iddoc=0;
 
@@ -213,10 +215,11 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
         Log.e("info", "info: " + docente.getIddocente());
     }
 
-    public void setIdDocente(int idDocente) {
-        iddoc = idDocente;
+    public void setIdDocente(int id_Docente) {
+
+        variablesBundleDocente.setIdDocente(id_Docente);
     }
     public Integer gerIdDocente(){
-        return iddoc;
+        return variablesBundleDocente.getIdDocente();
     }
 }
