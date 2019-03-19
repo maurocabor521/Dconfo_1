@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,12 +14,23 @@ import com.example.asus.dconfo_app.LoginMainEstudianteActivity;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.presentation.view.activity.docente.ManageEjercicioDocenteActivity;
 import com.example.asus.dconfo_app.presentation.view.activity.docente.NewEjercicioDocenteActivity;
+import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.HomeEstudianteFragment;
+import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.Tipo1EstudianteFragment;
+import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.Tipo2EstudianteFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.docente.HomeEjerciciosDocenteFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
-public class HomeEstudianteActivity extends AppCompatActivity {
+public class HomeEstudianteActivity extends AppCompatActivity implements
+        HomeEstudianteFragment.OnFragmentInteractionListener,
+        Tipo1EstudianteFragment.OnFragmentInteractionListener,
+        Tipo2EstudianteFragment.OnFragmentInteractionListener {
     private BottomBar bottomBar;
+    HomeEstudianteFragment homeEstudianteFragment;
+    Tipo1EstudianteFragment tipo1EstudianteFragment;
+    Tipo2EstudianteFragment tipo2EstudianteFragment;
+    String nameestudiante;
+    int idestudiante;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,29 +40,44 @@ public class HomeEstudianteActivity extends AppCompatActivity {
         Intent intent = this.getIntent();
         Bundle extra = intent.getExtras();
 
-        String nameestudiante = extra.getString("nameestudiante");
-        int idestudiante= extra.getInt("idestudiante");
-        showToolbar("Est: "+nameestudiante+" ,id: "+idestudiante, true);
+        nameestudiante = extra.getString("nameestudiante");
+        idestudiante = extra.getInt("idestudiante");
+        showToolbar("Est: " + nameestudiante + " ,id: " + idestudiante, true);
+        cargarBottombar();
     }
 
     private void cargarBottombar() {
 
-        bottomBar.setDefaultTab(R.id.bo);
+        bottomBar.setDefaultTab(R.id.bot_deber_home_deberes);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(int tabId) {
                 switch (tabId) {
-                    case R.id.bott__deber_home_deberes:
-                        homeEjerciciosDocenteFragment = new HomeEjerciciosDocenteFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container_DocenteEjercicios, homeEjerciciosDocenteFragment)
+                    case R.id.bot_deber_home_deberes:
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("idEstudiante", idestudiante);
+                        bundle.putString("nameEstudiante", nameestudiante);
+
+                        homeEstudianteFragment = new HomeEstudianteFragment();
+                        homeEstudianteFragment.setArguments(bundle);
+                        
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, homeEstudianteFragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
                         //Toast.makeText(getApplicationContext(), "Ejercicios Home", Toast.LENGTH_LONG).show();
                         break;
-                    case R.id.bott_deber_t1:
+                    case R.id.bot_deber_t1:
+                        tipo1EstudianteFragment = new Tipo1EstudianteFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo1EstudianteFragment)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                                .addToBackStack(null).commit();
 
                         break;
-                        case R.id.bott_deber_t2:
+                    case R.id.bot_deber_t2:
+                        tipo2EstudianteFragment = new Tipo2EstudianteFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo2EstudianteFragment)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                                .addToBackStack(null).commit();
 
                         break;
                 }
@@ -65,5 +92,10 @@ public class HomeEstudianteActivity extends AppCompatActivity {
         //getSupportActionBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(upButton);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

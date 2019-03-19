@@ -37,9 +37,11 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
     private EditText edt_email;
     private EditText edt_pass;
     private Button btn_ingresar;
-    private int iddconte_bundle=0;
+    private int iddconte_bundle = 0;
     private String namedocente_bundle;
     ProgressDialog progreso;
+
+    int iddoc=0;
 
     //******** CONEXIÓN CON WEBSERVICE
     //RequestQueue request;
@@ -78,14 +80,14 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
         String email = edt_email.getText().toString();
         String password = edt_pass.getText().toString();
 
-        String url_lh=Globals.url;
+        String url_lh = Globals.url;
         // String ip = getString(R.string.ip);
 
         //String url = "http://192.168.0.13/" +
-        String url = "http://"+url_lh+"/" +
+        String url = "http://" + url_lh + "/" +
                 //"ejemploBDRemota/wsJSONConsultarUsuario.php?documento=" + campoDocumento.getText().toString();
-                "proyecto_dconfo/wsJSONConsultarDocente.php?password="+password+"&email="+email;
-       // Toast.makeText(getApplicationContext(), "Mensaje: " + cod, Toast.LENGTH_SHORT).show();
+                "proyecto_dconfo/wsJSONConsultarDocente.php?password=" + password + "&email=" + email;
+        // Toast.makeText(getApplicationContext(), "Mensaje: " + cod, Toast.LENGTH_SHORT).show();
         // String url = ip+"ejemploBDRemota/wsJSONConsultarUsuarioImagen.php?documento=" + campoDocumento.getText().toString();
 
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
@@ -95,19 +97,19 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
 
     private void cargarWebService() {
 
-      //  progreso.setMessage("Cargando...");
+        //  progreso.setMessage("Cargando...");
 //        progreso.show();
-        String url_lh=Globals.url;
+        String url_lh = Globals.url;
         String url =
-                "http://"+url_lh+"/proyecto_dconfo/wsJSONLogin1.php?";
-               // "http://192.168.0.13/proyecto_dconfo/wsJSONLogin.php?";
+                "http://" + url_lh + "/proyecto_dconfo/wsJSONLogin1.php?";
+        // "http://192.168.0.13/proyecto_dconfo/wsJSONLogin.php?";
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto
                 progreso.hide();
                 if (response.trim().equalsIgnoreCase("registra")) {
 
-                //if (response.contentEquals("registra")) {
+                    //if (response.contentEquals("registra")) {
                     edt_email.setText("");
                     edt_pass.setText("");
                     //Login miLogin = new Login();
@@ -116,12 +118,12 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
                     parmetros.putString("namedocente", namedocente_bundle);
 
                     Intent intent = new Intent(LoginDocenteActivity.this, ManageCursosDocenteActivity.class);
-                   // intent.putExtras(parmetros);
+                    // intent.putExtras(parmetros);
                     startActivity(intent);
 
 
                     Toast.makeText(getApplicationContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
-                    Toast.makeText(getApplicationContext(), "iddocente: "+iddconte_bundle, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "iddocente: " + iddconte_bundle, Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "No se ha cargado ", Toast.LENGTH_LONG).show();
                     Log.i("ERROR", "RESPONSE" + response.toString());
@@ -152,7 +154,7 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
         VolleySingleton.getIntanciaVolley(getApplicationContext()).addToRequestQueue(stringRequest);//p21
     }
 
-    public void enviarIdDocente(View view){
+    public void enviarIdDocente(View view) {
 
       /* tv1.setText("1");
 
@@ -178,7 +180,7 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
         progreso.hide();
         Toast.makeText(getApplicationContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
         Login login = new Login();
-        Docente docente=new Docente();
+        Docente docente = new Docente();
         JSONArray json = response.optJSONArray("docente");
         JSONObject jsonObject = null;
         try {
@@ -186,26 +188,35 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
             jsonObject = json.getJSONObject(0);
             docente.setIddocente(jsonObject.optInt("iddocente"));
             docente.setNamedocente(jsonObject.optString("namedocente"));
-            Log.i("iddocente","iddco"+docente);
+            Log.i("iddocente", "iddco" + docente);
 
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        int idDocente=docente.getIddocente();
-        String nameDocente=docente.getNamedocente();
+        int idDocente = docente.getIddocente();
+        String nameDocente = docente.getNamedocente();
+
+        setIdDocente(idDocente);
 
         Bundle parametros = new Bundle();
         parametros.putInt("iddocente", idDocente);
         parametros.putString("namedocente", nameDocente);
-        Toast.makeText(getApplicationContext(), "name Doc: "+nameDocente, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "name Doc: " + nameDocente, Toast.LENGTH_LONG).show();
 
         Intent intent = new Intent(LoginDocenteActivity.this, ManageCursosDocenteActivity.class);
         intent.putExtras(parametros);
         startActivity(intent);
-       // iddconte_bundle=login.getIddocente();
-       // Toast.makeText(getApplicationContext(), "Login: "+docente.getIddocente(), Toast.LENGTH_LONG).show();
-        Log.e("info","info: "+docente.getIddocente());
+        // iddconte_bundle=login.getIddocente();
+        // Toast.makeText(getApplicationContext(), "Login: "+docente.getIddocente(), Toast.LENGTH_LONG).show();
+        Log.e("info", "info: " + docente.getIddocente());
+    }
+
+    public void setIdDocente(int idDocente) {
+        iddoc = idDocente;
+    }
+    public Integer gerIdDocente(){
+        return iddoc;
     }
 }

@@ -2,6 +2,7 @@ package com.example.asus.dconfo_app.presentation.view.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class DeberesEstudianteAdapter extends RecyclerView.Adapter<DeberesEstudi
     @Override
     public void onBindViewHolder(EjerciciosHolder holder, int position) {
         // holder.txtidGrupo.setText(listaGrupos.get(position).getIdGrupo().toString());
-       // Log.i("size", "lista_: " + listaGrupos.size());
+        Log.i("size adapter", "lista_: " + listaDeberes.size());
         if (listaDeberes.size() != 0) {
             holder.txtidEjercicio.setText(listaDeberes.get(position).getIdEjercicio().toString());
             holder.txtnameDeber.setText(listaDeberes.get(position).getTipoDeber().toString());

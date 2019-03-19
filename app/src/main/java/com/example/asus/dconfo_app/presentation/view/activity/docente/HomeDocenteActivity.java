@@ -52,6 +52,9 @@ public class HomeDocenteActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view1);
         navigationView.setNavigationItemSelectedListener(this);
 
+        ManageCursosDocenteActivity intent = new ManageCursosDocenteActivity();
+//        Bundle datos = intent.getIntent().getBundleExtra("idgrupo");
+
         Bundle datos = this.getIntent().getExtras();
         int idgrupo = datos.getInt("idgrupo");
         int idcurso = datos.getInt("idcurso");
