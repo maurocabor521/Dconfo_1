@@ -21,11 +21,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.DeberEstudiante;
-import com.example.asus.dconfo_app.domain.model.EjercicioG1;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
 import com.example.asus.dconfo_app.presentation.view.adapter.DeberesEstudianteAdapter;
-import com.example.asus.dconfo_app.presentation.view.adapter.TipoEjerciciosDocenteAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,12 +34,12 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link HomeEstudianteFragment.OnFragmentInteractionListener} interface
+ * {@link CasaHomeEstudianteFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link HomeEstudianteFragment#newInstance} factory method to
+ * Use the {@link CasaHomeEstudianteFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeEstudianteFragment extends Fragment implements Response.Listener<JSONObject>,
+public class CasaHomeEstudianteFragment extends Fragment implements Response.Listener<JSONObject>,
         Response.ErrorListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,6 +49,7 @@ public class HomeEstudianteFragment extends Fragment implements Response.Listene
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
     private RecyclerView rv_misDeberes;
     String nameestudiante = "";
     int idestudiante = 0;
@@ -59,7 +58,7 @@ public class HomeEstudianteFragment extends Fragment implements Response.Listene
 
     private OnFragmentInteractionListener mListener;
 
-    public HomeEstudianteFragment() {
+    public CasaHomeEstudianteFragment() {
         // Required empty public constructor
     }
 
@@ -69,11 +68,11 @@ public class HomeEstudianteFragment extends Fragment implements Response.Listene
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeEstudianteFragment.
+     * @return A new instance of fragment CasaHomeEstudianteFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeEstudianteFragment newInstance(String param1, String param2) {
-        HomeEstudianteFragment fragment = new HomeEstudianteFragment();
+    public static CasaHomeEstudianteFragment newInstance(String param1, String param2) {
+        CasaHomeEstudianteFragment fragment = new CasaHomeEstudianteFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -94,10 +93,10 @@ public class HomeEstudianteFragment extends Fragment implements Response.Listene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home_estudiante, container, false);
+        View view=inflater.inflate(R.layout.fragment_casa_home_estudiante, container, false);
         listaDeberes = new ArrayList<>();
 
-        rv_misDeberes = (RecyclerView) view.findViewById(R.id.rcv_EstudianteListaDeberes);
+        rv_misDeberes = (RecyclerView) view.findViewById(R.id.rcv_EstudianteListaDeberes_CHE);
         rv_misDeberes.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_misDeberes.setHasFixedSize(true);
 
@@ -107,31 +106,6 @@ public class HomeEstudianteFragment extends Fragment implements Response.Listene
         cargarWebService();
         return view;
     }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
     private void cargarWebService() {
 
         String url_lh = Globals.url;
@@ -160,15 +134,14 @@ public class HomeEstudianteFragment extends Fragment implements Response.Listene
         //progreso.hide();
     }
 
-    // si esta bien el llamado a la url entonces entra a este metodo
     @Override
     public void onResponse(JSONObject response) {
-//        progreso.hide();
-        //Toast.makeText(getApplicationContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(getContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
         DeberEstudiante deberEstudiante = null;
         JSONArray json = response.optJSONArray("deber");
 
-        try {
+        try{
             for (int i = 0; i < json.length(); i++) {
                 deberEstudiante = new DeberEstudiante();
                 JSONObject jsonObject = null;
@@ -177,25 +150,21 @@ public class HomeEstudianteFragment extends Fragment implements Response.Listene
                 deberEstudiante.setIdEjercicio(jsonObject.optInt("EjercicioG1_idEjercicioG1"));
                 deberEstudiante.setIdEjercicio2(jsonObject.optInt("EjercicioG1_idEjercicioG2"));
                 deberEstudiante.setTipoDeber(jsonObject.optString("tipoDeber"));
-
-
                 listaDeberes.add(deberEstudiante);
-
-//idgrupo,namegrupo,curso_idcurso,curso_Instituto_idInstituto
             }
-            //Toast.makeText(getApplicationContext(), "listagrupos: " + listaGrupos.size(), Toast.LENGTH_LONG).show();
-            Log.i("size", "lista: " + deberEstudiante.toString());
             DeberesEstudianteAdapter deberesEstudianteAdapter = new DeberesEstudianteAdapter(listaDeberes);
             deberesEstudianteAdapter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int ejerpos=listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio();
+                    Log.i("size", "lista: " + listaDeberes.size());
+                    int ejerpos = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio();
+                    String ejertipo = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getTipoDeber();
                     Tipo1EstudianteFragment tipo1EstudianteFragment = new Tipo1EstudianteFragment();
 
-                    Bundle bundle=new Bundle();
-                    bundle.putInt("idejercicio",ejerpos);
-                    tipo1EstudianteFragment.setArguments(bundle);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("idejercicio", ejerpos);
 
+                    tipo1EstudianteFragment.setArguments(bundle);
                     getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo1EstudianteFragment)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .addToBackStack(null).commit();
@@ -203,15 +172,44 @@ public class HomeEstudianteFragment extends Fragment implements Response.Listene
             });
 
             rv_misDeberes.setAdapter(deberesEstudianteAdapter);
-        } catch (JSONException e) {
+
+        }catch (JSONException e){
             e.printStackTrace();
-            Log.d("error", response.toString());
+        }//catch
 
-            //Toast.makeText(getApplicationContext(), "No se ha podido establecer conexión: " + response.toString(), Toast.LENGTH_LONG).show();
+    }//onResponse
 
-            //progreso.hide();
+
+
+
+
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
         }
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+
+
 
     /**
      * This interface must be implemented by activities that contain this

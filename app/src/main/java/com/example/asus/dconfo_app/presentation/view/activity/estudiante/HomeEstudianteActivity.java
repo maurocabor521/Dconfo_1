@@ -7,21 +7,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.asus.dconfo_app.R;
-import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.CasaEstudianteFragment;
 
+
+import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.CasaHomeEstudianteFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.Tipo1EstudianteFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.Tipo2EstudianteFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
 public class HomeEstudianteActivity extends AppCompatActivity implements
-        CasaEstudianteFragment.OnFragmentInteractionListener,
+        CasaHomeEstudianteFragment.OnFragmentInteractionListener,
         Tipo1EstudianteFragment.OnFragmentInteractionListener,
         Tipo2EstudianteFragment.OnFragmentInteractionListener {
 
 
     private BottomBar bottomBar;
-    CasaEstudianteFragment homeEstudianteFragment;
+    CasaHomeEstudianteFragment homeEstudianteFragment;
     Tipo1EstudianteFragment tipo1EstudianteFragment;
     Tipo2EstudianteFragment tipo2EstudianteFragment;
     String nameestudiante;
@@ -53,7 +54,7 @@ public class HomeEstudianteActivity extends AppCompatActivity implements
                         bundle.putInt("idEstudiante", idestudiante);
                         bundle.putString("nameEstudiante", nameestudiante);
 
-                        homeEstudianteFragment = new CasaEstudianteFragment();
+                        homeEstudianteFragment = new CasaHomeEstudianteFragment();
                         homeEstudianteFragment.setArguments(bundle);
 
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, homeEstudianteFragment)
