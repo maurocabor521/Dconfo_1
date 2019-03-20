@@ -1,32 +1,27 @@
 package com.example.asus.dconfo_app.presentation.view.activity.estudiante;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 
-import com.example.asus.dconfo_app.LoginMainEstudianteActivity;
 import com.example.asus.dconfo_app.R;
-import com.example.asus.dconfo_app.presentation.view.activity.docente.ManageEjercicioDocenteActivity;
-import com.example.asus.dconfo_app.presentation.view.activity.docente.NewEjercicioDocenteActivity;
-import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.HomeEstudianteFragment;
+import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.CasaEstudianteFragment;
+
 import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.Tipo1EstudianteFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.Tipo2EstudianteFragment;
-import com.example.asus.dconfo_app.presentation.view.fragment.docente.HomeEjerciciosDocenteFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
 public class HomeEstudianteActivity extends AppCompatActivity implements
-        HomeEstudianteFragment.OnFragmentInteractionListener,
+        CasaEstudianteFragment.OnFragmentInteractionListener,
         Tipo1EstudianteFragment.OnFragmentInteractionListener,
         Tipo2EstudianteFragment.OnFragmentInteractionListener {
+
+
     private BottomBar bottomBar;
-    HomeEstudianteFragment homeEstudianteFragment;
+    CasaEstudianteFragment homeEstudianteFragment;
     Tipo1EstudianteFragment tipo1EstudianteFragment;
     Tipo2EstudianteFragment tipo2EstudianteFragment;
     String nameestudiante;
@@ -58,9 +53,9 @@ public class HomeEstudianteActivity extends AppCompatActivity implements
                         bundle.putInt("idEstudiante", idestudiante);
                         bundle.putString("nameEstudiante", nameestudiante);
 
-                        homeEstudianteFragment = new HomeEstudianteFragment();
+                        homeEstudianteFragment = new CasaEstudianteFragment();
                         homeEstudianteFragment.setArguments(bundle);
-                        
+
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, homeEstudianteFragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
