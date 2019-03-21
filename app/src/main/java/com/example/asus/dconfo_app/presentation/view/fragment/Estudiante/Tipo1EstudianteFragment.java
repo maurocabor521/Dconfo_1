@@ -259,6 +259,7 @@ public class Tipo1EstudianteFragment extends Fragment
                 @Override
                 public void onResponse(Bitmap response) {
                     //holder.imagen.setImageBitmap(response);
+                    iv_imagen.setBackground(null);
                     iv_imagen.setImageBitmap(response);
                 }
             }, 0, 0, ImageView.ScaleType.CENTER, null, new Response.ErrorListener() {
