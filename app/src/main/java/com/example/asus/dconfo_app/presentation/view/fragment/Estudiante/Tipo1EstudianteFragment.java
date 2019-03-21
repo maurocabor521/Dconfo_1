@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -68,7 +69,9 @@ public class Tipo1EstudianteFragment extends Fragment
     private Button btn_b3;
     private Button btn_b4;
     private Button btn_b5;
+    private Button btn_responder;
     private TextToSpeech mTTS;
+    private TextView txt_miRespuesta;
 
     private SeekBar mSeekBarPitch;
     private SeekBar mSeekBarSpeed;
@@ -89,6 +92,7 @@ public class Tipo1EstudianteFragment extends Fragment
     JsonObjectRequest jsonObjectRequest;
 
     int campanada;
+    int cantLexemas;
 
     private OnFragmentInteractionListener mListener;
 
@@ -197,6 +201,21 @@ public class Tipo1EstudianteFragment extends Fragment
         btn_b4 = (Button) view.findViewById(R.id.btn_estudiante_b4);
         btn_b5 = (Button) view.findViewById(R.id.btn_estudiante_b5);
 
+
+        txt_miRespuesta = (TextView) view.findViewById(R.id.txt_estudiante_resultado);
+        btn_responder = (Button) view.findViewById(R.id.btn_estudiante_Responde);
+        btn_responder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (campanada == cantLexemas) {
+                    txt_miRespuesta.setText("CORRECTO");
+                }else{
+                    txt_miRespuesta.setText("INCORRECTO");
+                }
+            }
+        });
+
+
         idEjercicio = getArguments().getInt("idejercicio");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("id Ejercicio: " + idEjercicio);
 
@@ -276,8 +295,10 @@ public class Tipo1EstudianteFragment extends Fragment
 
             }
             textOracion = ejercicioG1.getOracion();
+            cantLexemas = ejercicioG1.getCantidadValida();
 
             String url_lh = Globals.url;
+
             final String rutaImagen = ejercicioG1.getRutaImagen();
 
             urlImagen = "http://" + url_lh + "/proyecto_dconfo/" + rutaImagen;
