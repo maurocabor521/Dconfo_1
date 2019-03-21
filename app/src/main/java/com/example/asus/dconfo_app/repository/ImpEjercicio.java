@@ -34,16 +34,16 @@ public class ImpEjercicio implements Response.Listener<JSONObject>,
     ArrayList<EjercicioG1> listaEjerciciosg1;
     Context context;
     View view;
-    Integer iddocente;
+    Integer idejercicio;
     List<String> listaNombreEjerciciog1;
     List<Integer> listaidEjerciciog1;
 
     StringRequest stringRequest;
 
-    public ImpEjercicio(Context context, View view, Integer iddocente) {
+    public ImpEjercicio(Context context, View view, Integer idejercicio) {
         this.context = context;
         this.view = view;
-        this.iddocente = iddocente;
+        this.idejercicio = idejercicio;
         cargarWebService(context);
     }
 
@@ -53,7 +53,7 @@ public class ImpEjercicio implements Response.Listener<JSONObject>,
         // String ip = getString(R.string.ip);
 
         //String url = "http://192.168.0.13/proyecto_dconfo/wsJSONConsultarListaCursos.php";
-        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjerciciosDocente.php?iddocente=" + iddocente;
+        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarEjercicio.php?idEjercicioG1=" + idejercicio;
         //String url = ip+"ejemploBDRemota/wsJSONConsultarLista.php";
         //reemplazar espacios en blanco del nombre por %20
         url = url.replace(" ", "%20");
@@ -126,23 +126,16 @@ public class ImpEjercicio implements Response.Listener<JSONObject>,
                 }
             });
 
-            //spinner.s
-            //setListaCursos(listaCursos1);
-            // listaDCursos = listaCursos1;
-            // setListadeCursos(listaDCursos);
+
 
             System.out.println("la lista Ejercicios:" + listaNombreEjerciciog1.size());
-//            System.out.println("la lista1:"+listaCursos1.get(0).getNameCurso());
-            // return listaCursos;
-            // CursosAdapter cursosAdapter = new CursosAdapter(listaCursos);
-            // rvListaCursos.setAdapter(cursosAdapter);
-            // getListaCursos();
+
         } catch (JSONException e) {
             e.printStackTrace();
             //Toast.makeText(getContext(), "No se ha podido establecer conexión: " + response.toString(), Toast.LENGTH_LONG).show();
 
         }
-    }
+    }//onResponse
 
   /*  public void setListadeCursos(ArrayList<Curso> listaCursos1) {
         this.listaCursos1 = listaCursos1;
