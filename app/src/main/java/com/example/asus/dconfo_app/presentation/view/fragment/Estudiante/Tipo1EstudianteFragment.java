@@ -88,6 +88,8 @@ public class Tipo1EstudianteFragment extends Fragment
     StringRequest stringRequest;
     JsonObjectRequest jsonObjectRequest;
 
+    int campanada;
+
     private OnFragmentInteractionListener mListener;
 
     public Tipo1EstudianteFragment() {
@@ -126,10 +128,12 @@ public class Tipo1EstudianteFragment extends Fragment
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tipo1_estudiante, container, false);
+
+
         idEjercicio = getArguments().getInt("idejercicio");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("id Ejercicio: " + idEjercicio);
 
-        iv_imagen = (ImageView)view.findViewById(R.id.iv_estudiante_tipo1);
+        iv_imagen = (ImageView) view.findViewById(R.id.iv_estudiante_tipo1);
         mSeekBarPitch = (SeekBar) view.findViewById(R.id.seek_bar_pitch_estudiante);
         mSeekBarSpeed = (SeekBar) view.findViewById(R.id.seek_bar_speed_estudiante);
 
@@ -162,7 +166,31 @@ public class Tipo1EstudianteFragment extends Fragment
 
         iv_imagen = (ImageView) view.findViewById(R.id.iv_estudiante_tipo1);
 
+        campanada = 0;
+
         btn_bell = (Button) view.findViewById(R.id.btn_estudiante_bell);
+        btn_bell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                campanada++;
+                if (campanada == 1) {
+                    System.out.println("campanada :" + campanada);
+                    btn_b1.setBackground(getResources().getDrawable(R.drawable.selec));
+                }
+                if (campanada == 2) {
+                    System.out.println("campanada :" + campanada);
+                    btn_b2.setBackground(getResources().getDrawable(R.drawable.selec));
+                }
+                if (campanada == 3) {
+                    System.out.println("campanada :" + campanada);
+                    btn_b3.setBackground(getResources().getDrawable(R.drawable.selec));
+                }
+                if (campanada == 4) {
+                    System.out.println("campanada :" + campanada);
+                    btn_b4.setBackground(getResources().getDrawable(R.drawable.selec));
+                }
+            }
+        });
         btn_b1 = (Button) view.findViewById(R.id.btn_estudiante_b1);
         btn_b2 = (Button) view.findViewById(R.id.btn_estudiante_b2);
         btn_b3 = (Button) view.findViewById(R.id.btn_estudiante_b3);
@@ -252,7 +280,7 @@ public class Tipo1EstudianteFragment extends Fragment
             String url_lh = Globals.url;
             final String rutaImagen = ejercicioG1.getRutaImagen();
 
-            urlImagen = "http://" +url_lh + "/proyecto_dconfo/" + rutaImagen;
+            urlImagen = "http://" + url_lh + "/proyecto_dconfo/" + rutaImagen;
             urlImagen = urlImagen.replace(" ", "%20");
 
             ImageRequest imageRequest = new ImageRequest(urlImagen, new Response.Listener<Bitmap>() {
@@ -266,43 +294,11 @@ public class Tipo1EstudianteFragment extends Fragment
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(getContext(), "Error al cargar la imagen", Toast.LENGTH_SHORT).show();
-                    System.out.println("ruta imagen: "+urlImagen);
+                    System.out.println("ruta imagen: " + urlImagen);
                 }
             });
             VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(imageRequest);
-            //iv_imagen.setBackground();
 
-         /*   Spinner spinner = (Spinner) this.view.findViewById(R.id.sp_Ejercicios_asignar);
-            listaNombreEjerciciog1 = new ArrayList<>();
-            listaidEjerciciog1 = new ArrayList<>();*/
-            //listaNombreEjerciciog1.add(" ");
-
-       /*     for (int i = 0; i < listaDEjerciciosg1.size(); i++) {
-
-                listaNombreEjerciciog1.add(String.valueOf(listaDEjerciciosg1.get(i).getNameEjercicio()));
-                listaidEjerciciog1.add(listaDEjerciciosg1.get(i).getIdEjercicio());
-
-                System.out.println("Ejercicio:" + i + listaDEjerciciosg1.get(i).getIdEjercicio());
-            }*/
-         /*   ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listaNombreEjerciciog1);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(adapter);
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    System.out.println("ejericio seleccionado: "+listaNombreEjerciciog1.get(position));
-                    AsignarEstudianteDeberActivity asignarEstudianteDeberActivity=new AsignarEstudianteDeberActivity();
-                    //asignarEstudianteDeberActivity.
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });*/
-
-
-            // System.out.println("la lista Ejercicios:" + listaNombreEjerciciog1.size());
 
         } catch (JSONException e) {
             e.printStackTrace();
