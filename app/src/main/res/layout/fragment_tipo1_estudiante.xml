@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_margin="20dp"
+    android:orientation="vertical"
     tools:context=".presentation.view.fragment.Estudiante.Tipo1EstudianteFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -23,13 +23,14 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/iv_imagen_muestra"
+                android:id="@+id/iv_estudiante_tipo1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:background="@drawable/panda" />
 
             <Button
+                android:id="@+id/btn_estudiante_bell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -45,7 +46,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btn_tipo1_textToS"
+                android:id="@+id/btn_estudiante_tipo1_textToS"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -104,26 +105,31 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/btn_estudiante_b1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_square_30dp" />
 
                 <Button
+                    android:id="@+id/btn_estudiante_b2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_square_30dp" />
 
                 <Button
+                    android:id="@+id/btn_estudiante_b3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_square_30dp" />
 
                 <Button
+                    android:id="@+id/btn_estudiante_b4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_square_30dp" />
 
                 <Button
+                    android:id="@+id/btn_estudiante_b5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_square_30dp" />

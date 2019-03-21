@@ -3,13 +3,20 @@ package com.example.asus.dconfo_app.presentation.view.fragment.Estudiante;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.SeekBar;
 
 import com.example.asus.dconfo_app.R;
+
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +35,20 @@ public class Tipo1EstudianteFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private int idEjercicio=0;
+    private int idEjercicio = 0;
+
+    private ImageView iv_imagen;
+    private Button btn_bell;
+    private Button mButtonSpeak;
+    private Button btn_b1;
+    private Button btn_b2;
+    private Button btn_b3;
+    private Button btn_b4;
+    private Button btn_b5;
+    private TextToSpeech mTTS;
+
+    private SeekBar mSeekBarPitch;
+    private SeekBar mSeekBarSpeed;
 
     private OnFragmentInteractionListener mListener;
 
@@ -67,11 +87,65 @@ public class Tipo1EstudianteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_tipo1_estudiante, container, false);
-        idEjercicio=getArguments().getInt("idejercicio");
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle( "id Ejercicio: " + idEjercicio);
+        View view = inflater.inflate(R.layout.fragment_tipo1_estudiante, container, false);
+        idEjercicio = getArguments().getInt("idejercicio");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("id Ejercicio: " + idEjercicio);
+
+        mButtonSpeak = (Button) view.findViewById(R.id.btn_estudiante_tipo1_textToS);
+        mButtonSpeak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //speak();
+            }
+        });
+
+        mTTS = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    //int result = mTTS.setLanguage(Locale.getDefault());
+                    int result = mTTS.setLanguage(new Locale("spa", "ESP"));
+
+                    if (result == TextToSpeech.LANG_MISSING_DATA
+                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "Language not supported");
+                    } else {
+                        // mButtonSpeak.setEnabled(true);
+                    }
+                } else {
+                    Log.e("TTS", "Initialization failed");
+                }
+            }
+        });
+
+        iv_imagen = (ImageView) view.findViewById(R.id.iv_estudiante_tipo1);
+
+        btn_bell = (Button) view.findViewById(R.id.btn_estudiante_bell);
+        btn_b1 = (Button) view.findViewById(R.id.btn_estudiante_b1);
+        btn_b2 = (Button) view.findViewById(R.id.btn_estudiante_b2);
+        btn_b3 = (Button) view.findViewById(R.id.btn_estudiante_b3);
+        btn_b4 = (Button) view.findViewById(R.id.btn_estudiante_b4);
+        btn_b5 = (Button) view.findViewById(R.id.btn_estudiante_b5);
+
+        idEjercicio = getArguments().getInt("idejercicio");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("id Ejercicio: " + idEjercicio);
+
         return view;
     }
+
+    private void speak() {
+        // String text = edt_OrtacionEjercicio.getText().toString();
+        float pitch = (float) mSeekBarPitch.getProgress() / 50;
+        if (pitch < 0.1) pitch = 0.1f;
+        float speed = (float) mSeekBarSpeed.getProgress() / 50;
+        if (speed < 0.1) speed = 0.1f;
+
+        mTTS.setPitch(pitch);
+        mTTS.setSpeechRate(speed);
+
+        // mTTS.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

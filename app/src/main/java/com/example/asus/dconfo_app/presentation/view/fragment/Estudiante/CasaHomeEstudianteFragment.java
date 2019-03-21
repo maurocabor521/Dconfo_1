@@ -93,7 +93,7 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_casa_home_estudiante, container, false);
+        View view = inflater.inflate(R.layout.fragment_casa_home_estudiante, container, false);
         listaDeberes = new ArrayList<>();
 
         rv_misDeberes = (RecyclerView) view.findViewById(R.id.rcv_EstudianteListaDeberes_CHE);
@@ -106,6 +106,7 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
         cargarWebService();
         return view;
     }
+
     private void cargarWebService() {
 
         String url_lh = Globals.url;
@@ -141,7 +142,7 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
         DeberEstudiante deberEstudiante = null;
         JSONArray json = response.optJSONArray("deber");
 
-        try{
+        try {
             for (int i = 0; i < json.length(); i++) {
                 deberEstudiante = new DeberEstudiante();
                 JSONObject jsonObject = null;
@@ -157,31 +158,43 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
                 @Override
                 public void onClick(View v) {
                     Log.i("size", "lista: " + listaDeberes.size());
-                    int ejerpos = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio();
-                    String ejertipo = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getTipoDeber();
+                    int ejerpos1 = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio();
+                    int ejerpos2 = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio2();
+
+                    String tipo1 = String.valueOf(ejerpos1);
+                    String tipo2 = String.valueOf(ejerpos2);
+
+                    int ejertipo = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio();
                     Tipo1EstudianteFragment tipo1EstudianteFragment = new Tipo1EstudianteFragment();
 
                     Bundle bundle = new Bundle();
-                    bundle.putInt("idejercicio", ejerpos);
+                    if (!tipo1.equals("NULL")) {
+                        bundle.putInt("idejercicio", ejerpos1);
+                        Log.i("tipo1 :", tipo1);
+                    } else if (!tipo2.equals("NULL")) {
+                        bundle.putInt("idejercicio", ejerpos1);
+                        Log.i("tipo2 :", tipo2);
+                    }
 
+
+                    // if (ejertipo == "tipo1") {
                     tipo1EstudianteFragment.setArguments(bundle);
                     getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo1EstudianteFragment)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .addToBackStack(null).commit();
+                   /* } else {
+                        Toast.makeText(getContext(), "no es tipo1"+ejertipo, Toast.LENGTH_LONG).show();
+                    }*/
                 }
             });
 
             rv_misDeberes.setAdapter(deberesEstudianteAdapter);
 
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }//catch
 
     }//onResponse
-
-
-
-
 
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -207,8 +220,6 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
         super.onDetach();
         mListener = null;
     }
-
-
 
 
     /**
