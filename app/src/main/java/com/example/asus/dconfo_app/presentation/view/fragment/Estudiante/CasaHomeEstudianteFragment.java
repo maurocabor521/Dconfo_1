@@ -111,7 +111,8 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
 
         String url_lh = Globals.url;
         String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaDeberesEst.php?estudiante_idestudiante="
-                + idestudiante + "&docente_iddocente=" + 220;
+                + idestudiante ;
+               // + idestudiante + "&docente_iddocente=" + 220;
 
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
 
