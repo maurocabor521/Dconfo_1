@@ -1,15 +1,36 @@
 package com.example.asus.dconfo_app.presentation.view.fragment.docente.tipoFragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.domain.model.VolleySingleton;
+import com.example.asus.dconfo_app.helpers.Globals;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,9 +50,36 @@ public class Tipo2Fragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private EditText edt_name_ejer;
+    private EditText edt_oracion;
+    private EditText edt_cant_lexemas;
+    private Button btn_crear_tipo2;
+
+    private LinearLayout ll_muestra;
+
+    private Button btn_C1;
+    private Button btn_C2;
+    private Button btn_C3;
+    private Button btn_C4;
+    private Button btn_C5;
+
+    private TextToSpeech mTTS;
+    private Button btn_escuchar_oracion;
+    private SeekBar mSeekBarPitch;
+    private SeekBar mSeekBarSpeed;
+
+    //RequestQueue request;
+    JsonObjectRequest jsonObjectRequest;
+    StringRequest stringRequest;
+
+    ProgressDialog progreso;
+
+    private String nameDocente;
+    private int idDocente;
+
     private OnFragmentInteractionListener mListener;
 
-    public static Tipo2Fragment getInstance(){
+    public static Tipo2Fragment getInstance() {
         return new Tipo2Fragment();
     }
 
@@ -70,10 +118,144 @@ public class Tipo2Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_tipo2, container, false);
+        View view = inflater.inflate(R.layout.fragment_tipo2, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.home_tipo2);
+
+        nameDocente = getArguments().getString("namedocente");
+        idDocente = getArguments().getInt("iddocente");
+
+        edt_oracion = (EditText) view.findViewById(R.id.edt_docente_tipo2_oracion);
+        edt_cant_lexemas = (EditText) view.findViewById(R.id.edt_docente_tipo2_cant_lex_corr);
+        edt_name_ejer = (EditText) view.findViewById(R.id.edt_docente_tipo2_nombreE);
+
+        ll_muestra = (LinearLayout) view.findViewById(R.id.ll_docente_tipo2);
+
+        btn_C1 = (Button) view.findViewById(R.id.btn_docente_tipo2_casilla1);
+        btn_C2 = (Button) view.findViewById(R.id.btn_docente_tipo2_casilla2);
+        btn_C3 = (Button) view.findViewById(R.id.btn_docente_tipo2_casilla3);
+        btn_C4 = (Button) view.findViewById(R.id.btn_docente_tipo2_casilla4);
+        btn_C5 = (Button) view.findViewById(R.id.btn_docente_tipo2_casilla5);
+
+        mSeekBarPitch = (SeekBar) view.findViewById(R.id.docente_seek_bar_pitch);
+        mSeekBarSpeed = (SeekBar) view.findViewById(R.id.docente_seek_bar_speed);
+
+        btn_escuchar_oracion = (Button) view.findViewById(R.id.btn_docente_escuchar_tipo2);
+        btn_escuchar_oracion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //speak();
+            }
+        });
+
+        mTTS = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    //int result = mTTS.setLanguage(Locale.getDefault());
+                    int result = mTTS.setLanguage(new Locale("spa", "ESP"));
+
+                    if (result == TextToSpeech.LANG_MISSING_DATA
+                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "Language not supported");
+                    } else {
+                        // mButtonSpeak.setEnabled(true);
+                    }
+                } else {
+                    Log.e("TTS", "Initialization failed");
+                }
+            }
+        });
+
+        btn_crear_tipo2 = (Button) view.findViewById(R.id.btn_docente_tipo2_send_EjerT2);
+        btn_crear_tipo2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cargarWebService();
+            }
+        });
+
         return view;
     }
+
+    private void speak() {
+        // String text = edt_OrtacionEjercicio.getText().toString();
+        float pitch = (float) mSeekBarPitch.getProgress() / 50;
+        if (pitch < 0.1) pitch = 0.1f;
+        float speed = (float) mSeekBarSpeed.getProgress() / 50;
+        if (speed < 0.1) speed = 0.1f;
+
+        mTTS.setPitch(pitch);
+        mTTS.setSpeechRate(speed);
+
+        // mTTS.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+    }
+
+    private void cargarWebService() {
+        progreso = new ProgressDialog(getContext());
+        progreso.setMessage("Cargando...");
+        progreso.show();
+        String ip = Globals.url;
+        String url = "http://" + ip + "/proyecto_dconfo/wsJSONRegistroTipo2.php";//p12.buena
+
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto
+                progreso.hide();
+                if (response.trim().equalsIgnoreCase("registra")) {
+                    edt_cant_lexemas.setText("");
+                    edt_name_ejer.setText("");
+                    // edt_oracion.setText("");
+                    ll_muestra.setVisibility(View.VISIBLE);
+
+                    Toast.makeText(getContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "No se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "No se ha podido conectar", Toast.LENGTH_LONG).show();
+                String ERROR = "error";
+                Log.d(ERROR, error.toString());
+                System.out.println("error" + error.toString());
+                progreso.hide();
+            }
+        }) {//enviar para metros a webservice, mediante post
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //String idejercicio = edt_CodigoEjercicio.getText().toString();
+                //String idejercicio = "";
+                String nameejercicio = edt_name_ejer.getText().toString();
+                String iddocente = String.valueOf(idDocente);
+                String idactividad = "2";
+                String idtipo = "4";
+                // String imagen = convertirImgString(bitmap);
+                //System.out.println("dconfo imagen: " + imagen);
+                String cantidadValida = edt_cant_lexemas.getText().toString();
+                String oracion = edt_oracion.getText().toString();
+                //System.out.println("cantidadvalida"+cantidadValida);
+                //System.out.println("oracion"+oracion);
+
+                Map<String, String> parametros = new HashMap<>();
+                // parametros.put("idEjercicio", idejercicio);
+                parametros.put("nameEjercicio", nameejercicio);
+                parametros.put("docente_iddocente", iddocente);
+                parametros.put("Actividad_idActividad", idactividad);
+                parametros.put("Tipo_idTipo", idtipo);
+                //parametros.put("imagen", imagen);
+                parametros.put("cantidadValidaEG1", cantidadValida);
+                parametros.put("oracion", oracion);
+                // parametros.put("imagen", imagen);
+
+                return parametros;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(stringRequest);//p21
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

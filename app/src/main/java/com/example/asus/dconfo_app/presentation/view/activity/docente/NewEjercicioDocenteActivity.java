@@ -80,7 +80,14 @@ public class NewEjercicioDocenteActivity extends AppCompatActivity implements
                         //Toast.makeText(getApplicationContext(), "Ejercicio Nuevo", Toast.LENGTH_LONG).show();
                         break;
                     case R.id.bott_tipo2_CED:
+
+                        Bundle args2 = new Bundle();
+                        args2.putString("namedocente", nameDocente);
+                        args2.putInt("iddocente", idDocente);
+
                         tipo2Fragment = new Tipo2Fragment();
+                        tipo2Fragment.setArguments(args2);
+
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_Tipos_CED, tipo2Fragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();

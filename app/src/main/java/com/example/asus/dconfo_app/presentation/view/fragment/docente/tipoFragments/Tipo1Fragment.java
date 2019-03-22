@@ -151,6 +151,7 @@ public class Tipo1Fragment extends Fragment {
 
         nameDocente=getArguments().getString("namedocente");
         idDocente=getArguments().getInt("iddocente");
+
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Docente Tipo 1: "+nameDocente);
 
         ll_tipo_ejercicio=(LinearLayout)view.findViewById(R.id.ll_tipo_muestra_ejercicio);
