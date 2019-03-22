@@ -74,6 +74,8 @@ public class Tipo2Fragment extends Fragment {
 
     ProgressDialog progreso;
 
+    private Integer cantPulsada;
+
     private String nameDocente;
     private int idDocente;
 
@@ -121,6 +123,8 @@ public class Tipo2Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tipo2, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.home_tipo2);
 
+        cantPulsada = 0;
+
         nameDocente = getArguments().getString("namedocente");
         idDocente = getArguments().getInt("iddocente");
 
@@ -131,10 +135,55 @@ public class Tipo2Fragment extends Fragment {
         ll_muestra = (LinearLayout) view.findViewById(R.id.ll_docente_tipo2);
 
         btn_C1 = (Button) view.findViewById(R.id.btn_docente_tipo2_casilla1);
+        btn_C1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cantPulsada++;
+                System.out.println("cantidad pulsada C1: " + cantPulsada);
+                btn_C1.setBackground(null);
+                btn_C1.setBackground(getResources().getDrawable(R.drawable.selec));
+            }
+        });
         btn_C2 = (Button) view.findViewById(R.id.btn_docente_tipo2_casilla2);
+        btn_C2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cantPulsada++;
+                System.out.println("cantidad pulsada C2: " + cantPulsada);
+                btn_C2.setBackground(null);
+                btn_C2.setBackground(getResources().getDrawable(R.drawable.selec));
+            }
+        });
         btn_C3 = (Button) view.findViewById(R.id.btn_docente_tipo2_casilla3);
+        btn_C3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cantPulsada++;
+                System.out.println("cantidad pulsada C3: " + cantPulsada);
+                btn_C3.setBackground(null);
+                btn_C3.setBackground(getResources().getDrawable(R.drawable.selec));
+            }
+        });
         btn_C4 = (Button) view.findViewById(R.id.btn_docente_tipo2_casilla4);
+        btn_C4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cantPulsada++;
+                System.out.println("cantidad pulsada C4: " + cantPulsada);
+                btn_C4.setBackground(null);
+                btn_C4.setBackground(getResources().getDrawable(R.drawable.selec));
+            }
+        });
         btn_C5 = (Button) view.findViewById(R.id.btn_docente_tipo2_casilla5);
+        btn_C5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cantPulsada++;
+                System.out.println("cantidad pulsada C5: " + cantPulsada);
+                btn_C5.setBackground(null);
+                btn_C5.setBackground(getResources().getDrawable(R.drawable.selec));
+            }
+        });
 
         mSeekBarPitch = (SeekBar) view.findViewById(R.id.docente_seek_bar_pitch);
         mSeekBarSpeed = (SeekBar) view.findViewById(R.id.docente_seek_bar_speed);
@@ -143,7 +192,7 @@ public class Tipo2Fragment extends Fragment {
         btn_escuchar_oracion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //speak();
+                speak();
             }
         });
 
@@ -178,7 +227,7 @@ public class Tipo2Fragment extends Fragment {
     }
 
     private void speak() {
-        // String text = edt_OrtacionEjercicio.getText().toString();
+        String text = edt_oracion.getText().toString();
         float pitch = (float) mSeekBarPitch.getProgress() / 50;
         if (pitch < 0.1) pitch = 0.1f;
         float speed = (float) mSeekBarSpeed.getProgress() / 50;
@@ -187,7 +236,7 @@ public class Tipo2Fragment extends Fragment {
         mTTS.setPitch(pitch);
         mTTS.setSpeechRate(speed);
 
-        // mTTS.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        mTTS.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     private void cargarWebService() {
