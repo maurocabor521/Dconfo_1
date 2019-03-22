@@ -21,6 +21,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.DeberEstudiante;
+import com.example.asus.dconfo_app.domain.model.EjercicioG1;
+import com.example.asus.dconfo_app.domain.model.Estudiante;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
 import com.example.asus.dconfo_app.presentation.view.adapter.DeberesEstudianteAdapter;
@@ -55,6 +57,11 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
     int idestudiante = 0;
     JsonObjectRequest jsonObjectRequest;
     ArrayList<DeberEstudiante> listaDeberes;
+    ArrayList<EjercicioG1> listaEjercicios;
+
+    private int idEjercicio;
+
+    JSONArray jsonArray1;
 
     private OnFragmentInteractionListener mListener;
 
@@ -104,17 +111,23 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
         idestudiante = getArguments().getInt("idEstudiante");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Estudiante Home: " + nameestudiante + "id: " + idestudiante);
         cargarWebService();
+       // cargarWebService1();
+
         return view;
     }
 
     private void cargarWebService() {
 
         String url_lh = Globals.url;
+
         String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaDeberesEst.php?estudiante_idestudiante="
-                + idestudiante ;
-               // + idestudiante + "&docente_iddocente=" + 220;
+                + idestudiante;
+     /*   String url1 = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarEjercicio.php?estudiante_idestudiante="
+                + idEjercicio;*/
+        // + idestudiante + "&docente_iddocente=" + 220;
 
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        //jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url1, null, this, this);
 
         final int MY_DEFAULT_TIMEOUT = 15000;
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
@@ -140,8 +153,14 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
     public void onResponse(JSONObject response) {
 
         Toast.makeText(getContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
+
         DeberEstudiante deberEstudiante = null;
+        EjercicioG1 ejercicioG1 = null;
+
         JSONArray json = response.optJSONArray("deber");
+
+        jsonArray1 = response.optJSONArray("ejerciciog1");
+
 
         try {
             for (int i = 0; i < json.length(); i++) {
@@ -154,13 +173,48 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
                 deberEstudiante.setTipoDeber(jsonObject.optString("tipoDeber"));
                 listaDeberes.add(deberEstudiante);
             }
+          /* for (int i = 0; i < jsonArray1.length(); i++) {
+                ejercicioG1 = new EjercicioG1();
+                JSONObject jsonObject = null;
+                jsonObject = jsonArray1.getJSONObject(i);
+                // jsonObject = new JSONObject(response);
+                ejercicioG1.setIdTipo(jsonObject.optInt("Tipo_idTipo"));
+
+                listaEjercicios.add(ejercicioG1);
+            }*/
+
+           // System.out.println("id tipo: "+ejercicioG1.getIdTipo());
+
+
             DeberesEstudianteAdapter deberesEstudianteAdapter = new DeberesEstudianteAdapter(listaDeberes);
             deberesEstudianteAdapter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+
                     Log.i("size", "lista: " + listaDeberes.size());
                     int ejerpos1 = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio();
                     int ejerpos2 = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio2();
+
+                    idEjercicio = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio();
+                   // cargarWebService1();
+
+
+               /*     try {
+
+                        for (int i = 0; i < jsonArray1.length(); i++) {
+                            ejercicioG1 = new EjercicioG1();
+                            JSONObject jsonObject = null;
+                            jsonObject = jsonArray1.getJSONObject(i);
+                            // jsonObject = new JSONObject(response);
+                            ejercicioG1.setIdTipo(jsonObject.optInt("Tipo_idTipo"));
+
+                            listaEjercicios.add(ejercicioG1);
+                        }
+                    } catch (JSONException e1) {
+
+                    }*/
+
 
                     String tipo1 = String.valueOf(ejerpos1);
                     String tipo2 = String.valueOf(ejerpos2);
@@ -195,7 +249,30 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
             e.printStackTrace();
         }//catch
 
+
     }//onResponse
+
+
+    private void cargarWebService1() {
+
+        String url_lh = Globals.url;
+        idEjercicio=27;
+        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarEjercicio.php?idEjercicioG1="
+                + idEjercicio;
+        // + idestudiante + "&docente_iddocente=" + 220;
+
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+
+        final int MY_DEFAULT_TIMEOUT = 15000;
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_DEFAULT_TIMEOUT,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        // request.add(jsonObjectRequest);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);//p21
+        Toast.makeText(getContext(), "ejercicio a buscar", Toast.LENGTH_LONG).show();
+    }
 
 
     // TODO: Rename method, update argument and hook method into UI event
