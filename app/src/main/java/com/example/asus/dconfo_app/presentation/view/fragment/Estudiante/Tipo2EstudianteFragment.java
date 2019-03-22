@@ -3,11 +3,17 @@ package com.example.asus.dconfo_app.presentation.view.fragment.Estudiante;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.SeekBar;
 
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
 
 /**
@@ -27,6 +33,24 @@ public class Tipo2EstudianteFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private TextToSpeech mTTS;
+    private SeekBar mSeekBarPitch;
+    private SeekBar mSeekBarSpeed;
+
+    private Button mButtonSpeak;
+    private Button btn_b1;
+    private Button btn_b2;
+    private Button btn_b3;
+    private Button btn_b4;
+    private Button btn_b5;
+    private Button btn_responder;
+
+    private int idEjercicio;
+    private int cantLexemas;
+
+    StringRequest stringRequest;
+    JsonObjectRequest jsonObjectRequest;
 
     private OnFragmentInteractionListener mListener;
 
@@ -67,6 +91,78 @@ public class Tipo2EstudianteFragment extends Fragment {
         // Inflate the layout for this fragment
         View view;
         view = inflater.inflate(R.layout.fragment_tipo2_estudiante, container, false);
+
+        cantLexemas = 0;
+
+        idEjercicio = getArguments().getInt("idejercicio");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("id Ejercicio: " + idEjercicio);
+
+        mSeekBarPitch = (SeekBar) view.findViewById(R.id.estudiante_seek_bar_pitch);
+        mSeekBarSpeed = (SeekBar) view.findViewById(R.id.estudiante_seek_bar_speed);
+
+        mButtonSpeak = (Button) view.findViewById(R.id.btn_estudiante_escuchar_tipo2);
+        mButtonSpeak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //speak();
+            }
+        });
+
+        btn_b1 = (Button) view.findViewById(R.id.btn_estudiante_tipo2_casilla1);
+        btn_b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_b1.setBackground(null);
+                btn_b1.setBackground(getResources().getDrawable(R.drawable.selec));
+                cantLexemas++;
+                System.out.println("cant lex c1: " + cantLexemas);
+            }
+        });
+
+        btn_b2 = (Button) view.findViewById(R.id.btn_estudiante_tipo2_casilla2);
+        btn_b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_b2.setBackground(null);
+                btn_b2.setBackground(getResources().getDrawable(R.drawable.selec));
+                cantLexemas++;
+                System.out.println("cant lex c2: " + cantLexemas);
+            }
+        });
+
+        btn_b3 = (Button) view.findViewById(R.id.btn_estudiante_tipo2_casilla3);
+        btn_b3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_b3.setBackground(null);
+                btn_b3.setBackground(getResources().getDrawable(R.drawable.selec));
+                cantLexemas++;
+                System.out.println("cant lex c3: " + cantLexemas);
+            }
+        });
+
+        btn_b4 = (Button) view.findViewById(R.id.btn_estudiante_tipo2_casilla4);
+        btn_b4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_b4.setBackground(null);
+                btn_b4.setBackground(getResources().getDrawable(R.drawable.selec));
+                cantLexemas++;
+                System.out.println("cant lex c4: " + cantLexemas);
+            }
+        });
+
+        btn_b5 = (Button) view.findViewById(R.id.btn_estudiante_tipo2_casilla5);
+        btn_b5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_b5.setBackground(null);
+                btn_b5.setBackground(getResources().getDrawable(R.drawable.selec));
+                cantLexemas++;
+                System.out.println("cant lex c5: " + cantLexemas);
+            }
+        });
+
         return view;
     }
 

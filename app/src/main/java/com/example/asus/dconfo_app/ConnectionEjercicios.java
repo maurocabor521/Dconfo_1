@@ -93,6 +93,7 @@ public class ConnectionEjercicios implements Response.Listener<JSONObject>,
                 jsonObject = json.getJSONObject(i);
                 ejercicioG1.setNameEjercicio(jsonObject.optString("nameEjercicioG1"));
                 ejercicioG1.setIdEjercicio(jsonObject.optInt("idEjercicioG1"));
+                ejercicioG1.setIdTipo(jsonObject.optInt("Tipo_idTipo"));
 
                 listaDEjerciciosg1.add(ejercicioG1);
 

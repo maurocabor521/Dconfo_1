@@ -166,7 +166,7 @@ public class HomeTiposFragment extends Fragment implements Response.Listener<JSO
        // Toast.makeText(getContext(), "No se puede cone , grupo doc" + error.toString(), Toast.LENGTH_LONG).show();
         System.out.println();
         Log.d("ERROR", error.toString());
-        progreso.hide();
+       // progreso.hide();
     }
 
     // si esta bien el llamado a la url entonces entra a este metodo
