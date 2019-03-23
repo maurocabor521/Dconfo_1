@@ -189,7 +189,7 @@ public class Tipo2EstudianteFragment extends Fragment {
             }
         });
 
-        btn_responder = (Button) view.findViewById(R.id.btn_docente_tipo2_send_EjerT2);
+        btn_responder = (Button) view.findViewById(R.id.btn_estudiante_tipo2_enviar_respuesta);
         btn_responder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
