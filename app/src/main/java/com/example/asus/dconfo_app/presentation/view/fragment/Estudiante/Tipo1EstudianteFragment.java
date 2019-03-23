@@ -209,7 +209,7 @@ public class Tipo1EstudianteFragment extends Fragment
             public void onClick(View v) {
                 if (campanada == cantLexemas) {
                     txt_miRespuesta.setText("CORRECTO");
-                }else{
+                } else {
                     txt_miRespuesta.setText("INCORRECTO");
                 }
             }

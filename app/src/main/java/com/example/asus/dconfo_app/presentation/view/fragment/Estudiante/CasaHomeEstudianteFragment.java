@@ -221,6 +221,7 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
 
                     int ejertipo = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio();
                     Tipo1EstudianteFragment tipo1EstudianteFragment = new Tipo1EstudianteFragment();
+                    InicioEjercicioFragment inicioEjercicioFragment=new InicioEjercicioFragment();
 
                     Bundle bundle = new Bundle();
                     if (!tipo1.equals("NULL")) {
@@ -234,7 +235,9 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
 
                     // if (ejertipo == "tipo1") {
                     tipo1EstudianteFragment.setArguments(bundle);
-                    getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo1EstudianteFragment)
+                    inicioEjercicioFragment.setArguments(bundle);
+                   // getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo1EstudianteFragment)
+                    getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, inicioEjercicioFragment)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .addToBackStack(null).commit();
                    /* } else {
