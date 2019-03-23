@@ -6,15 +6,19 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
+
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +52,8 @@ public class Tipo2EstudianteFragment extends Fragment {
 
     private int idEjercicio;
     private int cantLexemas;
+    private int cantLexemas_bundle;
+    private String oracion;
 
     StringRequest stringRequest;
     JsonObjectRequest jsonObjectRequest;
@@ -92,9 +98,10 @@ public class Tipo2EstudianteFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_tipo2_estudiante, container, false);
 
-        cantLexemas = 0;
-
         idEjercicio = getArguments().getInt("idejercicio");
+        cantLexemas_bundle = getArguments().getInt("cantLexemas");
+        oracion = getArguments().getString("oracion");
+
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("id Ejercicio: " + idEjercicio);
 
         mSeekBarPitch = (SeekBar) view.findViewById(R.id.estudiante_seek_bar_pitch);
@@ -104,7 +111,7 @@ public class Tipo2EstudianteFragment extends Fragment {
         mButtonSpeak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //speak();
+                speak();
             }
         });
 
@@ -163,7 +170,53 @@ public class Tipo2EstudianteFragment extends Fragment {
             }
         });
 
+        mTTS = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    //int result = mTTS.setLanguage(Locale.getDefault());
+                    int result = mTTS.setLanguage(new Locale("spa", "ESP"));
+
+                    if (result == TextToSpeech.LANG_MISSING_DATA
+                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "Language not supported");
+                    } else {
+                        // mButtonSpeak.setEnabled(true);
+                    }
+                } else {
+                    Log.e("TTS", "Initialization failed");
+                }
+            }
+        });
+
+        btn_responder = (Button) view.findViewById(R.id.btn_docente_tipo2_send_EjerT2);
+        btn_responder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cantLexemas == cantLexemas_bundle) {
+                    Toast.makeText(getContext(), "CORRECTO", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "INCORRECTO", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
         return view;
+    }
+
+    private void speak() {
+        // String text = edt_OrtacionEjercicio.getText().toString();
+        //String text = edt_OrtacionEjercicio.getText().toString();
+        float pitch = (float) mSeekBarPitch.getProgress() / 50;
+        if (pitch < 0.1) pitch = 0.1f;
+        float speed = (float) mSeekBarSpeed.getProgress() / 50;
+        if (speed < 0.1) speed = 0.1f;
+
+        mTTS.setPitch(pitch);
+        mTTS.setSpeechRate(speed);
+
+        mTTS.speak(oracion, TextToSpeech.QUEUE_FLUSH, null);
+        System.out.println("oración: " + oracion);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
