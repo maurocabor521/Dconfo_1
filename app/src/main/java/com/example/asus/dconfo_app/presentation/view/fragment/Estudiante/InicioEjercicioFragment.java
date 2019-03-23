@@ -105,6 +105,7 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("id Ejercicio: " + idEjercicio);
 
         txt_nameEjercicio = (TextView) view.findViewById(R.id.txt_estudiante_nombreEjercicio);
+        txt_nameEjercicio.setText("id Ejercicio: " + idEjercicio);
 
         btn_iniciarEjercicio = (Button) view.findViewById(R.id.btn_estudiante_iniciar_ejer);
         btn_iniciarEjercicio.setOnClickListener(new View.OnClickListener() {
@@ -179,6 +180,8 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
             int tipoEjercicio = ejercicioG1.getIdTipo();
             String oracion = ejercicioG1.getOracion();
             int cantLexemas = ejercicioG1.getCantidadValida();
+
+
 
             System.out.println("el tipoEjercicio: " + tipoEjercicio);
 
