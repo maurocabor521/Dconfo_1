@@ -13,17 +13,22 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.domain.model.Curso;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +37,8 @@ public class AsignarEstudianteDeberActivity extends AppCompatActivity {
     EditText edt_idEjercicio;
     Button btn_asignar;
     ProgressDialog progreso;
+    ArrayList<Curso> listaCursos1;
+
 
     //******** CONEXIÓN CON WEBSERVICE
     //RequestQueue request;
@@ -65,66 +72,88 @@ public class AsignarEstudianteDeberActivity extends AppCompatActivity {
 
             }
         });
+        listarCursos();
 
     }
 
     //***********************************
-    public void btnAceptar(View view) {
+    public void listarCursos() {
         // final String usuario = etUsuario.getText().toString();
         // final String password = etPass.getText().toString();
 
         // INICIAR LA CONEXION CON VOLLEY
-        String url_lh = Globals.url;
-        String url =
-                //"http://192.168.0.13/proyecto_dconfo/wsJSONCrearCurso.php?";
-                "http://" + url_lh + "/proyecto_dconfo/wsJSONAsignarDeberEstudiante.php?";
-        StringRequest request = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // SE EJECUTA CUANDO LA CONSULTA SALIO BIEN, SIN ERRORES
-                        if (response.equals("0")) {
-                            // Toast.makeText(MainActivity.this, "Datos de usuario incorrecto...", Toast.LENGTH_SHORT).show();
-                        } else {
-                            try {
-                                System.out.println("RESPUESTA DE SERVIDOR : " + response);
-                                // Toast.makeText(MainActivity.this, response, Toast.LENGTH_LONG).show();
-                                JSONArray jsonArray = new JSONArray(response);
-                                // OBTENEMOS LOS DATOS QUE DEVUELVE EL SERVIDOR
-                                String nombre = jsonArray.getJSONObject(0).getString("nombre");
-                                String DNI = jsonArray.getJSONObject(0).getString("dni");
-                                String sexo = jsonArray.getJSONObject(0).getString("sexo");
 
-                                // ABRIMOS UNA NUEVA ACTIVITY Y MANDAMOS LOS DATOS QUE SE VAN A MOSTRAR
-                              /*  Intent intent = new Intent(MainActivity.this, PresentacionLayout.class);
-                                intent.putExtra("nombre", nombre);
-                                intent.putExtra("dni", DNI);
-                                intent.putExtra("sexo", sexo);
-                                startActivity(intent);*/
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+        String url_lh = Globals.url;
+        // String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEstudiantesGrupoDocente.php?";
+        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaCursos.php";
+
+        //jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, this, this);
+        //VolleySingleton.getIntanciaVolley(getApplicationContext()).addToRequestQueue(jsonObjectRequest);//p21
+
+        //RequestQueu requestQueue = Volley.newRequestQueue(mContext);
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+        // Initialize a new JsonObjectRequest instance
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // Do something with response
+                        //mTextView.setText(response.toString());
+
+                        Curso curso = null;
+
+
+                        ArrayList<Curso> listaDCursos = new ArrayList<>();
+                        listaCursos1 = new ArrayList<>();
+
+                        // Process the JSON
+                        try {
+                            // Get the JSON array
+                            //JSONArray array = response.getJSONArray("students");
+                            JSONArray array = response.optJSONArray("curso");
+
+                            // Loop through the array elements
+                            for (int i = 0; i < array.length(); i++) {
+                                // curso = new Curso();
+                                // JSONObject jsonObject = null;
+                                // jsonObject = json.getJSONObject(i);
+
+                                // Get current json object
+                                JSONObject student = array.getJSONObject(i);
+                                curso = new Curso();
+                                JSONObject jsonObject = null;
+                                jsonObject = array.getJSONObject(i);
+                                curso.setIdCurso(jsonObject.optInt("idcurso"));
+                                curso.setIdInstitutoCurso(jsonObject.optInt("Instituto_idInstituto"));
+                                curso.setNameCurso(jsonObject.optString("namecurso"));
+                                curso.setPeriodoCurso(jsonObject.optString("periodocurso"));
+                                listaCursos1.add(curso);
                             }
+                            Toast.makeText(getApplicationContext(), "lista cursos" + listaCursos1, Toast.LENGTH_LONG).show();
+                            System.out.println("cursos size: " + listaCursos1.size());
+                            System.out.println("cursos: " + listaCursos1.get(0).getNameCurso());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // SE EJECUTA CUANDO ALGO SALIO MAL AL INTENTAR HACER LA CONEXION
-                        //Toast.makeText(MainActivity.this, "ERROR DE CONEXION...", Toast.LENGTH_SHORT).show();
+                        // Do something when error occurred
+                        System.out.println();
+                        Log.d("ERROR", error.toString());
                     }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                // AQUI SE ENVIARAN LOS DATOS EMPAQUETADOS EN UN OBJETO MAP<clave, valor>
-                Map<String, String> parametros = new HashMap<>();
-                //  parametros.put("usuario", usuario);
-                //  parametros.put("pass", password);
-                return parametros;
-            }
-        };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        VolleySingleton.getIntanciaVolley(getApplicationContext()).addToRequestQueue(stringRequest);//p21
+                }
+        );
+
+        requestQueue.add(jsonObjectRequest);
+        //stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //VolleySingleton.getIntanciaVolley(getApplicationContext()).addToRequestQueue(stringRequest);//p21
     }
     //***********************************
 
