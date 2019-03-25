@@ -118,7 +118,10 @@ public class HomeDocenteActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_asignardeber) {
             //intentAsignarDeber = new Intent(HomeDocenteActivity.this, AsignarDeberDocenteActivity.class);
+            Bundle args=new Bundle();
+            args.putInt("iddocente",iddocente);
             intentAsignarDeber = new Intent(HomeDocenteActivity.this, AsignarEstudianteDeberActivity.class);
+            intentAsignarDeber.putExtras(args);
             startActivity(intentAsignarDeber);
 
         } else if (id == R.id.nav_share) {
