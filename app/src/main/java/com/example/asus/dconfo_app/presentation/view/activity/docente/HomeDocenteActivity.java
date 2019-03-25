@@ -25,6 +25,7 @@ public class HomeDocenteActivity extends AppCompatActivity
     String namegrupo;
     String namedocente;
     int iddocente;
+    int idgrupo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class HomeDocenteActivity extends AppCompatActivity
 //        Bundle datos = intent.getIntent().getBundleExtra("idgrupo");
 
         Bundle datos = this.getIntent().getExtras();
-        int idgrupo = datos.getInt("idgrupo");
+        idgrupo = datos.getInt("idgrupo");
         int idcurso = datos.getInt("idcurso");
         namegrupo = datos.getString("namegrupo");
 
@@ -120,6 +121,7 @@ public class HomeDocenteActivity extends AppCompatActivity
             //intentAsignarDeber = new Intent(HomeDocenteActivity.this, AsignarDeberDocenteActivity.class);
             Bundle args=new Bundle();
             args.putInt("iddocente",iddocente);
+            args.putInt("idgrupo",idgrupo);
             intentAsignarDeber = new Intent(HomeDocenteActivity.this, AsignarEstudianteDeberActivity.class);
             intentAsignarDeber.putExtras(args);
             startActivity(intentAsignarDeber);
