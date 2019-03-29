@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.EjercicioG1;
 import com.example.asus.dconfo_app.presentation.view.adapter.SpinnerEjerciciosAdapter;
+import com.example.asus.dconfo_app.repository.Callback;
 import com.example.asus.dconfo_app.repository.ImpEjercicio;
+import com.example.asus.dconfo_app.repository.ImpListEjercicios;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +47,12 @@ public class FindEjercicioFragment extends Fragment {
     private Spinner sp_lista_ejercicios;
     private EditText edt_lista_ejercicios;
     private Button btn_find;
-    List<EjercicioG1> lstEjercicios_frag;
+    List<String> lstEjercicios_frag;
     List<String> lstNombreEjercicios;
     ImpEjercicio impEjercicio;
+    ImpListEjercicios impListEjercicios;
     SpinnerEjerciciosAdapter spinnerEjerciciosAdapter;
+    Integer idDocente;
 
     private OnFragmentInteractionListener mListener;
 
@@ -86,23 +92,78 @@ public class FindEjercicioFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_find_ejercicio, container, false);
+
+        idDocente = getArguments().getInt("iddocente");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Docente id: " + idDocente);
+
         sp_lista_ejercicios = (Spinner) view.findViewById(R.id.sp_docente_FE);
         edt_lista_ejercicios = (EditText) view.findViewById(R.id.edt_docente_FE);
-        impEjercicio = new ImpEjercicio(getContext(), view, 20);
+
+        impListEjercicios = new ImpListEjercicios(getContext(), view, idDocente);
+
+
+        //impEjercicio = new ImpEjercicio(getContext(), view, 20);
         lstEjercicios_frag = new ArrayList<>();
+
+        lstEjercicios_frag = impListEjercicios.getListaEjercicios();
+
+        System.out.println("la lista: "+impListEjercicios.getListaEjercicios());
+        cargarLista1();
+        //final Callback<List<String>> listCallback
+
+        if (lstEjercicios_frag == null) {
+            // cargarLista();
+
+
+        } else {
+             cargarSpinner();
+        }
+
+
         btn_find = (Button) view.findViewById(R.id.btn_docente_FE);
         btn_find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lstEjercicios_frag = impEjercicio.getListaEjercicios();
-                Log.i("mis ejercicio:", lstEjercicios_frag.get(0).getNameEjercicio());
+                lstEjercicios_frag = impListEjercicios.getListaEjercicios();
+                cargarSpinner();
+                Log.i("Mis ejercicios:", lstEjercicios_frag.toString());
             }
         });
         return view;
     }
 
+    public void cargarLista() {
+        lstEjercicios_frag = impListEjercicios.getListaEjercicios();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+
+        }
+        // System.out.println("lista llenando");
+        // cargarSpinner();
+    }
+
+    public void cargarLista1() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                lstEjercicios_frag = impListEjercicios.getListaEjercicios();
+                cargarLista();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //cargarSpinner();
+                        lstEjercicios_frag = impListEjercicios.getListaEjercicios();
+                        Toast.makeText(getContext(), "cargando", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        }).start();
+    }
+
+
     public void cargarSpinner() {
-        spinnerEjerciciosAdapter = new SpinnerEjerciciosAdapter(getContext(), lstNombreEjercicios, getView(), sp_lista_ejercicios);
+        spinnerEjerciciosAdapter = new SpinnerEjerciciosAdapter(getContext(), lstEjercicios_frag, getView(), sp_lista_ejercicios);
         sp_lista_ejercicios = spinnerEjerciciosAdapter.getSpinner();
 
 
@@ -131,6 +192,16 @@ public class FindEjercicioFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+   /* @Override
+    public void success(Object result) {
+        lstEjercicios_frag = impListEjercicios.getListaEjercicios();
+    }
+
+    @Override
+    public void error(Exception error) {
+
+    }*/
 
     /**
      * This interface must be implemented by activities that contain this

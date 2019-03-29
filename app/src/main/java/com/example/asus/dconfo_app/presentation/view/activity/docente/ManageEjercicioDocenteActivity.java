@@ -66,7 +66,12 @@ public class ManageEjercicioDocenteActivity extends AppCompatActivity implements
                         break;
 
                     case R.id.bott_buscar_CED:
+                        Bundle parametros_1 = new Bundle();
+                        parametros_1.putInt("iddocente", idDocente);
+
                         findEjercicioFragment = new FindEjercicioFragment();
+                        findEjercicioFragment.setArguments(parametros_1);
+
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_DocenteEjercicios, findEjercicioFragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
