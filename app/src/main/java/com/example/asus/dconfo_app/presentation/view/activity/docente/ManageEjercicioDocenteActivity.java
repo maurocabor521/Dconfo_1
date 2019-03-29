@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.presentation.view.fragment.docente.FindEjercicioFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.docente.HomeEjerciciosDocenteFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.docente.NewEjercicioDocenteFragment;
 import com.roughike.bottombar.BottomBar;
@@ -15,13 +16,15 @@ import com.roughike.bottombar.OnTabSelectListener;
 
 public class ManageEjercicioDocenteActivity extends AppCompatActivity implements
         HomeEjerciciosDocenteFragment.OnFragmentInteractionListener,
-        NewEjercicioDocenteFragment.OnFragmentInteractionListener {
+        NewEjercicioDocenteFragment.OnFragmentInteractionListener,
+        FindEjercicioFragment.OnFragmentInteractionListener {
 
     private BottomBar bottomBar;
     private HomeEjerciciosDocenteFragment homeEjerciciosDocenteFragment;
     private NewEjercicioDocenteFragment newEjercicioDocenteFragment;
-    String nameDocente="";
-    int idDocente=0;
+    private FindEjercicioFragment findEjercicioFragment;
+    String nameDocente = "";
+    int idDocente = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +36,8 @@ public class ManageEjercicioDocenteActivity extends AppCompatActivity implements
         Bundle extra = intent.getExtras();
 
         nameDocente = extra.getString("namedocente");
-        idDocente= extra.getInt("iddocente");
-        showToolbar("Gestionar Ejercicios Léxicos, Docente: "+nameDocente, true);
+        idDocente = extra.getInt("iddocente");
+        showToolbar("Gestionar Ejercicios Léxicos, Docente: " + nameDocente, true);
         bottomBar = findViewById(R.id.bottombar_CED);
         cargarBottombar();
     }
@@ -61,6 +64,15 @@ public class ManageEjercicioDocenteActivity extends AppCompatActivity implements
                                 .addToBackStack(null).commit();
                         //Toast.makeText(getApplicationContext(), "Ejercicios Home", Toast.LENGTH_LONG).show();
                         break;
+
+                    case R.id.bott_buscar_CED:
+                        findEjercicioFragment = new FindEjercicioFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container_DocenteEjercicios, findEjercicioFragment)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                                .addToBackStack(null).commit();
+                        //Toast.makeText(getApplicationContext(), "Ejercicios Home", Toast.LENGTH_LONG).show();
+                        break;
+
                     case R.id.bott_new_CED:
                         Bundle parametros = new Bundle();
                         parametros.putInt("iddocente", idDocente);
