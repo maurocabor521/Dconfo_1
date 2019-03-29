@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -97,9 +98,26 @@ public class FindEjercicioFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Docente id: " + idDocente);
 
         sp_lista_ejercicios = (Spinner) view.findViewById(R.id.sp_docente_FE);
+        sp_lista_ejercicios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                lstEjercicios_frag = impListEjercicios.getListaEjercicios();
+                cargarSpinner();
+            }
+        });
+
         edt_lista_ejercicios = (EditText) view.findViewById(R.id.edt_docente_FE);
 
         impListEjercicios = new ImpListEjercicios(getContext(), view, idDocente);
+        impListEjercicios.cargarWebService(getContext());
+        impListEjercicios.getListaEjercicios();
+
+        System.out.println("la lista: "+impListEjercicios.getListaEjercicios());
 
 
         //impEjercicio = new ImpEjercicio(getContext(), view, 20);
@@ -107,18 +125,19 @@ public class FindEjercicioFragment extends Fragment {
 
         lstEjercicios_frag = new ImpListEjercicios(getContext(), view, idDocente).getListaEjercicios();
 
+       // carga();
         //lstEjercicios_frag = impListEjercicios.getListaEjercicios();
 
         //System.out.println("la lista: "+impListEjercicios.getListaEjercicios());
-       // cargarLista1();
+        // cargarLista1();
         //final Callback<List<String>> listCallback
 
         if (lstEjercicios_frag == null) {
             //cargarLista();
-            System.out.println("la lista: "+true);
+            System.out.println("la lista: " + true);
 
         } else {
-             cargarSpinner();
+            cargarSpinner();
         }
 
 
@@ -126,12 +145,25 @@ public class FindEjercicioFragment extends Fragment {
         btn_find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lstEjercicios_frag = impListEjercicios.getListaEjercicios();
+              /*  lstEjercicios_frag = impListEjercicios.getListaEjercicios();
                 cargarSpinner();
-                Log.i("Mis ejercicios:", lstEjercicios_frag.toString());
+                Log.i("Mis ejercicios:", lstEjercicios_frag.toString());*/
+                carga();
             }
         });
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //carga();
+    }
+
+    public void carga() {
+        lstEjercicios_frag = impListEjercicios.getListaEjercicios();
+        cargarSpinner();
+        Log.i("Mis ejercicios:", lstEjercicios_frag.toString());
     }
 
     public void cargarLista() {
