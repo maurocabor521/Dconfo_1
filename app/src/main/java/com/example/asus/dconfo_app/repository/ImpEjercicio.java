@@ -37,6 +37,7 @@ public class ImpEjercicio implements Response.Listener<JSONObject>,
     Integer idejercicio;
     List<String> listaNombreEjerciciog1;
     List<Integer> listaidEjerciciog1;
+    JSONArray json;
 
     StringRequest stringRequest;
 
@@ -81,7 +82,7 @@ public class ImpEjercicio implements Response.Listener<JSONObject>,
 
         //Toast.makeText(getContext(), "onResponse: " + response.toString(), Toast.LENGTH_SHORT).show();
         EjercicioG1 ejercicioG1 = null;
-        JSONArray json = response.optJSONArray("ejerciciog1");
+        json = response.optJSONArray("ejerciciog1");
 
         ArrayList<EjercicioG1> listaDEjerciciosg1 = new ArrayList<>();
         listaDEjerciciosg1 = new ArrayList<>();
@@ -109,14 +110,14 @@ public class ImpEjercicio implements Response.Listener<JSONObject>,
 
                 System.out.println("Ejercicio:" + i + listaDEjerciciosg1.get(i).getIdEjercicio());
             }
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listaNombreEjerciciog1);
+         /*   ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listaNombreEjerciciog1);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    System.out.println("ejericio seleccionado: "+listaNombreEjerciciog1.get(position));
-                    AsignarEstudianteDeberActivity asignarEstudianteDeberActivity=new AsignarEstudianteDeberActivity();
+                    System.out.println("ejericio seleccionado: " + listaNombreEjerciciog1.get(position));
+                    AsignarEstudianteDeberActivity asignarEstudianteDeberActivity = new AsignarEstudianteDeberActivity();
                     //asignarEstudianteDeberActivity.
                 }
 
@@ -127,8 +128,7 @@ public class ImpEjercicio implements Response.Listener<JSONObject>,
             });
 
 
-
-            System.out.println("la lista Ejercicios:" + listaNombreEjerciciog1.size());
+            System.out.println("la lista Ejercicios:" + listaNombreEjerciciog1.size());*/
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -136,6 +136,36 @@ public class ImpEjercicio implements Response.Listener<JSONObject>,
 
         }
     }//onResponse
+
+    public List<EjercicioG1> getListaEjercicios() {
+        List<EjercicioG1> ListEjer = new ArrayList<>();
+        EjercicioG1 ejercicioG1 = new EjercicioG1();
+        //JSONArray json1 = json;
+        if (json == null) {
+            cargarWebService(context);
+        } else {
+            try {
+                for (int i = 0; i < json.length(); i++) {
+                    ejercicioG1 = new EjercicioG1();
+                    JSONObject jsonObject = null;
+                    jsonObject = json.getJSONObject(i);
+                    ejercicioG1.setNameEjercicio(jsonObject.optString("nameEjercicioG1"));
+                    ejercicioG1.setIdEjercicio(jsonObject.optInt("idEjercicioG1"));
+
+                    ListEjer.add(ejercicioG1);
+
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return ListEjer;
+    }
+
+
+}
 
   /*  public void setListadeCursos(ArrayList<Curso> listaCursos1) {
         this.listaCursos1 = listaCursos1;
@@ -145,6 +175,6 @@ public class ImpEjercicio implements Response.Listener<JSONObject>,
        /* Curso curso=new Curso();
         curso.setIdCurso(03);
         listaCursos1.add(curso);*/
-    // return listaCursos1;
-    //}*/
-}
+// return listaCursos1;
+//}*/
+

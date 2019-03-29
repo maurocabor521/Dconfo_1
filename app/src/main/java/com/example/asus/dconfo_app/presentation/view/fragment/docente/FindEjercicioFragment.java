@@ -4,14 +4,22 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.domain.model.EjercicioG1;
+import com.example.asus.dconfo_app.presentation.view.adapter.SpinnerEjerciciosAdapter;
+import com.example.asus.dconfo_app.repository.ImpEjercicio;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +43,10 @@ public class FindEjercicioFragment extends Fragment {
     private Spinner sp_lista_ejercicios;
     private EditText edt_lista_ejercicios;
     private Button btn_find;
+    List<EjercicioG1> lstEjercicios_frag;
+    List<String> lstNombreEjercicios;
+    ImpEjercicio impEjercicio;
+    SpinnerEjerciciosAdapter spinnerEjerciciosAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -74,10 +86,26 @@ public class FindEjercicioFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_find_ejercicio, container, false);
-        sp_lista_ejercicios=(Spinner)view.findViewById(R.id.sp_docente_FE);
-        edt_lista_ejercicios=(EditText) view.findViewById(R.id.edt_docente_FE);
-        btn_find=(Button) view.findViewById(R.id.btn_docente_FE);
+        sp_lista_ejercicios = (Spinner) view.findViewById(R.id.sp_docente_FE);
+        edt_lista_ejercicios = (EditText) view.findViewById(R.id.edt_docente_FE);
+        impEjercicio = new ImpEjercicio(getContext(), view, 20);
+        lstEjercicios_frag = new ArrayList<>();
+        btn_find = (Button) view.findViewById(R.id.btn_docente_FE);
+        btn_find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lstEjercicios_frag = impEjercicio.getListaEjercicios();
+                Log.i("mis ejercicio:", lstEjercicios_frag.get(0).getNameEjercicio());
+            }
+        });
         return view;
+    }
+
+    public void cargarSpinner() {
+        spinnerEjerciciosAdapter = new SpinnerEjerciciosAdapter(getContext(), lstNombreEjercicios, getView(), sp_lista_ejercicios);
+        sp_lista_ejercicios = spinnerEjerciciosAdapter.getSpinner();
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
