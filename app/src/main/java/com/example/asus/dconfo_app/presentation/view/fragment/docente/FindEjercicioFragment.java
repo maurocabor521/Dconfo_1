@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.example.asus.dconfo_app.R;
 
@@ -27,6 +30,11 @@ public class FindEjercicioFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
+    private Spinner sp_lista_ejercicios;
+    private EditText edt_lista_ejercicios;
+    private Button btn_find;
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,7 +73,11 @@ public class FindEjercicioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_find_ejercicio, container, false);
+        View view = inflater.inflate(R.layout.fragment_find_ejercicio, container, false);
+        sp_lista_ejercicios=(Spinner)view.findViewById(R.id.sp_docente_FE);
+        edt_lista_ejercicios=(EditText) view.findViewById(R.id.edt_docente_FE);
+        btn_find=(Button) view.findViewById(R.id.btn_docente_FE);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
