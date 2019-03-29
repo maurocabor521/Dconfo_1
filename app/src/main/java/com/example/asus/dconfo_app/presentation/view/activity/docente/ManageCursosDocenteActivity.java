@@ -97,7 +97,7 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
 
         // request.add(jsonObjectRequest);
         VolleySingleton.getIntanciaVolley(getApplicationContext()).addToRequestQueue(jsonObjectRequest);//p21
-        Toast.makeText(getApplicationContext(), "web service 1111", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "web service 1111", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -138,9 +138,9 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
             gruposDocenteAdapter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getApplicationContext(), "Seleccion: " +
+                   /*Toast.makeText(getApplicationContext(), "Seleccion: " +
                             listaGrupos.get(rvListaCursos.
-                                    getChildAdapterPosition(view)).getNameGrupo(), Toast.LENGTH_SHORT).show();//video p1
+                                    getChildAdapterPosition(view)).getNameGrupo(), Toast.LENGTH_SHORT).show();//video p1*/
 
                     Bundle parametros = new Bundle();
                     int idgrupo = listaGrupos.get(rvListaCursos.
@@ -169,7 +169,7 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
                     intent.putExtra("idcurso", idcurso);
                     intent.putExtra("idDoc", idDocente);
                     intent.putExtra("nameDoc", nameDocente);
-                    Toast.makeText(getApplicationContext(), "id Doc MCDA: " + idDocente, Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getApplicationContext(), "id Doc MCDA: " + idDocente, Toast.LENGTH_LONG).show();
                     intent.putExtra("namegrupo", namegrupo);
                     startActivity(intent);
                   /*  interfaceComunicaFragments.

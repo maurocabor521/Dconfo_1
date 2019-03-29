@@ -105,15 +105,17 @@ public class FindEjercicioFragment extends Fragment {
         //impEjercicio = new ImpEjercicio(getContext(), view, 20);
         lstEjercicios_frag = new ArrayList<>();
 
-        lstEjercicios_frag = impListEjercicios.getListaEjercicios();
+        lstEjercicios_frag = new ImpListEjercicios(getContext(), view, idDocente).getListaEjercicios();
 
-        System.out.println("la lista: "+impListEjercicios.getListaEjercicios());
-        cargarLista1();
+        //lstEjercicios_frag = impListEjercicios.getListaEjercicios();
+
+        //System.out.println("la lista: "+impListEjercicios.getListaEjercicios());
+       // cargarLista1();
         //final Callback<List<String>> listCallback
 
         if (lstEjercicios_frag == null) {
-            // cargarLista();
-
+            //cargarLista();
+            System.out.println("la lista: "+true);
 
         } else {
              cargarSpinner();

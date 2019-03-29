@@ -124,8 +124,8 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
                     startActivity(intent);
 
 
-                    Toast.makeText(getApplicationContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
-                    Toast.makeText(getApplicationContext(), "iddocente: " + iddconte_bundle, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "iddocente: " + iddconte_bundle, Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "No se ha cargado ", Toast.LENGTH_LONG).show();
                     Log.i("ERROR", "RESPONSE" + response.toString());
@@ -180,7 +180,7 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
     @Override
     public void onResponse(JSONObject response) {
         progreso.hide();
-        Toast.makeText(getApplicationContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getApplicationContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
         Login login = new Login();
         Docente docente = new Docente();
         JSONArray json = response.optJSONArray("docente");
@@ -205,7 +205,7 @@ public class LoginDocenteActivity extends AppCompatActivity implements Response.
         Bundle parametros = new Bundle();
         parametros.putInt("iddocente", idDocente);
         parametros.putString("namedocente", nameDocente);
-        Toast.makeText(getApplicationContext(), "name Doc: " + nameDocente, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "name Doc: " + nameDocente, Toast.LENGTH_LONG).show();
 
         Intent intent = new Intent(LoginDocenteActivity.this, ManageCursosDocenteActivity.class);
         intent.putExtras(parametros);

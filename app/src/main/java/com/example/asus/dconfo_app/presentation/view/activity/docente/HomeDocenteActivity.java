@@ -66,8 +66,8 @@ public class HomeDocenteActivity extends AppCompatActivity
         //toolbar.setLabelFor();
         this.setTitle("Docente: " + namedocente + " - Id Curso: " + idcurso + " - " + namegrupo);
 
-        Toast.makeText(getApplicationContext(), "idgrupo: " + idgrupo, Toast.LENGTH_LONG).show();
-        Toast.makeText(getApplicationContext(), "idcurso: " + idcurso, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "idgrupo: " + idgrupo, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "idcurso: " + idcurso, Toast.LENGTH_LONG).show();
     }
 
     @Override
