@@ -2,6 +2,7 @@ package com.example.asus.dconfo_app.presentation.view.fragment.docente;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -12,16 +13,19 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
+import com.android.volley.Response;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.EjercicioG1;
 import com.example.asus.dconfo_app.presentation.view.adapter.SpinnerEjerciciosAdapter;
 import com.example.asus.dconfo_app.repository.Callback;
 import com.example.asus.dconfo_app.repository.ImpEjercicio;
 import com.example.asus.dconfo_app.repository.ImpListEjercicios;
+import com.example.asus.dconfo_app.repository.ListaEjercicios;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,12 +52,16 @@ public class FindEjercicioFragment extends Fragment {
     private Spinner sp_lista_ejercicios;
     private EditText edt_lista_ejercicios;
     private Button btn_find;
-    List<String> lstEjercicios_frag;
+    private ProgressBar pb_find;
+    List<String> lstEjercicios_frag = new ArrayList<>();
     List<String> lstNombreEjercicios;
     ImpEjercicio impEjercicio;
     ImpListEjercicios impListEjercicios;
     SpinnerEjerciciosAdapter spinnerEjerciciosAdapter;
     Integer idDocente;
+    View view;
+
+    ListaEjercicios listaEjercicios;
 
     private OnFragmentInteractionListener mListener;
 
@@ -92,40 +100,45 @@ public class FindEjercicioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_find_ejercicio, container, false);
+        view = inflater.inflate(R.layout.fragment_find_ejercicio, container, false);
 
         idDocente = getArguments().getInt("iddocente");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Docente id: " + idDocente);
+        impListEjercicios = new ImpListEjercicios(getContext(), view, idDocente);
+
+
+        pb_find = (ProgressBar) view.findViewById(R.id.pb_docente_FE);
+//        carga();
 
         sp_lista_ejercicios = (Spinner) view.findViewById(R.id.sp_docente_FE);
-        sp_lista_ejercicios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        listaEjercicios=new ListaEjercicios(getContext());
+        listaEjercicios.execute();
+        lstEjercicios_frag=listaEjercicios.getListaStringEjercicios();
+      /*  new Thread(new Runnable() {
+            public void run() {
 
             }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                lstEjercicios_frag = impListEjercicios.getListaEjercicios();
-                cargarSpinner();
-            }
-        });
+        }).start();*/
+
 
         edt_lista_ejercicios = (EditText) view.findViewById(R.id.edt_docente_FE);
 
         impListEjercicios = new ImpListEjercicios(getContext(), view, idDocente);
-        impListEjercicios.cargarWebService(getContext());
-        impListEjercicios.getListaEjercicios();
 
-        System.out.println("la lista: "+impListEjercicios.getListaEjercicios());
+
+        //System.out.println("la lista: " + impListEjercicios.getListaEjercicios());
 
 
         //impEjercicio = new ImpEjercicio(getContext(), view, 20);
-        lstEjercicios_frag = new ArrayList<>();
+        //lstEjercicios_frag = new ArrayList<>();
 
-        lstEjercicios_frag = new ImpListEjercicios(getContext(), view, idDocente).getListaEjercicios();
 
-       // carga();
+        //lstEjercicios_frag = impListEjercicios.getListaEjercicios();
+
+
+        //carga();
         //lstEjercicios_frag = impListEjercicios.getListaEjercicios();
 
         //System.out.println("la lista: "+impListEjercicios.getListaEjercicios());
@@ -149,21 +162,49 @@ public class FindEjercicioFragment extends Fragment {
                 cargarSpinner();
                 Log.i("Mis ejercicios:", lstEjercicios_frag.toString());*/
                 carga();
+                //new Task1().execute();
+
             }
         });
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        //carga();
+    class Task1 extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pb_find.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            impListEjercicios = new ImpListEjercicios(getContext(), view, idDocente);
+
+            System.out.println("Cargando...");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            carga();
+            pb_find.setVisibility(View.INVISIBLE);
+        }
     }
+
 
     public void carga() {
         lstEjercicios_frag = impListEjercicios.getListaEjercicios();
         cargarSpinner();
         Log.i("Mis ejercicios:", lstEjercicios_frag.toString());
+    }
+
+    public void cargarSpinner() {
+        spinnerEjerciciosAdapter = new SpinnerEjerciciosAdapter(getContext(), lstEjercicios_frag, getView(), sp_lista_ejercicios);
+        sp_lista_ejercicios = spinnerEjerciciosAdapter.getSpinner();
+
+
     }
 
     public void cargarLista() {
@@ -196,11 +237,13 @@ public class FindEjercicioFragment extends Fragment {
     }
 
 
-    public void cargarSpinner() {
-        spinnerEjerciciosAdapter = new SpinnerEjerciciosAdapter(getContext(), lstEjercicios_frag, getView(), sp_lista_ejercicios);
-        sp_lista_ejercicios = spinnerEjerciciosAdapter.getSpinner();
+    @Override
+    public void onStart() {
+        super.onStart();
+        //carga();
+    }
 
-
+    {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -213,6 +256,7 @@ public class FindEjercicioFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        //carga();
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -250,5 +294,6 @@ public class FindEjercicioFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+
     }
 }
