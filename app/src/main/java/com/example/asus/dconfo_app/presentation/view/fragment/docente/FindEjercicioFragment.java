@@ -1,6 +1,7 @@
 package com.example.asus.dconfo_app.presentation.view.fragment.docente;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,19 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
-import com.android.volley.Response;
 import com.example.asus.dconfo_app.R;
-import com.example.asus.dconfo_app.domain.model.EjercicioG1;
 import com.example.asus.dconfo_app.presentation.view.adapter.SpinnerEjerciciosAdapter;
-import com.example.asus.dconfo_app.repository.Callback;
 import com.example.asus.dconfo_app.repository.ImpEjercicio;
 import com.example.asus.dconfo_app.repository.ImpListEjercicios;
 import com.example.asus.dconfo_app.repository.ListaEjercicios;
@@ -60,6 +56,7 @@ public class FindEjercicioFragment extends Fragment {
     SpinnerEjerciciosAdapter spinnerEjerciciosAdapter;
     Integer idDocente;
     View view;
+    MediaPlayer mp;
 
     ListaEjercicios listaEjercicios;
 
@@ -101,6 +98,7 @@ public class FindEjercicioFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_find_ejercicio, container, false);
+        mp=MediaPlayer.create(getContext(),R.raw.sound_button);
 
         idDocente = getArguments().getInt("iddocente");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Docente id: " + idDocente);
@@ -161,7 +159,8 @@ public class FindEjercicioFragment extends Fragment {
               /*  lstEjercicios_frag = impListEjercicios.getListaEjercicios();
                 cargarSpinner();
                 Log.i("Mis ejercicios:", lstEjercicios_frag.toString());*/
-                carga();
+                //carga();
+                mp.start();
                 //new Task1().execute();
 
             }
