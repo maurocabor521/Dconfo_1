@@ -103,7 +103,7 @@ public class ListaEjercicios extends AsyncTask<String, Void, String> {
                             }
                             System.out.println("get lista ejercicios" + listaEjercicios.toString());
 
-                            listaStringEjercicios.add("Seleccione Id Ejercicio");
+                            //listaStringEjercicios.add("Seleccione Id Ejercicio");
                             for (int i = 0; i < listaEjercicios.size(); i++) {
                                 //listaStringEjercicios.add(listaEjercicios.get(i).getIdEjercicio().toString());
                                 listaStringEjercicios.add(listaEjercicios.get(i).getNameEjercicio());

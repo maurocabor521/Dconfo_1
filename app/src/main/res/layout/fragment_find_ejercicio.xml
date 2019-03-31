@@ -19,7 +19,8 @@
     <Spinner
         android:id="@+id/sp_docente_FE"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></Spinner>pinner
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"></Spinner>pinner
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
