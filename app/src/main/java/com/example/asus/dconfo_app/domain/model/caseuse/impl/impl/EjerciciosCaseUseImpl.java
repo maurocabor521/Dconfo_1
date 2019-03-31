@@ -27,7 +27,7 @@ public class EjerciciosCaseUseImpl implements EjerciciosCaseUse {
 
     ArrayList<EjercicioG1> listaEjercicios;
     ArrayList<String> listaStringEjercicios = new ArrayList<>();
-    ;
+    int flag = 0;
     Context context;
 
     public EjerciciosCaseUseImpl(Context context) {
@@ -41,14 +41,21 @@ public class EjerciciosCaseUseImpl implements EjerciciosCaseUse {
                     @Override
                     public List<EjercicioG1> execute() throws Exception {
                         //Llamo al metodo sincrono del UseCase
-                        try {
+                     /*   try {
                             Thread.sleep(100);
                             System.out.println("Dormir...");
                         } catch (InterruptedException e) {
 
-                        }
+                        }*/
+                      /*  if (flag != 1) {
+                            getlstEjercicios();
+                            //return getlstEjercicios1();
+                        } else {
+
+                            return getlstEjercicios();
+                        }*/
+
                         return getlstEjercicios();
-                        //return getlstEjercicios1();
                     }
 
                     @Override
@@ -115,7 +122,7 @@ public class EjerciciosCaseUseImpl implements EjerciciosCaseUse {
                                 listaEjercicios.add(ejercicioG1);
                             }
                             System.out.println("get lista ejercicios" + listaEjercicios.toString());
-
+                            flag = 1;
                             //listaStringEjercicios.add("Seleccione Id Ejercicio");
                             for (int i = 0; i < listaEjercicios.size(); i++) {
                                 //listaStringEjercicios.add(listaEjercicios.get(i).getIdEjercicio().toString());
@@ -146,7 +153,7 @@ public class EjerciciosCaseUseImpl implements EjerciciosCaseUse {
         requestQueue.add(jsonObjectRequest);
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
             System.out.println("Dormir...");
         } catch (InterruptedException e) {
 

@@ -115,6 +115,7 @@ public class Find1EjercicioFragment extends Fragment implements CategoriaEjercic
     public void showListaEjercicios() {
         lst_NomEjercicios=presenter.getLstNombreEjercicios();
         lst_Ejercicios=presenter.getListaEjercicios();
+        System.out.println("lista ejercicios: "+lst_NomEjercicios.toString());
         spinnerEjerciciosAdapter = new SpinnerEjerciciosAdapter(getContext(), lst_NomEjercicios, getView(), sp_lista_ejercicios);
         sp_lista_ejercicios = spinnerEjerciciosAdapter.getSpinner();
 
