@@ -1,15 +1,27 @@
 package com.example.asus.dconfo_app.presentation.view.fragment.docente;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.domain.model.EjercicioG1;
+import com.example.asus.dconfo_app.presentation.view.adapter.SpinnerEjerciciosAdapter;
 import com.example.asus.dconfo_app.presentation.view.contract.CategoriaEjerciciosContract;
+import com.example.asus.dconfo_app.presentation.view.presenter.CategoriaEjerciciosPresenter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +40,16 @@ public class Find1EjercicioFragment extends Fragment implements CategoriaEjercic
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private CategoriaEjerciciosContract.Presenter presenter;
+    SpinnerEjerciciosAdapter spinnerEjerciciosAdapter;
+    private Spinner sp_lista_ejercicios;
+    private EditText edt_lista_ejercicios;
+    private Button btn_find;
+    private ProgressBar pb_find;
+    private List<String> lst_NomEjercicios;
+    private List<EjercicioG1> lst_Ejercicios;
+    MediaPlayer mp;
 
     private OnFragmentInteractionListener mListener;
 
@@ -67,11 +89,34 @@ public class Find1EjercicioFragment extends Fragment implements CategoriaEjercic
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_find1_ejercicio, container, false);
+
+        presenter = new CategoriaEjerciciosPresenter(this, getContext());
+        presenter.loadListaEjercicios();
+
+        edt_lista_ejercicios = (EditText) view.findViewById(R.id.edt_F1_docente_FE);
+        sp_lista_ejercicios = (Spinner) view.findViewById(R.id.sp_F1_docente_FE);
+        mp = MediaPlayer.create(getContext(), R.raw.sound_button);
+
+        btn_find = (Button) view.findViewById(R.id.btn_F1_docente_FE);
+        btn_find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mp.start();
+            }
+        });
+
+        lst_Ejercicios = new ArrayList<EjercicioG1>();
+        lst_NomEjercicios = new ArrayList<String>();
+
         return view;
     }
 
     @Override
     public void showListaEjercicios() {
+        lst_NomEjercicios=presenter.getLstNombreEjercicios();
+        lst_Ejercicios=presenter.getListaEjercicios();
+        spinnerEjerciciosAdapter = new SpinnerEjerciciosAdapter(getContext(), lst_NomEjercicios, getView(), sp_lista_ejercicios);
+        sp_lista_ejercicios = spinnerEjerciciosAdapter.getSpinner();
 
     }
 
@@ -98,7 +143,6 @@ public class Find1EjercicioFragment extends Fragment implements CategoriaEjercic
         super.onDetach();
         mListener = null;
     }
-
 
 
     /**

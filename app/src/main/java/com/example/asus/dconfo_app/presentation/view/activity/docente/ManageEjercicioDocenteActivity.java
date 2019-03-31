@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.presentation.view.fragment.docente.Find1EjercicioFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.docente.FindEjercicioFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.docente.HomeEjerciciosDocenteFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.docente.NewEjercicioDocenteFragment;
@@ -17,12 +18,14 @@ import com.roughike.bottombar.OnTabSelectListener;
 public class ManageEjercicioDocenteActivity extends AppCompatActivity implements
         HomeEjerciciosDocenteFragment.OnFragmentInteractionListener,
         NewEjercicioDocenteFragment.OnFragmentInteractionListener,
-        FindEjercicioFragment.OnFragmentInteractionListener {
+        FindEjercicioFragment.OnFragmentInteractionListener,
+        Find1EjercicioFragment.OnFragmentInteractionListener {
 
     private BottomBar bottomBar;
     private HomeEjerciciosDocenteFragment homeEjerciciosDocenteFragment;
     private NewEjercicioDocenteFragment newEjercicioDocenteFragment;
     private FindEjercicioFragment findEjercicioFragment;
+    private Find1EjercicioFragment find1EjercicioFragment;
     String nameDocente = "";
     int idDocente = 0;
 
@@ -69,10 +72,13 @@ public class ManageEjercicioDocenteActivity extends AppCompatActivity implements
                         Bundle parametros_1 = new Bundle();
                         parametros_1.putInt("iddocente", idDocente);
 
-                        findEjercicioFragment = new FindEjercicioFragment();
-                        findEjercicioFragment.setArguments(parametros_1);
+                       // findEjercicioFragment = new FindEjercicioFragment();
+                       // findEjercicioFragment.setArguments(parametros_1);
 
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container_DocenteEjercicios, findEjercicioFragment)
+                        find1EjercicioFragment = new Find1EjercicioFragment();
+                        find1EjercicioFragment.setArguments(parametros_1);
+
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container_DocenteEjercicios, find1EjercicioFragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
                         //Toast.makeText(getApplicationContext(), "Ejercicios Home", Toast.LENGTH_LONG).show();
