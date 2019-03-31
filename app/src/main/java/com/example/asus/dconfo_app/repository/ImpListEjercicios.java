@@ -138,6 +138,7 @@ public class ImpListEjercicios implements Response.Listener<JSONObject>,
 
                 for (int i = 0; i < listaDEjerciciosg1.size(); i++) {
 
+                   // listaNombreEjerciciog1.add(String.valueOf(listaDEjerciciosg1.get(i).getNameEjercicio()));
                     listaNombreEjerciciog1.add(String.valueOf(listaDEjerciciosg1.get(i).getNameEjercicio()));
                     listaidEjerciciog1.add(listaDEjerciciosg1.get(i).getIdEjercicio());
 
