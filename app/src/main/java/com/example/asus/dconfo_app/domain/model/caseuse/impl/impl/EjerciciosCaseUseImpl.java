@@ -25,7 +25,7 @@ import java.util.List;
 
 public class EjerciciosCaseUseImpl implements EjerciciosCaseUse {
 
-    ArrayList<EjercicioG1> listaEjercicios;
+    ArrayList<EjercicioG1> listaEjercicios = new ArrayList<>();//modificado con new ArrayList<>();
     ArrayList<String> listaStringEjercicios = new ArrayList<>();
     int flag = 0;
     Context context;
@@ -54,8 +54,10 @@ public class EjerciciosCaseUseImpl implements EjerciciosCaseUse {
 
                             return getlstEjercicios();
                         }*/
-
+                        // getlstEjercicios();
                         return getlstEjercicios();
+                        //return getlstEjercicios();
+
                     }
 
                     @Override
@@ -67,6 +69,25 @@ public class EjerciciosCaseUseImpl implements EjerciciosCaseUse {
                         }
                     }
                 });
+    }
+
+    private List<EjercicioG1> getlstEjercicios2() throws Exception {
+        System.out.println("*****flag :" + flag);
+        List<EjercicioG1> lstEjer = new ArrayList<>();
+        if (flag == 1) {
+            lstEjer = listaEjercicios;
+            System.out.println("-----flag :" + flag);
+            //flag = 0;
+            return lstEjer;
+
+        } else {
+            //getlstEjercicios();
+            getlstEjercicios2();
+            System.out.println("*****getlstEjercicios2" + listaEjercicios.toString());
+        }
+
+        System.out.println("*****lstEjer" + lstEjer.toString());
+        return lstEjer;
     }
 
     public List<EjercicioG1> getlstEjercicios1() throws Exception {
@@ -83,6 +104,8 @@ public class EjerciciosCaseUseImpl implements EjerciciosCaseUse {
 
     @Override
     public List<EjercicioG1> getlstEjercicios() throws Exception {
+
+        // List<EjercicioG1> listaEjercicios;//2 agregado aquí
 
         String url_lh = Globals.url;
 
@@ -102,7 +125,7 @@ public class EjerciciosCaseUseImpl implements EjerciciosCaseUse {
                     public void onResponse(JSONObject response) {
                         // Do something with response
 
-                        listaEjercicios = new ArrayList<>();
+                        //listaEjercicios = new ArrayList<>();//comentado
 
                         EjercicioG1 ejercicioG1 = null;
 
@@ -123,6 +146,7 @@ public class EjerciciosCaseUseImpl implements EjerciciosCaseUse {
                             }
                             System.out.println("get lista ejercicios" + listaEjercicios.toString());
                             flag = 1;
+
                             //listaStringEjercicios.add("Seleccione Id Ejercicio");
                             for (int i = 0; i < listaEjercicios.size(); i++) {
                                 //listaStringEjercicios.add(listaEjercicios.get(i).getIdEjercicio().toString());

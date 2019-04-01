@@ -19,6 +19,7 @@ public interface CategoriaEjerciciosContract {
     interface View{
         //void disableButtons();
         void showListaEjercicios();
+        void findEjercicios();
         //void getAdapter();
     }
 }

@@ -5,9 +5,12 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -18,6 +21,7 @@ import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.EjercicioG1;
 import com.example.asus.dconfo_app.presentation.view.adapter.SpinnerEjerciciosAdapter;
 import com.example.asus.dconfo_app.presentation.view.contract.CategoriaEjerciciosContract;
+import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.InicioEjercicioFragment;
 import com.example.asus.dconfo_app.presentation.view.presenter.CategoriaEjerciciosPresenter;
 
 import java.util.ArrayList;
@@ -31,7 +35,8 @@ import java.util.List;
  * Use the {@link Find1EjercicioFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Find1EjercicioFragment extends Fragment implements CategoriaEjerciciosContract.View {
+public class Find1EjercicioFragment extends Fragment implements CategoriaEjerciciosContract.View,
+InicioEjercicioFragment.OnFragmentInteractionListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -50,6 +55,7 @@ public class Find1EjercicioFragment extends Fragment implements CategoriaEjercic
     private List<String> lst_NomEjercicios;
     private List<EjercicioG1> lst_Ejercicios;
     MediaPlayer mp;
+    int idEjercicio = 0;
 
     private OnFragmentInteractionListener mListener;
 
@@ -102,8 +108,10 @@ public class Find1EjercicioFragment extends Fragment implements CategoriaEjercic
             @Override
             public void onClick(View v) {
                 mp.start();
+                //findEjercicios();
             }
         });
+        btn_find.setEnabled(false);
 
         lst_Ejercicios = new ArrayList<EjercicioG1>();
         lst_NomEjercicios = new ArrayList<String>();
@@ -113,12 +121,45 @@ public class Find1EjercicioFragment extends Fragment implements CategoriaEjercic
 
     @Override
     public void showListaEjercicios() {
-        lst_NomEjercicios=presenter.getLstNombreEjercicios();
-        lst_Ejercicios=presenter.getListaEjercicios();
-        System.out.println("lista ejercicios: "+lst_NomEjercicios.toString());
+        lst_NomEjercicios = presenter.getLstNombreEjercicios();
+        lst_Ejercicios = presenter.getListaEjercicios();
+        System.out.println("lista ejercicios: " + lst_NomEjercicios.toString());
         spinnerEjerciciosAdapter = new SpinnerEjerciciosAdapter(getContext(), lst_NomEjercicios, getView(), sp_lista_ejercicios);
         sp_lista_ejercicios = spinnerEjerciciosAdapter.getSpinner();
+        sp_lista_ejercicios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0) {
+                    edt_lista_ejercicios.setText(lst_Ejercicios.get(position - 1).getNameEjercicio());
+                    System.out.println("nombre ejercicio: " + lst_Ejercicios.get(position - 1).getNameEjercicio());
+                    btn_find.setEnabled(true);
+                    idEjercicio = lst_Ejercicios.get(position - 1).getIdEjercicio();
+                }
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void findEjercicios() {
+        Bundle bundle = new Bundle();
+
+        bundle.putInt("idejercicio", idEjercicio);
+
+
+        // if (ejertipo == "tipo1") {
+
+        InicioEjercicioFragment inicioEjercicioFragment = new InicioEjercicioFragment();
+        inicioEjercicioFragment.setArguments(bundle);
+        // getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo1EstudianteFragment)
+        getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, inicioEjercicioFragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .addToBackStack(null).commit();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -143,6 +184,11 @@ public class Find1EjercicioFragment extends Fragment implements CategoriaEjercic
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
 
