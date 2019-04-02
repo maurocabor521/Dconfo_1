@@ -65,14 +65,28 @@ public class HomeEstudianteActivity extends AppCompatActivity implements
                         //Toast.makeText(getApplicationContext(), "Ejercicios Home", Toast.LENGTH_LONG).show();
                         break;
                     case R.id.bot_deber_t1:
+
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putInt("idEstudiante", idestudiante);
+                        bundle1.putString("nameEstudiante", nameestudiante);
+
                         tipo1EstudianteFragment = new Tipo1EstudianteFragment();
+                        tipo1EstudianteFragment.setArguments(bundle1);
+
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo1EstudianteFragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
 
                         break;
                     case R.id.bot_deber_t2:
+
+                        Bundle bundle2 = new Bundle();
+                        bundle2.putInt("idEstudiante", idestudiante);
+                        bundle2.putString("nameEstudiante", nameestudiante);
+
                         tipo2EstudianteFragment = new Tipo2EstudianteFragment();
+                        tipo2EstudianteFragment.setArguments(bundle2);
+
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo2EstudianteFragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
