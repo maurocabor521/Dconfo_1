@@ -60,11 +60,13 @@ public class ManageCursosDocenteActivity extends AppCompatActivity implements Re
         Intent intent = this.getIntent();
         Bundle extra = intent.getExtras();
 
+
         //LoginDocenteActivity intent1 = new LoginDocenteActivity();
        //Bundle extra1 = intent1.getIntent().getExtras();
 
         nameDocente = extra.getString("namedocente");
         idDocente= extra.getInt("iddocente");
+        Globals.idDocente_globals=idDocente;
        // idDocente= LoginDocenteActivity.;
 
         cargarWebService();

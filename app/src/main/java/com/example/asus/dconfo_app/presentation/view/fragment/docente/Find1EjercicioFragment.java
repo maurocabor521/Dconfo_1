@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.EjercicioG1;
@@ -36,7 +37,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class Find1EjercicioFragment extends Fragment implements CategoriaEjerciciosContract.View,
-InicioEjercicioFragment.OnFragmentInteractionListener{
+        InicioEjercicioFragment.OnFragmentInteractionListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -54,6 +55,10 @@ InicioEjercicioFragment.OnFragmentInteractionListener{
     private ProgressBar pb_find;
     private List<String> lst_NomEjercicios;
     private List<EjercicioG1> lst_Ejercicios;
+    private TextView txt_idejercicio;
+    private TextView txt_nombreejercicio;
+    private TextView txt_actividadejercicio;
+    private TextView txt_tipodejercicio;
     MediaPlayer mp;
     int idEjercicio = 0;
 
@@ -103,6 +108,11 @@ InicioEjercicioFragment.OnFragmentInteractionListener{
         sp_lista_ejercicios = (Spinner) view.findViewById(R.id.sp_F1_docente_FE);
         mp = MediaPlayer.create(getContext(), R.raw.sound_button);
 
+        txt_actividadejercicio=(TextView)view.findViewById(R.id.txt_find1_actividadEjercicio);
+        txt_idejercicio=(TextView)view.findViewById(R.id.txt_find1_idEjercicio);
+        txt_nombreejercicio=(TextView)view.findViewById(R.id.txt_find1_nombreEjercicio);
+        txt_tipodejercicio=(TextView)view.findViewById(R.id.txt_find1_tipoEjercicio);
+
         btn_find = (Button) view.findViewById(R.id.btn_F1_docente_FE);
         btn_find.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +140,14 @@ InicioEjercicioFragment.OnFragmentInteractionListener{
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
+
                     edt_lista_ejercicios.setText(lst_Ejercicios.get(position - 1).getNameEjercicio());
+
+                    txt_actividadejercicio.setText(lst_Ejercicios.get(position - 1).getIdActividad().toString());
+                    txt_idejercicio.setText(lst_Ejercicios.get(position - 1).getIdEjercicio().toString());
+                    txt_nombreejercicio.setText(lst_Ejercicios.get(position - 1).getNameEjercicio());
+                    txt_tipodejercicio.setText(lst_Ejercicios.get(position - 1).getIdTipo().toString());
+
                     System.out.println("nombre ejercicio: " + lst_Ejercicios.get(position - 1).getNameEjercicio());
                     btn_find.setEnabled(true);
                     idEjercicio = lst_Ejercicios.get(position - 1).getIdEjercicio();

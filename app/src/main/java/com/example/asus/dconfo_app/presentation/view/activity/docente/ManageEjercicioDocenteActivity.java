@@ -45,6 +45,13 @@ public class ManageEjercicioDocenteActivity extends AppCompatActivity implements
         cargarBottombar();
     }
 
+    //método que permite volver al padre conservando las variables
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -72,8 +79,8 @@ public class ManageEjercicioDocenteActivity extends AppCompatActivity implements
                         Bundle parametros_1 = new Bundle();
                         parametros_1.putInt("iddocente", idDocente);
 
-                       // findEjercicioFragment = new FindEjercicioFragment();
-                       // findEjercicioFragment.setArguments(parametros_1);
+                        // findEjercicioFragment = new FindEjercicioFragment();
+                        // findEjercicioFragment.setArguments(parametros_1);
 
                         find1EjercicioFragment = new Find1EjercicioFragment();
                         find1EjercicioFragment.setArguments(parametros_1);
