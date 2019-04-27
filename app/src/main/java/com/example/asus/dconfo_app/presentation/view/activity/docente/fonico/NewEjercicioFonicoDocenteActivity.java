@@ -27,7 +27,7 @@ public class NewEjercicioFonicoDocenteActivity extends AppCompatActivity impleme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_ejercicio_docente);
+        setContentView(R.layout.activity_new_ejercicio_fonico_docente);
         Intent intent = this.getIntent();
         Bundle extra = intent.getExtras();
 
