@@ -34,7 +34,7 @@ public class NewEjercicioFonicoDocenteActivity extends AppCompatActivity impleme
         nameDocente = extra.getString("namedocente");
         idDocente= extra.getInt("iddocente");
 
-        showToolbar("Nuevo Ejercicio Léxico, Docente: "+nameDocente, true);
+        showToolbar("Nuevo Ejercicio Fónico, Docente: "+nameDocente, true);
         bottomBar = findViewById(R.id.bottombar_CED_activity);
        // cargarBottombar();
     }

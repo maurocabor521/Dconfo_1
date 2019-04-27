@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.presentation.view.activity.docente.fonico.NewEjercicioFonicoActivity;
+import com.example.asus.dconfo_app.presentation.view.activity.docente.fonico.NewEjercicioFonicoDocenteActivity;
 
 public class HomeDocenteActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -165,7 +166,7 @@ public class HomeDocenteActivity extends AppCompatActivity
             parametros1.putInt("iddocente", iddocente);
             parametros1.putString("namedocente", namedocente);
 
-            intentCreateEjercicioFonico = new Intent(HomeDocenteActivity.this, NewEjercicioFonicoActivity.class);
+            intentCreateEjercicioFonico = new Intent(HomeDocenteActivity.this, NewEjercicioFonicoDocenteActivity.class);
             intentCreateEjercicioFonico.putExtras(parametros1);
             startActivity(intentCreateEjercicioFonico);
             String TAG="TAG";

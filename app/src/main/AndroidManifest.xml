@@ -18,6 +18,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".presentation.view.activity.docente.fonico.NewEjercicioFonicoActivity"></activity>
+        <activity android:name=".presentation.view.activity.docente.fonico.NewEjercicioFonicoDocenteActivity"></activity>
         <activity android:name=".presentation.view.activity.docente.AsignarEstudianteDeberActivity" />
         <activity android:name=".presentation.view.activity.docente.AsignarDeberDocenteActivity" />
         <activity android:name=".MainActivity">
