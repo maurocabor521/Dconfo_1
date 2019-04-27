@@ -44,6 +44,13 @@ public class HomeEstudianteActivity extends AppCompatActivity implements
         cargarBottombar();
     }
 
+    //método que permite volver al padre conservando las variables
+   /* @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }*/
+
     private void cargarBottombar() {
 
         bottomBar.setDefaultTab(R.id.bot_deber_home_deberes);
