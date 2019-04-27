@@ -23,7 +23,8 @@
                 android:id="@+id/container_Tipos_CEFD"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="70dp">
+                android:paddingBottom="70dp"
+                android:background="@color/colorAccent">
 
 
             </FrameLayout>
