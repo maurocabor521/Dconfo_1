@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,11 +17,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.presentation.view.activity.docente.fonico.NewEjercicioFonicoActivity;
 
 public class HomeDocenteActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Intent intentCED;
+    Intent intentCreateEjercicioFonico;
     Intent intentAsignarDeber;
     String namegrupo;
     String namedocente;
@@ -119,9 +122,9 @@ public class HomeDocenteActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_asignardeber) {
             //intentAsignarDeber = new Intent(HomeDocenteActivity.this, AsignarDeberDocenteActivity.class);
-            Bundle args=new Bundle();
-            args.putInt("iddocente",iddocente);
-            args.putInt("idgrupo",idgrupo);
+            Bundle args = new Bundle();
+            args.putInt("iddocente", iddocente);
+            args.putInt("idgrupo", idgrupo);
             intentAsignarDeber = new Intent(HomeDocenteActivity.this, AsignarEstudianteDeberActivity.class);
             intentAsignarDeber.putExtras(args);
             startActivity(intentAsignarDeber);
@@ -155,6 +158,20 @@ public class HomeDocenteActivity extends AppCompatActivity
             intentCED = new Intent(HomeDocenteActivity.this, ManageEjercicioDocenteActivity.class);
             intentCED.putExtras(parametros);
             startActivity(intentCED);
+
+
+        } else if (id == R.id.nav_con_fonica_ejercicios) {
+            Bundle parametros1 = new Bundle();
+            parametros1.putInt("iddocente", iddocente);
+            parametros1.putString("namedocente", namedocente);
+
+            intentCreateEjercicioFonico = new Intent(HomeDocenteActivity.this, NewEjercicioFonicoActivity.class);
+            intentCreateEjercicioFonico.putExtras(parametros1);
+            startActivity(intentCreateEjercicioFonico);
+            String TAG="TAG";
+            Log.i(TAG, "iddocente: " +iddocente);
+            Log.i(TAG, "namedocente: " +namedocente);
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
