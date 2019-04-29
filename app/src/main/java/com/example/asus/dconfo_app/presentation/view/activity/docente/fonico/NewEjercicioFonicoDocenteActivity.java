@@ -72,7 +72,7 @@ public class NewEjercicioFonicoDocenteActivity extends AppCompatActivity impleme
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_Tipos_CEFD, homeFonicoFragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
-                        Toast.makeText(getApplicationContext(), "Ejercicios Home", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Ejercicios Home", Toast.LENGTH_LONG).show();
                         break;
                     case R.id.bott_tipo1_CED:
                         //enviar datos activity a fragment
@@ -88,7 +88,7 @@ public class NewEjercicioFonicoDocenteActivity extends AppCompatActivity impleme
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_Tipos_CEFD, tipo1FonicoFragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
-                        Toast.makeText(getApplicationContext(), "Ejercicio tipo 1", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Ejercicio tipo 1", Toast.LENGTH_LONG).show();
                         break;
                     case R.id.bott_tipo2_CED:
 
@@ -102,7 +102,7 @@ public class NewEjercicioFonicoDocenteActivity extends AppCompatActivity impleme
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_Tipos_CEFD, tipo2FonicoFragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
-                        //Toast.makeText(getApplicationContext(), "Ejercicio Nuevo", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Ejercicio tipo 2", Toast.LENGTH_LONG).show();
                         break;
 
 
