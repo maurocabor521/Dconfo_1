@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,13 +24,24 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.domain.model.VolleySingleton;
+import com.example.asus.dconfo_app.helpers.Globals;
 import com.example.asus.dconfo_app.presentation.view.activity.docente.fonico.BankImagesActivity;
+import com.example.asus.dconfo_app.presentation.view.contract.CategoriaEjerciciosContract;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +51,7 @@ import java.io.IOException;
  * Use the {@link Tipo1FonicoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Tipo1FonicoFragment extends Fragment {
+public class Tipo1FonicoFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -50,11 +62,33 @@ public class Tipo1FonicoFragment extends Fragment {
     private String mParam2;
 
     private EditText edt_letra;
+
+    private EditText edt_letraInicial_img1;
+    private EditText edt_letraFinal_img1;
+    private EditText edt_cantSilaba_img1;
+
+    private EditText edt_letraInicial_img2;
+    private EditText edt_letraFinal_img2;
+    private EditText edt_cantSilaba_img2;
+
+    private EditText edt_letraInicial_img3;
+    private EditText edt_letraFinal_img3;
+    private EditText edt_cantSilaba_img3;
+
+    private EditText edt_letraInicial_img4;
+    private EditText edt_letraFinal_img4;
+    private EditText edt_cantSilaba_img4;
+
     private Button btn_img1;
     private Button btn_img2;
     private Button btn_img3;
     private Button btn_img4;
     private Button btn_enviar;
+
+    private Button btn_crearImg1;
+    private Button btn_crearImg2;
+    private Button btn_crearImg3;
+    private Button btn_crearImg4;
 
     private boolean btn1Activo = false;
     private boolean btn2Activo = false;
@@ -120,11 +154,33 @@ public class Tipo1FonicoFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tipo1_fonico, container, false);
         edt_letra = (EditText) view.findViewById(R.id.edt_fonico_tipo1_vocal);
+
+        edt_letraInicial_img1 = (EditText) view.findViewById(R.id.edt_fonico_inicialLetra_img1);
+        edt_letraFinal_img1 = (EditText) view.findViewById(R.id.edt_fonico_finalLetra_img1);
+        edt_cantSilaba_img1 = (EditText) view.findViewById(R.id.edt_fonico_cantSilabas_img1);
+
+        edt_letraInicial_img2 = (EditText) view.findViewById(R.id.edt_fonico_inicialLetra_img2);
+        edt_letraFinal_img2 = (EditText) view.findViewById(R.id.edt_fonico_finalLetra_img2);
+        edt_cantSilaba_img2 = (EditText) view.findViewById(R.id.edt_fonico_cantSilabas_img2);
+
+        edt_letraInicial_img3 = (EditText) view.findViewById(R.id.edt_fonico_inicialLetra_img3);
+        edt_letraFinal_img3 = (EditText) view.findViewById(R.id.edt_fonico_finalLetra_img3);
+        edt_cantSilaba_img3 = (EditText) view.findViewById(R.id.edt_fonico_cantSilabas_img3);
+
+        edt_letraInicial_img4 = (EditText) view.findViewById(R.id.edt_fonico_inicialLetra_img4);
+        edt_letraFinal_img4 = (EditText) view.findViewById(R.id.edt_fonico_finalLetra_img4);
+        edt_cantSilaba_img4 = (EditText) view.findViewById(R.id.edt_fonico_cantSilabas_img4);
+
         btn_enviar = (Button) view.findViewById(R.id.btn_fonico_doc_enviar);
         btn_img1 = (Button) view.findViewById(R.id.btn_fonico_doc_img1);
         btn_img2 = (Button) view.findViewById(R.id.btn_fonico_doc_img2);
         btn_img3 = (Button) view.findViewById(R.id.btn_fonico_doc_img3);
         btn_img4 = (Button) view.findViewById(R.id.btn_fonico_doc_img4);
+
+        btn_crearImg1 = (Button) view.findViewById(R.id.btn_fonico_crearImg1);
+        btn_crearImg2 = (Button) view.findViewById(R.id.btn_fonico_crearImg2);
+        btn_crearImg3 = (Button) view.findViewById(R.id.btn_fonico_crearImg3);
+        btn_crearImg4 = (Button) view.findViewById(R.id.btn_fonico_crearImg4);
 
         btn_img1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,9 +217,47 @@ public class Tipo1FonicoFragment extends Fragment {
             }
         });
 
+        btn_enviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btn_crearImg1.setOnClickListener(this);
+        btn_crearImg2.setOnClickListener(this);
+        btn_crearImg3.setOnClickListener(this);
+        btn_crearImg4.setOnClickListener(this);
+
         imgFoto = new ImageView(getContext());
         return view;
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.btn_fonico_crearImg1:
+                // code for button when user clicks btnOne.
+                Toast.makeText(getContext(),"crear 1",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_fonico_crearImg2:
+                // code for button when user clicks btnOne.
+                Toast.makeText(getContext(),"crear 2",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_fonico_crearImg3:
+                // code for button when user clicks btnOne.
+                Toast.makeText(getContext(),"crear 3",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_fonico_crearImg4:
+                // code for button when user clicks btnOne.
+                Toast.makeText(getContext(),"crear 4",Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
+    }
+
     //**********************************************************************************************
 
     private void mostrarDialogOpciones() {//part 9
@@ -273,6 +367,104 @@ public class Tipo1FonicoFragment extends Fragment {
         }
     }
 
+    //******************************WEB SERVICE
+    //para iniciar el proceso de llamado al webservice
+    private void cargarWebService() {
+        progreso = new ProgressDialog(getContext());
+        progreso.setMessage("Cargando...");
+        progreso.show();
+        String ip = Globals.url;
+        String url = "http://" + ip + "/proyecto_dconfo/wsJSONRegistroTipo1Fonico.php";//p12.buena
+
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto
+                progreso.hide();
+                if (response.trim().equalsIgnoreCase("registra")) {
+
+                   /* edt_letraInicial_img1.setText("");
+                    edt_letraFinal_img1.setText("");
+                    edt_cantSilaba_img1.setText("");
+
+                    edt_letraInicial_img2.setText("");
+                    edt_letraFinal_img2.setText("");
+                    edt_cantSilaba_img1.setText("");
+
+                    edt_letraInicial_img3.setText("");
+                    edt_letraFinal_img3.setText("");
+                    edt_cantSilaba_img3.setText("");
+
+                    edt_letraInicial_img4.setText("");
+                    edt_letraFinal_img4.setText("");
+                    edt_cantSilaba_img4.setText("");*/
+
+                    Toast.makeText(getContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "No se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "No se ha podido conectar", Toast.LENGTH_LONG).show();
+                String ERROR = "error";
+                Log.d(ERROR, error.toString());
+                System.out.println("error" + error.toString());
+                progreso.hide();
+            }
+        }) {//enviar para metros a webservice, mediante post
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //String idejercicio = edt_CodigoEjercicio.getText().toString();
+                //String idejercicio = "";
+               /* String nameejercicio = edt_nameEjercicio.getText().toString();
+                String iddocente = String.valueOf(idDocente);
+                String idactividad = "2";
+                String idtipo = "3";
+                String imagen = convertirImgString(bitmap);
+                System.out.println("dconfo imagen: "+imagen);
+                String cantidadValida = edt_CantLexCorEjercicio.getText().toString();
+                String oracion = edt_OrtacionEjercicio.getText().toString();*/
+                //System.out.println("cantidadvalida"+cantidadValida);
+                //System.out.println("oracion"+oracion);
+
+                Map<String, String> parametros = new HashMap<>();
+                // parametros.put("idEjercicio", idejercicio);
+              /*  parametros.put("nameEjercicio", nameejercicio);
+                parametros.put("docente_iddocente", iddocente);
+                parametros.put("Actividad_idActividad", idactividad);
+                parametros.put("Tipo_idTipo", idtipo);
+                parametros.put("imagen", imagen);
+                parametros.put("cantidadValidaEG1", cantidadValida);
+                parametros.put("oracion", oracion);*/
+                // parametros.put("imagen", imagen);
+
+                return parametros;
+            }
+        };
+        //request.add(stringRequest);
+        //p25 duplicar tiempo x defecto
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(stringRequest);//p21
+
+        //reemplazar espacios en blanco del nombre por %20
+        // url = url.replace(" ", "%20");
+
+        //hace el llamado a la url,no usa en p12
+        /*jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        request.add(jsonObjectRequest);*/
+    }
+
+    private String convertirImgString(Bitmap bitmap) {
+        //recibe un bitmap
+        ByteArrayOutputStream array = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, array);
+        byte[] imagenByte = array.toByteArray();
+        //codifica a base64
+        String imagenString = Base64.encodeToString(imagenByte, Base64.DEFAULT);
+
+        return imagenString;
+    }
 
     //**********************************************************************************************
 
@@ -299,6 +491,7 @@ public class Tipo1FonicoFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
 
     /**
      * This interface must be implemented by activities that contain this

@@ -102,7 +102,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:orientation="horizontal"
-                            android:layout_marginBottom="30dp">
+                            >
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -111,7 +111,7 @@
                                 android:layout_weight="0.3">
 
                                 <EditText
-                                    android:id="@+id/edt_fonico_inicialVocal_img1"
+                                    android:id="@+id/edt_fonico_inicialLetra_img1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -134,7 +134,7 @@
                                 android:layout_weight="0.3">
 
                                 <EditText
-                                    android:id="@+id/edt_fonico_finalVocal_img1"
+                                    android:id="@+id/edt_fonico_finalLetra_img1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -174,6 +174,17 @@
 
                         </LinearLayout>
 
+                        <Button
+                            android:id="@+id/btn_fonico_crearImg1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:text="Crear Imagen 1"
+                            android:textStyle="bold"
+                            android:theme="@style/RaisedButtonDark"
+                            android:layout_marginBottom="30dp"
+                            />
+
                     </LinearLayout>
 
 
@@ -202,7 +213,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:orientation="horizontal"
-                            android:layout_marginBottom="30dp">
+                            >
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -211,7 +222,7 @@
                                 android:layout_weight="0.3">
 
                                 <EditText
-                                    android:id="@+id/edt_fonico_inicialVocal_img2"
+                                    android:id="@+id/edt_fonico_inicialLetra_img2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -234,7 +245,7 @@
                                 android:layout_weight="0.3">
 
                                 <EditText
-                                    android:id="@+id/edt_fonico_finalVocal_img2"
+                                    android:id="@+id/edt_fonico_finalLetra_img2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -273,7 +284,16 @@
                             </LinearLayout>
 
                         </LinearLayout>
-
+                        <Button
+                            android:id="@+id/btn_fonico_crearImg2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:text="Crear Imagen 2"
+                            android:textStyle="bold"
+                            android:theme="@style/RaisedButtonDark"
+                            android:layout_marginBottom="30dp"
+                            />
                     </LinearLayout>
 
 
@@ -302,7 +322,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:orientation="horizontal"
-                            android:layout_marginBottom="30dp">
+                            >
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -311,7 +331,7 @@
                                 android:layout_weight="0.3">
 
                                 <EditText
-                                    android:id="@+id/edt_fonico_inicialVocal_img3"
+                                    android:id="@+id/edt_fonico_inicialLetra_img3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -334,7 +354,7 @@
                                 android:layout_weight="0.3">
 
                                 <EditText
-                                    android:id="@+id/edt_fonico_finalVocal_img3"
+                                    android:id="@+id/edt_fonico_finalLetra_img3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -373,7 +393,16 @@
                             </LinearLayout>
 
                         </LinearLayout>
-
+                        <Button
+                            android:id="@+id/btn_fonico_crearImg3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:text="Crear Imagen 3"
+                            android:textStyle="bold"
+                            android:theme="@style/RaisedButtonDark"
+                            android:layout_marginBottom="30dp"
+                            />
                     </LinearLayout>
 
                     <LinearLayout
@@ -409,7 +438,7 @@
                                 android:layout_weight="0.3">
 
                                 <EditText
-                                    android:id="@+id/edt_fonico_inicialVocal_img4"
+                                    android:id="@+id/edt_fonico_inicialLetra_img4"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -432,7 +461,7 @@
                                 android:layout_weight="0.3">
 
                                 <EditText
-                                    android:id="@+id/edt_fonico_finalVocal_img4"
+                                    android:id="@+id/edt_fonico_finalLetra_img4"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -471,6 +500,16 @@
                             </LinearLayout>
 
                         </LinearLayout>
+                        <Button
+                            android:id="@+id/btn_fonico_crearImg4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:text="Crear Imagen 4"
+                            android:textStyle="bold"
+                            android:theme="@style/RaisedButtonDark"
+
+                           />
 
                     </LinearLayout>
 
