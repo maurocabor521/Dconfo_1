@@ -44,12 +44,12 @@
                 <EditText
                     android:id="@+id/edt_fonico_tipo1_vocal"
                     android:layout_width="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_height="wrap_content"
-                    android:textSize="50dp"
+                    android:layout_gravity="center"
                     android:digits="abcdefghijlklmnñopqrstuvwxyz
                              ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
-                    android:maxLength="1"/>
+                    android:maxLength="1"
+                    android:textSize="50dp" />
 
 
             </LinearLayout>
@@ -69,66 +69,416 @@
                     android:textStyle="bold" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="30dp"
                     android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/btn_fonico_doc_img1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/ic_no_foto_80dp" />
 
-                    <TextView
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center"
-                        android:text="Imagen 1" />
+                        android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/btn_fonico_doc_img2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/ic_no_foto_80dp" />
+                        <Button
+                            android:id="@+id/btn_fonico_doc_img1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/ic_no_foto_80dp" />
 
-                    <TextView
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:gravity="center"
+                            android:text="Imagen 1" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="30dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="0.3">
+
+                                <EditText
+                                    android:id="@+id/edt_fonico_inicialVocal_img1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:digits="abcdefghijlklmnñopqrstuvwxyz
+                                    ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+                                    android:maxLength="1"
+                                    android:textSize="20dp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Letra Inicial"
+                                    android:gravity="center"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="0.3">
+
+                                <EditText
+                                    android:id="@+id/edt_fonico_finalVocal_img1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:digits="abcdefghijlklmnñopqrstuvwxyz
+                                    ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+                                    android:maxLength="1"
+                                    android:textSize="20dp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Letra Final"
+                                    android:gravity="center"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="0.3">
+
+                                <EditText
+                                    android:id="@+id/edt_fonico_cantSilabas_img1"
+                                    android:layout_width="40dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:digits="0123456789"
+                                    android:maxLength="2"
+                                    android:textSize="20dp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Cant. Sílabas"
+                                    android:gravity="center"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center"
-                        android:text="Imagen 2" />
+                        android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/btn_fonico_doc_img3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/ic_no_foto_80dp" />
+                        <Button
+                            android:id="@+id/btn_fonico_doc_img2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/ic_no_foto_80dp" />
 
-                    <TextView
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:gravity="center"
+                            android:text="Imagen 2" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="30dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="0.3">
+
+                                <EditText
+                                    android:id="@+id/edt_fonico_inicialVocal_img2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:digits="abcdefghijlklmnñopqrstuvwxyz
+                                    ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+                                    android:maxLength="1"
+                                    android:textSize="20dp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Letra Inicial"
+                                    android:gravity="center"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="0.3">
+
+                                <EditText
+                                    android:id="@+id/edt_fonico_finalVocal_img2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:digits="abcdefghijlklmnñopqrstuvwxyz
+                                    ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+                                    android:maxLength="1"
+                                    android:textSize="20dp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Letra Final"
+                                    android:gravity="center"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="0.3">
+
+                                <EditText
+                                    android:id="@+id/edt_fonico_cantSilabas_img2"
+                                    android:layout_width="40dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:digits="0123456789"
+                                    android:maxLength="2"
+                                    android:textSize="20dp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Cant. Sílabas"
+                                    android:gravity="center"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center"
-                        android:text="Imagen 3" />
+                        android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/btn_fonico_doc_img4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/ic_no_foto_80dp" />
+                        <Button
+                            android:id="@+id/btn_fonico_doc_img3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/ic_no_foto_80dp" />
 
-                    <TextView
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:gravity="center"
+                            android:text="Imagen 3" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="30dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="0.3">
+
+                                <EditText
+                                    android:id="@+id/edt_fonico_inicialVocal_img3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:digits="abcdefghijlklmnñopqrstuvwxyz
+                                    ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+                                    android:maxLength="1"
+                                    android:textSize="20dp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Letra Inicial"
+                                    android:gravity="center"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="0.3">
+
+                                <EditText
+                                    android:id="@+id/edt_fonico_finalVocal_img3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:digits="abcdefghijlklmnñopqrstuvwxyz
+                                    ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+                                    android:maxLength="1"
+                                    android:textSize="20dp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Letra Final"
+                                    android:gravity="center"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="0.3">
+
+                                <EditText
+                                    android:id="@+id/edt_fonico_cantSilabas_img3"
+                                    android:layout_width="40dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:digits="0123456789"
+                                    android:maxLength="2"
+                                    android:textSize="20dp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Cant. Sílabas"
+                                    android:gravity="center"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Imagen 4" />
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/btn_fonico_doc_img4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/ic_no_foto_80dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:gravity="center"
+                            android:text="Imagen 4" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="0.3">
+
+                                <EditText
+                                    android:id="@+id/edt_fonico_inicialVocal_img4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:digits="abcdefghijlklmnñopqrstuvwxyz
+                                    ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+                                    android:maxLength="1"
+                                    android:textSize="20dp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Letra Inicial"
+                                    android:gravity="center"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="0.3">
+
+                                <EditText
+                                    android:id="@+id/edt_fonico_finalVocal_img4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:digits="abcdefghijlklmnñopqrstuvwxyz
+                                    ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+                                    android:maxLength="1"
+                                    android:textSize="20dp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Letra Final"
+                                    android:gravity="center"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="0.3">
+
+                                <EditText
+                                    android:id="@+id/edt_fonico_cantSilabas_img4"
+                                    android:layout_width="40dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:digits="0123456789"
+                                    android:maxLength="2"
+                                    android:textSize="20dp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Cant. Sílabas"
+                                    android:gravity="center"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+
+
+
+
                 </LinearLayout>
 
                 <Button

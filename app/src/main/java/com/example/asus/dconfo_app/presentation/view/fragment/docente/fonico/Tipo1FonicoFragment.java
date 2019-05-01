@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.presentation.view.activity.docente.fonico.BankImagesActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -166,13 +167,20 @@ public class Tipo1FonicoFragment extends Fragment {
     //**********************************************************************************************
 
     private void mostrarDialogOpciones() {//part 9
-        final CharSequence[] opciones = {"Tomar Foto", "Elegir de Galeria", "Cancelar"};
+        final CharSequence[] opciones = {"Elegir de Banco de Imágenes", "Elegir de Galeria", "Cancelar"};
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Elige una Opción");
         builder.setItems(opciones, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (opciones[i].equals("Elegir de Banco de Imágenes")) {
+                    Intent intent = new Intent(getActivity(), BankImagesActivity.class);
+
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.setType("image/*");
+
+                    startActivityForResult(intent.createChooser(intent, "Seleccione"), COD_SELECCIONA);
                     //abriCamara();//part 10 tomar foto
                     //Toast.makeText(getContext(), "Cargar Cámara", Toast.LENGTH_LONG).show();
                 } else {
