@@ -17,8 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".presentation.view.activity.docente.fonico.NewEjercicioFonicoActivity"></activity>
-        <activity android:name=".presentation.view.activity.docente.fonico.NewEjercicioFonicoDocenteActivity"></activity>
+        <activity android:name=".presentation.view.activity.docente.fonico.BankImagesActivity"></activity>
+        <activity android:name=".presentation.view.activity.docente.fonico.NewEjercicioFonicoActivity" />
+        <activity android:name=".presentation.view.activity.docente.fonico.NewEjercicioFonicoDocenteActivity" />
         <activity android:name=".presentation.view.activity.docente.AsignarEstudianteDeberActivity" />
         <activity android:name=".presentation.view.activity.docente.AsignarDeberDocenteActivity" />
         <activity android:name=".MainActivity">
@@ -56,7 +57,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".presentation.view.activity.docente.ManageCursosDocenteActivity" />
         </activity>
-        <activity android:name=".presentation.view.activity.docente.ManageEjercicioDocenteActivity"></activity>
+        <activity android:name=".presentation.view.activity.docente.ManageEjercicioDocenteActivity" />
         <!--
         <activity
             android:name=".presentation.view.activity.docente.ManageEjercicioDocenteActivity"

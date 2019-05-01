@@ -172,9 +172,9 @@ public class Tipo1FonicoFragment extends Fragment {
         builder.setItems(opciones, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if (opciones[i].equals("Tomar Foto")) {
+                if (opciones[i].equals("Elegir de Banco de Imágenes")) {
                     //abriCamara();//part 10 tomar foto
-                    Toast.makeText(getContext(), "Cargar Cámara", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getContext(), "Cargar Cámara", Toast.LENGTH_LONG).show();
                 } else {
                     if (opciones[i].equals("Elegir de Galeria")) {
                         /*Intent intent = new Intent(Intent.ACTION_GET_CONTENT,
