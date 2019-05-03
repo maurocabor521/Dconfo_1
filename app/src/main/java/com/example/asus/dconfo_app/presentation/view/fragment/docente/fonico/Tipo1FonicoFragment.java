@@ -270,11 +270,13 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                 if (opciones[i].equals("Elegir de Banco de Imágenes")) {
                     Intent intent = new Intent(getActivity(), BankImagesActivity.class);
 
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
-                    intent.setType("image/*");
+                    //intent.setAction(Intent.ACTION_GET_CONTENT);
+                    intent.setAction(Intent.ACTION_PICK);
+                    //intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    //intent.setType("image/*");
 
                     startActivityForResult(intent.createChooser(intent, "Seleccione"), COD_SELECCIONA);
+                    System.out.println("info: "+intent);
                     //abriCamara();//part 10 tomar foto
                     //Toast.makeText(getContext(), "Cargar Cámara", Toast.LENGTH_LONG).show();
                 } else {
