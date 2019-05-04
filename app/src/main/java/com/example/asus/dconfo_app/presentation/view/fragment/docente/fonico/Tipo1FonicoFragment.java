@@ -301,7 +301,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         btn_enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                cargarWebService_2();
             }
         });
 
@@ -320,6 +320,79 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         imgFoto = new ImageView(getContext());
         return view;
     }
+
+    //----------------------------------------------------------------------------------------------
+    //******************************WEB SERVICE
+    //para iniciar el proceso de llamado al webservice
+    private void cargarWebService_2() {
+       /* progreso = new ProgressDialog(getContext());
+        progreso.setMessage("Cargando...");
+        progreso.show();*/
+        String ip = Globals.url;
+        String url = "http://" + ip + "/proyecto_dconfo/wsJSONRegistroTipo1Fonico.php";//p12.buena
+
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto
+//                progreso.hide();
+                if (response.trim().equalsIgnoreCase("registra")) {
+                    edt_letra.setText("");
+
+                    Toast.makeText(getContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "No se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "No se ha podido conectar", Toast.LENGTH_LONG).show();
+                String ERROR = "error";
+                Log.d(ERROR, error.toString());
+                System.out.println("error" + error.toString());
+                //progreso.hide();
+            }
+        }) {//enviar para metros a webservice, mediante post
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                String idEjercicio = "7";
+                String nameEjercicio = "ejG7";
+                String docente_iddocente = "220";
+                String Tipo_idTipo = "1";
+                String Actividad_idActividad = "1";
+                String letra_inicial = edt_letra.getText().toString();
+                String letra_final = "";
+
+                System.out.println("letra inicial"+letra_inicial);
+
+                Map<String, String> parametros = new HashMap<>();
+
+                parametros.put("idEjercicio", idEjercicio);
+                parametros.put("nameEjercicio", nameEjercicio);
+                parametros.put("docente_iddocente", docente_iddocente);
+                parametros.put("Tipo_idTipo", Tipo_idTipo);
+                parametros.put("Actividad_idActividad", Actividad_idActividad);
+                parametros.put("letra_inicial", letra_inicial);
+                parametros.put("letra_final", letra_final);
+
+                return parametros;
+            }
+        };
+        //request.add(stringRequest);
+        //p25 duplicar tiempo x defecto
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(stringRequest);//p21
+
+        //reemplazar espacios en blanco del nombre por %20
+        // url = url.replace(" ", "%20");
+
+        //hace el llamado a la url,no usa en p12
+        /*jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        request.add(jsonObjectRequest);*/
+    }
+
+    //----------------------------------------------------------------------------------------------
 
     private void cargarWebService_1() {
 
