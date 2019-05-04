@@ -41,6 +41,7 @@ public class ImagenUrlAdapter extends RecyclerView.Adapter<ImagenUrlAdapter.Usua
         RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         vista.setLayoutParams(layoutParams);
+        vista.setOnClickListener(this);
         return new UsuariosHolder(vista);
     }
 

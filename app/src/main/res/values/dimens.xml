@@ -7,7 +7,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbarlayout_height">70dp</dimen>
     <dimen name="height_cardView">100dp</dimen>
-    <dimen name="cornerRadius">4dp</dimen>
+    <dimen name="cornerRadius">8dp</dimen>
     <dimen name="textsize_username_card">15sp</dimen>
     <dimen name="firstword_textsize_card">10sp</dimen>
     <dimen name="timecard_marginleft_card">5sp</dimen>

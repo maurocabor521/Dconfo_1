@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,17 +31,25 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.domain.model.Imagen;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
 import com.example.asus.dconfo_app.presentation.view.activity.docente.fonico.BankImagesActivity;
+import com.example.asus.dconfo_app.presentation.view.adapter.ImagenUrlAdapter;
 import com.example.asus.dconfo_app.presentation.view.contract.CategoriaEjerciciosContract;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,7 +61,8 @@ import java.util.Map;
  * Use the {@link Tipo1FonicoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Tipo1FonicoFragment extends Fragment implements View.OnClickListener {
+public class Tipo1FonicoFragment extends Fragment implements View.OnClickListener, Response.Listener<JSONObject>,
+        Response.ErrorListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -80,7 +91,9 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
     private EditText edt_cantSilaba_img4;
 
     private Button btn_img1;
+    private ImageView btn_img_1;
     private Button btn_img2;
+    private ImageView btn_img_2;
     private Button btn_img3;
     private Button btn_img4;
     private Button btn_enviar;
@@ -91,14 +104,20 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
     private Button btn_crearImg4;
 
     private boolean btn1Activo = false;
+    private boolean btn_1Activo = false;
     private boolean btn2Activo = false;
+    private boolean btn_2Activo = false;
     private boolean btn3Activo = false;
     private boolean btn4Activo = false;
+
+    private RecyclerView rv_tipo1Fonico;
 
     ProgressDialog progreso;
     ImageView imgFoto;
     File fileImagen;
     Bitmap bitmap;
+
+    ArrayList<Imagen> listaImagenes;
 
     private final int MIS_PERMISOS = 100;
     private static final int COD_SELECCIONA = 10;
@@ -173,7 +192,13 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
 
         btn_enviar = (Button) view.findViewById(R.id.btn_fonico_doc_enviar);
         btn_img1 = (Button) view.findViewById(R.id.btn_fonico_doc_img1);
+
+        btn_img_1 = (ImageView) view.findViewById(R.id.btn_fonico_doc_img_1);
+
         btn_img2 = (Button) view.findViewById(R.id.btn_fonico_doc_img2);
+
+        btn_img_2 = (ImageView) view.findViewById(R.id.btn_fonico_doc_img_2);
+
         btn_img3 = (Button) view.findViewById(R.id.btn_fonico_doc_img3);
         btn_img4 = (Button) view.findViewById(R.id.btn_fonico_doc_img4);
 
@@ -182,6 +207,8 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         btn_crearImg3 = (Button) view.findViewById(R.id.btn_fonico_crearImg3);
         btn_crearImg4 = (Button) view.findViewById(R.id.btn_fonico_crearImg4);
 
+        listaImagenes = new ArrayList<>();
+
         btn_img1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,6 +216,14 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                 mostrarDialogOpciones();
             }
         });
+        btn_img_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_1Activo = true;
+                mostrarDialogOpciones();
+            }
+        });
+
         btn_img2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,6 +231,14 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                 mostrarDialogOpciones();
             }
         });
+        btn_img_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_2Activo = true;
+                mostrarDialogOpciones();
+            }
+        });
+
         btn_img3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -224,6 +267,10 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
             }
         });
 
+        rv_tipo1Fonico = (RecyclerView) view.findViewById(R.id.rv_tipo1Fonico);
+        rv_tipo1Fonico.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_tipo1Fonico.setHasFixedSize(true);
+
         btn_crearImg1.setOnClickListener(this);
         btn_crearImg2.setOnClickListener(this);
         btn_crearImg3.setOnClickListener(this);
@@ -233,25 +280,161 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         return view;
     }
 
+    private void cargarWebService_1() {
+
+       /* progreso.setMessage("Cargando...");
+        progreso.show();*/
+        // String ip = getString(R.string.ip);
+        //int iddoc=20181;
+        String iddoc = "20181";
+        String url_lh = Globals.url;
+
+        //String url = "http://192.168.0.13/proyecto_dconfo/wsJSONConsultarListaCursosDocente.php?iddocente=" + txtiddoc.getText().toString();
+
+        // String url = "http://"+url_lh+"/proyecto_dconfo/wsJSONConsultarListaCursosDocente.php?iddocente=" + txtiddoc.getText().toString();
+        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSON1ConsultarListaImagenes.php";
+        // http://localhost/proyecto_dconfo/
+///wsJSONConsultarEstudiante.php?documento=" + edt_codigo.getText().toString();
+        url = url.replace(" ", "%20");
+        //hace el llamado a la url
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+
+        final int MY_DEFAULT_TIMEOUT = 15000;
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_DEFAULT_TIMEOUT,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        // request.add(jsonObjectRequest);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);//p21
+        //Toast.makeText(getApplicationContext(), "web service 1111", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        //progreso.hide();
+        Toast.makeText(getContext(), "No se puede cone , grupo doc" + error.toString(), Toast.LENGTH_LONG).show();
+        System.out.println();
+        Log.d("ERROR", error.toString());
+        //progreso.hide();
+    }
+
+    // si esta bien el llamado a la url entonces entra a este metodo
+    @Override
+    public void onResponse(final JSONObject response) {
+        //progreso.hide();
+        //Toast.makeText(getApplicationContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
+        Imagen imagen = null;
+        JSONArray json = response.optJSONArray("imagen");
+
+        try {
+            for (int i = 0; i < json.length(); i++) {
+                imagen = new Imagen();
+                JSONObject jsonObject = null;
+                jsonObject = json.getJSONObject(i);
+                // jsonObject = new JSONObject(response);
+                imagen.setIdImagen(jsonObject.optInt("idImagen_Ejercicio"));
+                imagen.setNameImagen(jsonObject.optString("name_Imagen_Ejercicio"));
+                imagen.setRutaImagen(jsonObject.optString("ruta_Imagen_Ejercicio"));
+                imagen.setLetraInicialImagen(jsonObject.optString("letra_inicial_Imagen"));
+                imagen.setLetraFinalImagen(jsonObject.optString("letra_final_Imagen"));
+                imagen.setCantSilabasImagen(jsonObject.optInt("cant_silabas_Imagen"));
+
+                listaImagenes.add(imagen);
+
+//idgrupo,namegrupo,curso_idcurso,curso_Instituto_idInstituto
+            }
+
+            ImagenUrlAdapter imagenUrlAdapter = new ImagenUrlAdapter(listaImagenes, getContext());
+            imagenUrlAdapter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    String rutaImagen = listaImagenes.get(rv_tipo1Fonico.
+                            getChildAdapterPosition(v)).getRutaImagen();
+
+                    cargarImagenWebService(rutaImagen);
+
+                    //Toast.makeText(getApplicationContext(), "on click: " + rutaImagen, Toast.LENGTH_LONG).show();
+                    System.out.println("on click: " + rutaImagen);
+                    //Toast.makeText(getApplicationContext(), "on click: " , Toast.LENGTH_LONG).show();
+
+                }
+            });
+
+            rv_tipo1Fonico.setAdapter(imagenUrlAdapter);
+
+            //Toast.makeText(getApplicationContext(), "listagrupos: " + listaGrupos.size(), Toast.LENGTH_LONG).show();
+            //Log.i("size", "lista Imágenes: " + listaImagenes.get(0).getNameImagen());
+
+            //rv_bankimages.setAdapter(gruposDocenteAdapter);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.d("error", response.toString());
+
+            Toast.makeText(getContext(), "No se ha podido establecer conexión: " + response.toString(), Toast.LENGTH_LONG).show();
+
+            //progreso.hide();
+        }
+    }
+
+    private void cargarImagenWebService(String rutaImagen) {
+
+        // String ip = context.getString(R.string.ip);
+
+        String url_lh = Globals.url;
+
+        String urlImagen = "http://" + url_lh + "/proyecto_dconfo/" + rutaImagen;
+        urlImagen = urlImagen.replace(" ", "%20");
+
+        ImageRequest imageRequest = new ImageRequest(urlImagen, new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap response) {
+                if (btn_1Activo) {
+                    btn_img_1.setBackground(null);
+                    btn_img_1.setImageBitmap(response);
+                    btn_1Activo = false;
+                } else if (btn_2Activo) {
+                    btn_img_2.setBackground(null);
+                    btn_img_2.setImageBitmap(response);
+                    btn_2Activo = false;
+
+                }
+                // iv_bank_prueba.setBackground(null);
+                // iv_bank_prueba.setImageBitmap(response);
+            }
+        }, 0, 0, ImageView.ScaleType.CENTER, null, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "Error al cargar la imagen", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //request.add(imageRequest);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(imageRequest);
+    }
+
+
+    //----------------------------------------------------------------------------------------------
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
 
             case R.id.btn_fonico_crearImg1:
                 // code for button when user clicks btnOne.
-                Toast.makeText(getContext(),"crear 1",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "crear 1", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_fonico_crearImg2:
                 // code for button when user clicks btnOne.
-                Toast.makeText(getContext(),"crear 2",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "crear 2", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_fonico_crearImg3:
                 // code for button when user clicks btnOne.
-                Toast.makeText(getContext(),"crear 3",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "crear 3", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_fonico_crearImg4:
                 // code for button when user clicks btnOne.
-                Toast.makeText(getContext(),"crear 4",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "crear 4", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
@@ -268,7 +451,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (opciones[i].equals("Elegir de Banco de Imágenes")) {
-                    Intent intent = new Intent(getActivity(), BankImagesActivity.class);
+                /*    Intent intent = new Intent(getActivity(), BankImagesActivity.class);
 
                     //intent.setAction(Intent.ACTION_GET_CONTENT);
                     intent.setAction(Intent.ACTION_PICK);
@@ -276,9 +459,11 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                     //intent.setType("image/*");
 
                     startActivityForResult(intent.createChooser(intent, "Seleccione"), COD_SELECCIONA);
-                    System.out.println("info: "+intent);
+                    System.out.println("info: " + intent);
                     //abriCamara();//part 10 tomar foto
                     //Toast.makeText(getContext(), "Cargar Cámara", Toast.LENGTH_LONG).show();
+                    */
+                    cargarWebService_1();
                 } else {
                     if (opciones[i].equals("Elegir de Galeria")) {
                         /*Intent intent = new Intent(Intent.ACTION_GET_CONTENT,

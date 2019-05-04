@@ -57,8 +57,67 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/btn_fonico_doc_img_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/ic_no_foto_80dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:gravity="center"
+                        android:text="Imagen 1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/btn_fonico_doc_img_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/ic_no_foto_80dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:gravity="center"
+                        android:text="Imagen 2" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_tipo1Fonico">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="invisible">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -74,7 +133,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="30dp"
                     android:orientation="vertical">
-
 
 
                     <LinearLayout
@@ -101,14 +159,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:orientation="horizontal"
-                            >
+                            android:orientation="horizontal">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_weight="0.3">
+                                android:layout_weight="0.3"
+                                android:orientation="vertical">
 
                                 <EditText
                                     android:id="@+id/edt_fonico_inicialLetra_img1"
@@ -123,15 +180,15 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Letra Inicial"
-                                    android:gravity="center"/>
+                                    android:gravity="center"
+                                    android:text="Letra Inicial" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_weight="0.3">
+                                android:layout_weight="0.3"
+                                android:orientation="vertical">
 
                                 <EditText
                                     android:id="@+id/edt_fonico_finalLetra_img1"
@@ -146,15 +203,15 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Letra Final"
-                                    android:gravity="center"/>
+                                    android:gravity="center"
+                                    android:text="Letra Final" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_weight="0.3">
+                                android:layout_weight="0.3"
+                                android:orientation="vertical">
 
                                 <EditText
                                     android:id="@+id/edt_fonico_cantSilabas_img1"
@@ -168,8 +225,8 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Cant. Sílabas"
-                                    android:gravity="center"/>
+                                    android:gravity="center"
+                                    android:text="Cant. Sílabas" />
                             </LinearLayout>
 
                         </LinearLayout>
@@ -179,11 +236,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="20dp"
+                            android:layout_marginBottom="30dp"
                             android:text="Crear Imagen 1"
                             android:textStyle="bold"
-                            android:theme="@style/RaisedButtonDark"
-                            android:layout_marginBottom="30dp"
-                            />
+                            android:theme="@style/RaisedButtonDark" />
 
                     </LinearLayout>
 
@@ -212,14 +268,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:orientation="horizontal"
-                            >
+                            android:orientation="horizontal">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_weight="0.3">
+                                android:layout_weight="0.3"
+                                android:orientation="vertical">
 
                                 <EditText
                                     android:id="@+id/edt_fonico_inicialLetra_img2"
@@ -234,15 +289,15 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Letra Inicial"
-                                    android:gravity="center"/>
+                                    android:gravity="center"
+                                    android:text="Letra Inicial" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_weight="0.3">
+                                android:layout_weight="0.3"
+                                android:orientation="vertical">
 
                                 <EditText
                                     android:id="@+id/edt_fonico_finalLetra_img2"
@@ -257,15 +312,15 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Letra Final"
-                                    android:gravity="center"/>
+                                    android:gravity="center"
+                                    android:text="Letra Final" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_weight="0.3">
+                                android:layout_weight="0.3"
+                                android:orientation="vertical">
 
                                 <EditText
                                     android:id="@+id/edt_fonico_cantSilabas_img2"
@@ -279,21 +334,21 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Cant. Sílabas"
-                                    android:gravity="center"/>
+                                    android:gravity="center"
+                                    android:text="Cant. Sílabas" />
                             </LinearLayout>
 
                         </LinearLayout>
+
                         <Button
                             android:id="@+id/btn_fonico_crearImg2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="20dp"
+                            android:layout_marginBottom="30dp"
                             android:text="Crear Imagen 2"
                             android:textStyle="bold"
-                            android:theme="@style/RaisedButtonDark"
-                            android:layout_marginBottom="30dp"
-                            />
+                            android:theme="@style/RaisedButtonDark" />
                     </LinearLayout>
 
 
@@ -321,14 +376,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:orientation="horizontal"
-                            >
+                            android:orientation="horizontal">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_weight="0.3">
+                                android:layout_weight="0.3"
+                                android:orientation="vertical">
 
                                 <EditText
                                     android:id="@+id/edt_fonico_inicialLetra_img3"
@@ -343,15 +397,15 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Letra Inicial"
-                                    android:gravity="center"/>
+                                    android:gravity="center"
+                                    android:text="Letra Inicial" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_weight="0.3">
+                                android:layout_weight="0.3"
+                                android:orientation="vertical">
 
                                 <EditText
                                     android:id="@+id/edt_fonico_finalLetra_img3"
@@ -366,15 +420,15 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Letra Final"
-                                    android:gravity="center"/>
+                                    android:gravity="center"
+                                    android:text="Letra Final" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_weight="0.3">
+                                android:layout_weight="0.3"
+                                android:orientation="vertical">
 
                                 <EditText
                                     android:id="@+id/edt_fonico_cantSilabas_img3"
@@ -388,21 +442,21 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Cant. Sílabas"
-                                    android:gravity="center"/>
+                                    android:gravity="center"
+                                    android:text="Cant. Sílabas" />
                             </LinearLayout>
 
                         </LinearLayout>
+
                         <Button
                             android:id="@+id/btn_fonico_crearImg3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="20dp"
+                            android:layout_marginBottom="30dp"
                             android:text="Crear Imagen 3"
                             android:textStyle="bold"
-                            android:theme="@style/RaisedButtonDark"
-                            android:layout_marginBottom="30dp"
-                            />
+                            android:theme="@style/RaisedButtonDark" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -434,8 +488,8 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_weight="0.3">
+                                android:layout_weight="0.3"
+                                android:orientation="vertical">
 
                                 <EditText
                                     android:id="@+id/edt_fonico_inicialLetra_img4"
@@ -450,15 +504,15 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Letra Inicial"
-                                    android:gravity="center"/>
+                                    android:gravity="center"
+                                    android:text="Letra Inicial" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_weight="0.3">
+                                android:layout_weight="0.3"
+                                android:orientation="vertical">
 
                                 <EditText
                                     android:id="@+id/edt_fonico_finalLetra_img4"
@@ -473,15 +527,15 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Letra Final"
-                                    android:gravity="center"/>
+                                    android:gravity="center"
+                                    android:text="Letra Final" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_weight="0.3">
+                                android:layout_weight="0.3"
+                                android:orientation="vertical">
 
                                 <EditText
                                     android:id="@+id/edt_fonico_cantSilabas_img4"
@@ -495,11 +549,12 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Cant. Sílabas"
-                                    android:gravity="center"/>
+                                    android:gravity="center"
+                                    android:text="Cant. Sílabas" />
                             </LinearLayout>
 
                         </LinearLayout>
+
                         <Button
                             android:id="@+id/btn_fonico_crearImg4"
                             android:layout_width="match_parent"
@@ -509,13 +564,9 @@
                             android:textStyle="bold"
                             android:theme="@style/RaisedButtonDark"
 
-                           />
+                            />
 
                     </LinearLayout>
-
-
-
-
 
 
                 </LinearLayout>
