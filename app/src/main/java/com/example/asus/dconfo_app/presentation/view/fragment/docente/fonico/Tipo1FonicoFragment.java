@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -95,7 +96,9 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
     private Button btn_img2;
     private ImageView btn_img_2;
     private Button btn_img3;
+    private ImageView btn_img_3;
     private Button btn_img4;
+    private ImageView btn_img_4;
     private Button btn_enviar;
 
     private Button btn_crearImg1;
@@ -108,7 +111,14 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
     private boolean btn2Activo = false;
     private boolean btn_2Activo = false;
     private boolean btn3Activo = false;
+    private boolean btn_3Activo = false;
     private boolean btn4Activo = false;
+    private boolean btn_4Activo = false;
+
+    private TextView txt_id_img1;
+    private TextView txt_id_img2;
+    private TextView txt_id_img3;
+    private TextView txt_id_img4;
 
     private RecyclerView rv_tipo1Fonico;
 
@@ -190,6 +200,11 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         edt_letraFinal_img4 = (EditText) view.findViewById(R.id.edt_fonico_finalLetra_img4);
         edt_cantSilaba_img4 = (EditText) view.findViewById(R.id.edt_fonico_cantSilabas_img4);
 
+        txt_id_img1 = (TextView) view.findViewById(R.id.txt_fonico_id_img1);
+        txt_id_img2 = (TextView) view.findViewById(R.id.txt_fonico_id_img2);
+        txt_id_img3 = (TextView) view.findViewById(R.id.txt_fonico_id_img3);
+        txt_id_img4 = (TextView) view.findViewById(R.id.txt_fonico_id_img4);
+
         btn_enviar = (Button) view.findViewById(R.id.btn_fonico_doc_enviar);
         btn_img1 = (Button) view.findViewById(R.id.btn_fonico_doc_img1);
 
@@ -200,7 +215,10 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         btn_img_2 = (ImageView) view.findViewById(R.id.btn_fonico_doc_img_2);
 
         btn_img3 = (Button) view.findViewById(R.id.btn_fonico_doc_img3);
+        btn_img_3 = (ImageView) view.findViewById(R.id.btn_fonico_doc_img_3);
+
         btn_img4 = (Button) view.findViewById(R.id.btn_fonico_doc_img4);
+        btn_img_4 = (ImageView) view.findViewById(R.id.btn_fonico_doc_img_4);
 
         btn_crearImg1 = (Button) view.findViewById(R.id.btn_fonico_crearImg1);
         btn_crearImg2 = (Button) view.findViewById(R.id.btn_fonico_crearImg2);
@@ -208,6 +226,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         btn_crearImg4 = (Button) view.findViewById(R.id.btn_fonico_crearImg4);
 
         listaImagenes = new ArrayList<>();
+
 
         btn_img1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,6 +239,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
             @Override
             public void onClick(View v) {
                 btn_1Activo = true;
+                //rv_tipo1Fonico.setVisibility(View.VISIBLE);
                 mostrarDialogOpciones();
             }
         });
@@ -235,6 +255,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
             @Override
             public void onClick(View v) {
                 btn_2Activo = true;
+                //rv_tipo1Fonico.setVisibility(View.VISIBLE);
                 mostrarDialogOpciones();
             }
         });
@@ -246,10 +267,27 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                 mostrarDialogOpciones();
             }
         });
+
+        btn_img_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_3Activo = true;
+                //rv_tipo1Fonico.setVisibility(View.VISIBLE);
+                mostrarDialogOpciones();
+            }
+        });
         btn_img4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 btn4Activo = true;
+                mostrarDialogOpciones();
+            }
+        });
+        btn_img_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_4Activo = true;
+                //rv_tipo1Fonico.setVisibility(View.VISIBLE);
                 mostrarDialogOpciones();
             }
         });
@@ -267,9 +305,12 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
             }
         });
 
+        cargarWebService_1();
+
         rv_tipo1Fonico = (RecyclerView) view.findViewById(R.id.rv_tipo1Fonico);
         rv_tipo1Fonico.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_tipo1Fonico.setHasFixedSize(true);
+        rv_tipo1Fonico.setVisibility(View.INVISIBLE);
 
         btn_crearImg1.setOnClickListener(this);
         btn_crearImg2.setOnClickListener(this);
@@ -353,7 +394,10 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                     String rutaImagen = listaImagenes.get(rv_tipo1Fonico.
                             getChildAdapterPosition(v)).getRutaImagen();
 
-                    cargarImagenWebService(rutaImagen);
+                    String nameImagen = listaImagenes.get(rv_tipo1Fonico.
+                            getChildAdapterPosition(v)).getNameImagen();
+
+                    cargarImagenWebService(rutaImagen, nameImagen);
 
                     //Toast.makeText(getApplicationContext(), "on click: " + rutaImagen, Toast.LENGTH_LONG).show();
                     System.out.println("on click: " + rutaImagen);
@@ -378,7 +422,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    private void cargarImagenWebService(String rutaImagen) {
+    private void cargarImagenWebService(String rutaImagen, final String nameImagen) {
 
         // String ip = context.getString(R.string.ip);
 
@@ -394,11 +438,26 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                     btn_img_1.setBackground(null);
                     btn_img_1.setImageBitmap(response);
                     btn_1Activo = false;
+                    rv_tipo1Fonico.setVisibility(View.INVISIBLE);
+                    txt_id_img1.setText(nameImagen);
                 } else if (btn_2Activo) {
                     btn_img_2.setBackground(null);
                     btn_img_2.setImageBitmap(response);
                     btn_2Activo = false;
-
+                    rv_tipo1Fonico.setVisibility(View.INVISIBLE);
+                    txt_id_img2.setText(nameImagen);
+                } else if (btn_3Activo) {
+                    btn_img_3.setBackground(null);
+                    btn_img_3.setImageBitmap(response);
+                    btn_3Activo = false;
+                    rv_tipo1Fonico.setVisibility(View.INVISIBLE);
+                    txt_id_img3.setText(nameImagen);
+                } else if (btn_4Activo) {
+                    btn_img_4.setBackground(null);
+                    btn_img_4.setImageBitmap(response);
+                    btn_4Activo = false;
+                    rv_tipo1Fonico.setVisibility(View.INVISIBLE);
+                    txt_id_img4.setText(nameImagen);
                 }
                 // iv_bank_prueba.setBackground(null);
                 // iv_bank_prueba.setImageBitmap(response);
@@ -463,7 +522,8 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                     //abriCamara();//part 10 tomar foto
                     //Toast.makeText(getContext(), "Cargar Cámara", Toast.LENGTH_LONG).show();
                     */
-                    cargarWebService_1();
+                    //cargarWebService_1();
+                    rv_tipo1Fonico.setVisibility(View.VISIBLE);
                 } else {
                     if (opciones[i].equals("Elegir de Galeria")) {
                         /*Intent intent = new Intent(Intent.ACTION_GET_CONTENT,
