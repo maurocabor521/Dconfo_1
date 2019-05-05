@@ -44,11 +44,16 @@ public class DeberesEstudianteAdapter extends RecyclerView.Adapter<DeberesEstudi
     public void onBindViewHolder(EjerciciosHolder holder, int position) {
         // holder.txtidGrupo.setText(listaGrupos.get(position).getIdGrupo().toString());
         Log.i("size adapter", "lista_: " + listaDeberes.size());
+
         if (listaDeberes.size() != 0) {
-            holder.txtidEjercicio.setText(listaDeberes.get(position).getIdEjercicio().toString());
+            if (listaDeberes.get(position).getIdEjercicio() != 0) {
+                holder.txtidEjercicio.setText(listaDeberes.get(position).getIdEjercicio().toString());
+                holder.txtActividad.setText("Léxico");
+            } else if (listaDeberes.get(position).getIdEjercicio2() != 0) {
+                holder.txtidEjercicio.setText(listaDeberes.get(position).getIdEjercicio2().toString());
+                holder.txtActividad.setText("Fónico");
+            }
             holder.txtnameDeber.setText(listaDeberes.get(position).getTipoDeber().toString());
-
-
         } else {
 
         }
@@ -73,12 +78,13 @@ public class DeberesEstudianteAdapter extends RecyclerView.Adapter<DeberesEstudi
     }
 
     public class EjerciciosHolder extends RecyclerView.ViewHolder {
-        TextView txtidEjercicio, txtnameDeber, txtidActividad, txtidTipo;
+        TextView txtidEjercicio, txtnameDeber, txtActividad, txtidTipo;
 
         public EjerciciosHolder(View itemView) {
             super(itemView);
             txtidEjercicio = (TextView) itemView.findViewById(R.id.txt_deber_idejercicio);
             txtnameDeber = (TextView) itemView.findViewById(R.id.txt_deber_tipodeber);
+            txtActividad = (TextView) itemView.findViewById(R.id.txt_actividad_tipodeber);
 
 
         }

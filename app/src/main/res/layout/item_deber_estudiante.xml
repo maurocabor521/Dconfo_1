@@ -67,6 +67,33 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tipo Actividad"
+            android:textSize="@dimen/tsize_documento"
+            android:textStyle="bold"
+            android:layout_weight="1.5"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/txt_actividad_tipodeber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tipo Actividad"
+            android:text=""
+            android:textSize="@dimen/tsize_documento"
+            android:textStyle="bold"
+            android:layout_weight=".8"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
+
 
 
 

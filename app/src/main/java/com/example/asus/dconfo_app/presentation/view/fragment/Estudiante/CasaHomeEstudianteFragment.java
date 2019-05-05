@@ -22,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.DeberEstudiante;
 import com.example.asus.dconfo_app.domain.model.EjercicioG1;
+import com.example.asus.dconfo_app.domain.model.EjercicioG2;
 import com.example.asus.dconfo_app.domain.model.Estudiante;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
@@ -152,10 +153,11 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
     @Override
     public void onResponse(JSONObject response) {
 
-        Toast.makeText(getContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
 
         DeberEstudiante deberEstudiante = null;
         EjercicioG1 ejercicioG1 = null;
+        EjercicioG2 ejercicioG2 = null;
 
         JSONArray json = response.optJSONArray("deber");
 
@@ -169,7 +171,7 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
                 jsonObject = json.getJSONObject(i);
                 // jsonObject = new JSONObject(response);
                 deberEstudiante.setIdEjercicio(jsonObject.optInt("EjercicioG1_idEjercicioG1"));
-                deberEstudiante.setIdEjercicio2(jsonObject.optInt("EjercicioG1_idEjercicioG2"));
+                deberEstudiante.setIdEjercicio2(jsonObject.optInt("EjercicioG2_idEjercicioG2"));
                 deberEstudiante.setTipoDeber(jsonObject.optString("tipoDeber"));
                 listaDeberes.add(deberEstudiante);
             }
@@ -183,7 +185,7 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
                 listaEjercicios.add(ejercicioG1);
             }*/
 
-           // System.out.println("id tipo: "+ejercicioG1.getIdTipo());
+           System.out.println("listaDeberes: "+listaDeberes.get(3).getIdEjercicio2());
 
 
             DeberesEstudianteAdapter deberesEstudianteAdapter = new DeberesEstudianteAdapter(listaDeberes);
