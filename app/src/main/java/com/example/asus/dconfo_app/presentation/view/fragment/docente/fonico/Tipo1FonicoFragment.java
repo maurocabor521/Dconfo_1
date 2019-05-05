@@ -136,8 +136,8 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
     File fileImagen;
     Bitmap bitmap;
 
-    String nameDocente="";
-    int idDocente=0;
+    String nameDocente = "";
+    int idDocente = 0;
 
     ArrayList<Imagen> listaImagenes;
     ArrayList<EjercicioG2> listaEjerciciosG2;
@@ -197,8 +197,8 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tipo1_fonico, container, false);
 
-        nameDocente=getArguments().getString("namedocente");
-        idDocente=getArguments().getInt("iddocente");
+        nameDocente = getArguments().getString("namedocente");
+        idDocente = getArguments().getInt("iddocente");
 
         edt_letra = (EditText) view.findViewById(R.id.edt_fonico_tipo1_vocal);
 
@@ -389,7 +389,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                 String letra_inicial = edt_letra.getText().toString();
                 String letra_final = "";
 
-                System.out.println("letra inicial"+letra_inicial);
+                System.out.println("letra inicial" + letra_inicial);
 
                 Map<String, String> parametros = new HashMap<>();
 
@@ -429,8 +429,10 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         String url_lh = Globals.url;
 
         //String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjerciciosDocente.php?docente_iddocente=" + iddocente;
-        //String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjercicios_Fonico1_Docente.php?"+idDocente;
-        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSON1ConsultarListaEjercicios.php";
+        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjercicios_Fonico1_Docente.php?iddocente="+idDocente;
+
+        //String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjercicios_Fonico1_Docente.php";
+        //String url = "http://" + url_lh + "/proyecto_dconfo/wsJSON1ConsultarListaEjercicios.php";
 
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
@@ -445,10 +447,8 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                     public void onResponse(JSONObject response) {
                         // Do something with response
 
-
-
-                      /*  EjercicioG2 ejercicioG2 = null;
-
+                        EjercicioG2 ejercicioG2 = null;
+                        Toast.makeText(getContext(), "listar ejercicios g2: ", Toast.LENGTH_LONG).show();
 
                         try {
                             JSONArray json = response.optJSONArray("ejerciciog2");
@@ -466,9 +466,11 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                                 ejercicioG2.setLetra_final_EjercicioG2(jsonObject.optString("letra_final_EjercicioG2"));
 
                                 listaEjerciciosG2.add(ejercicioG2);
-                            }   */
+                            }
+                            System.out.println("Último de lista EG2: " + listaEjerciciosG2.get(listaEjerciciosG2.size()-1).getIdEjercicioG2());
 
-                            EjercicioG1 ejercicioG1 = null;
+
+                      /*  EjercicioG1 ejercicioG1 = null;
 
 
                         try {
@@ -486,6 +488,8 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
 
                                 listaEjercicios.add(ejercicioG1);
                             }
+                            System.out.println("Último de lista EjercicioG2: " + listaEjercicios.get((listaEjercicios.size() - 1)).getIdEjercicio());
+                            */
 
                           /*  final List<String> listaStringEjercicios = new ArrayList<>();
                             listaStringEjercicios.add("Seleccione Id Ejercicio");
@@ -493,7 +497,8 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                                 listaStringEjercicios.add(listaEjerciciosG2.get(i).getIdEjercicioG2().toString());
                             }*/
 
-                            System.out.println("Último de lista EG2"+listaEjercicios.get(listaEjercicios.size()).getIdEjercicio());
+
+
 
                             /*ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaStringEjercicios);
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
