@@ -42,6 +42,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.EjercicioG1;
 import com.example.asus.dconfo_app.domain.model.EjercicioG2;
+import com.example.asus.dconfo_app.domain.model.EjercicioG2HasImagen;
 import com.example.asus.dconfo_app.domain.model.Imagen;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
@@ -130,6 +131,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
     private TextView txt_id_img4;
 
     private RecyclerView rv_tipo1Fonico;
+    private EjercicioG2HasImagen ejercicioG2HasImagen;
 
     ProgressDialog progreso;
     ImageView imgFoto;
@@ -138,10 +140,14 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
 
     String nameDocente = "";
     int idDocente = 0;
+    int idEjercicio2;
 
     ArrayList<Imagen> listaImagenes;
     ArrayList<EjercicioG2> listaEjerciciosG2;
     ArrayList<EjercicioG1> listaEjercicios;
+    ArrayList<Integer> listaidImagenes;
+    ArrayList<Integer> listafilaImagen;
+    ArrayList<Integer> listacolumnaImagen;
 
     private final int MIS_PERMISOS = 100;
     private static final int COD_SELECCIONA = 10;
@@ -200,6 +206,8 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         nameDocente = getArguments().getString("namedocente");
         idDocente = getArguments().getInt("iddocente");
 
+        ejercicioG2HasImagen = new EjercicioG2HasImagen();
+
         edt_letra = (EditText) view.findViewById(R.id.edt_fonico_tipo1_vocal);
 
         edt_nameEjercicio = (EditText) view.findViewById(R.id.edt_fonico_nameEjercicio);
@@ -248,6 +256,9 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         listaImagenes = new ArrayList<>();
         listaEjerciciosG2 = new ArrayList<>();
         listaEjercicios = new ArrayList<>();
+        listaidImagenes = new ArrayList<>();
+        listafilaImagen = new ArrayList<>();
+        listacolumnaImagen = new ArrayList<>();
 
 
         btn_img1.setOnClickListener(new View.OnClickListener() {
@@ -323,12 +334,35 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         btn_enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //cargarWebService_2();
+                cargarWebService_2();
+                try {
+                    Thread.sleep(100);
+                    System.out.println("Dormir... crea Ejercicio");
+                } catch (InterruptedException e) {
+
+                }
                 listarEjerciciosG2Docente();
+                try {
+                    Thread.sleep(300);
+                    System.out.println("Dormir... Lista ejercicios");
+                } catch (InterruptedException e) {
+
+                }
+
+               /* for (int i = 0; i < listaidImagenes.size(); i++) {
+                    webService_CrearEjercicioG2_Has_Imagen(listaidImagenes.get(i), listafilaImagen.get(i), listacolumnaImagen.get(i));
+                    try {
+                        Thread.sleep(100);
+                        System.out.println("Dormir for... "+listaidImagenes.get(i));
+                    } catch (InterruptedException e) {
+
+                    }
+                }*/
+
             }
         });
 
-        cargarWebService_1();
+        consultarListaImagenes();
 
         rv_tipo1Fonico = (RecyclerView) view.findViewById(R.id.rv_tipo1Fonico);
         rv_tipo1Fonico.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -408,6 +442,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         //p25 duplicar tiempo x defecto
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(stringRequest);//p21
+        //listarEjerciciosG2Docente();
 
         //reemplazar espacios en blanco del nombre por %20
         // url = url.replace(" ", "%20");
@@ -429,7 +464,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         String url_lh = Globals.url;
 
         //String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjerciciosDocente.php?docente_iddocente=" + iddocente;
-        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjercicios_Fonico1_Docente.php?iddocente="+idDocente;
+        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjercicios_Fonico1_Docente.php?iddocente=" + idDocente;
 
         //String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjercicios_Fonico1_Docente.php";
         //String url = "http://" + url_lh + "/proyecto_dconfo/wsJSON1ConsultarListaEjercicios.php";
@@ -467,61 +502,15 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
 
                                 listaEjerciciosG2.add(ejercicioG2);
                             }
-                            System.out.println("Último de lista EG2: " + listaEjerciciosG2.get(listaEjerciciosG2.size()-1).getIdEjercicioG2());
+                            idEjercicio2 = listaEjerciciosG2.get(listaEjerciciosG2.size() - 1).getIdEjercicioG2();
+                            System.out.println("Último de lista EG2: " + idEjercicio2);
 
+                            if (idEjercicio2 > 0) {
 
-                      /*  EjercicioG1 ejercicioG1 = null;
+                                ejerciciog2HI_adjuntarImagenes();
 
-
-                        try {
-                            JSONArray json = response.optJSONArray("ejerciciog1");
-                            //JSONARRAY array=new JSONARRAY(response);
-                            for (int i = 0; i < json.length(); i++) {
-                                ejercicioG1 = new EjercicioG1();
-                                JSONObject jsonObject = null;
-                                jsonObject = json.getJSONObject(i);
-                                ejercicioG1.setIdEjercicio(jsonObject.optInt("idEjercicioG1"));
-                                ejercicioG1.setNameEjercicio(jsonObject.optString("nameEjercicioG1"));
-                                ejercicioG1.setIdDocente(jsonObject.optInt("docente_iddocente"));
-                                ejercicioG1.setIdTipo(jsonObject.optInt("Tipo_idTipo"));
-                                ejercicioG1.setIdActividad(jsonObject.optInt("Tipo_Actividad_idActividad"));
-
-                                listaEjercicios.add(ejercicioG1);
                             }
-                            System.out.println("Último de lista EjercicioG2: " + listaEjercicios.get((listaEjercicios.size() - 1)).getIdEjercicio());
-                            */
 
-                          /*  final List<String> listaStringEjercicios = new ArrayList<>();
-                            listaStringEjercicios.add("Seleccione Id Ejercicio");
-                            for (int i = 0; i < listaEjerciciosG2.size(); i++) {
-                                listaStringEjercicios.add(listaEjerciciosG2.get(i).getIdEjercicioG2().toString());
-                            }*/
-
-
-
-
-                            /*ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaStringEjercicios);
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spinnerEjercicios.setAdapter(adapter);
-                            spinnerEjercicios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                    if (position != 0) {
-                                        edt_idEjercicio.setText(listaStringEjercicios.get(position));
-                                    } else {
-
-                                    }
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });*/
-
-                           /* Toast.makeText(getApplicationContext(), "lista estudiantes" + listaStringEstudiantes, Toast.LENGTH_LONG).show();
-                            System.out.println("estudiantes size: " + listaEstudiantes.size());
-                            System.out.println("estudiantes: " + listaEstudiantes.get(0).getIdestudiante());*/
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -547,9 +536,116 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         //stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         //VolleySingleton.getIntanciaVolley(getApplicationContext()).addToRequestQueue(stringRequest);//p21
     }
+
+    private void ejerciciog2HI_adjuntarImagenes() {
+
+        for (int i = 0; i < listaidImagenes.size(); i++) {
+            webService_CrearEjercicioG2_Has_Imagen(listaidImagenes.get(i), listafilaImagen.get(i), listacolumnaImagen.get(i));
+            try {
+                Thread.sleep(100);
+                System.out.println("Dormir for... " + listaidImagenes.get(i));
+            } catch (InterruptedException e) {
+
+            }
+        }
+        edt_letra.setText("");
+        edt_nameEjercicio.setText("");
+        imgFoto.setBackgroundResource(R.drawable.ic_no_foto_80dp);
+        Drawable drawable = imgFoto.getDrawable();
+        btn_img_1.setImageResource(R.drawable.ic_no_foto_80dp);
+        btn_img_2.setImageResource(R.drawable.ic_no_foto_80dp);
+        btn_img_3.setImageResource(R.drawable.ic_no_foto_80dp);
+        btn_img_4.setImageResource(R.drawable.ic_no_foto_80dp);
+
+        txt_id_img1.setText("imagen 1");
+        txt_id_img2.setText("imagen 2");
+        txt_id_img3.setText("imagen 3");
+        txt_id_img4.setText("imagen 4");
+
+        /*btn_img_1.setBackgroundResource(R.drawable.ic_no_foto_80dp);
+        btn_img_2.setBackgroundResource(R.drawable.ic_no_foto_80dp);
+        btn_img_3.setBackgroundResource(R.drawable.ic_no_foto_80dp);
+        btn_img_4.setBackgroundResource(R.drawable.ic_no_foto_80dp);*/
+
+
+    }
     // ----------------------------------------------------------------------------------------------
 
-    private void cargarWebService_1() {
+    //para iniciar el proceso de llamado al webservice
+
+    private void webService_CrearEjercicioG2_Has_Imagen(final int id_Imagen, final int fila_imagen, final int columna_imagen) {
+       /* progreso = new ProgressDialog(getContext());
+        progreso.setMessage("Cargando...");
+        progreso.show();*/
+        String ip = Globals.url;
+        String url = "http://" + ip + "/proyecto_dconfo/wsJSONCrearEjercicio2HasImagen.php";//p12.buena
+
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto
+//                progreso.hide();
+                if (response.trim().equalsIgnoreCase("registra")) {
+
+                    //edt_letra.setText("");
+                    // edt_nameEjercicio.setText("");
+
+                    Toast.makeText(getContext(), "Se ha cargado con éxito EHI", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "No se ha cargado con éxito EHI", Toast.LENGTH_LONG).show();
+                    System.out.println("error no cargado con exito crearEHI");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "No se ha podido conectar EHI", Toast.LENGTH_LONG).show();
+                String ERROR = "error";
+                Log.d(ERROR, error.toString());
+                System.out.println("error" + error.toString());
+                //progreso.hide();
+            }
+        }) {//enviar para metros a webservice, mediante post
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+
+                String EjercicioG2_idEjercicioG2 = String.valueOf(idEjercicio2);
+                //String EjercicioG2_idEjercicioG2 = String.valueOf(10);
+                String Imagen_idImagen_Ejercicio = String.valueOf(id_Imagen);
+                String fila_E_h_I = String.valueOf(fila_imagen);
+                String columna_E_H_I = String.valueOf(columna_imagen);
+
+                //System.out.println("letra inicial" + letra_inicial);
+
+                Map<String, String> parametros = new HashMap<>();
+
+                //parametros.put("idEjercicio", idEjercicio);
+                parametros.put("EjercicioG2_idEjercicioG2", EjercicioG2_idEjercicioG2);
+                parametros.put("Imagen_idImagen_Ejercicio", Imagen_idImagen_Ejercicio);
+                parametros.put("fila_E_h_I", fila_E_h_I);
+                parametros.put("columna_E_H_I", columna_E_H_I);
+
+                System.out.println("Parametros: " + parametros.toString());
+
+
+                return parametros;
+            }
+        };
+        //request.add(stringRequest);
+        //p25 duplicar tiempo x defecto
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(stringRequest);//p21
+
+        //reemplazar espacios en blanco del nombre por %20
+        // url = url.replace(" ", "%20");
+
+        //hace el llamado a la url,no usa en p12
+        /*jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        request.add(jsonObjectRequest);*/
+    }
+    // ----------------------------------------------------------------------------------------------
+
+    private void consultarListaImagenes() {
 
        /* progreso.setMessage("Cargando...");
         progreso.show();*/
@@ -625,7 +721,10 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                     String nameImagen = listaImagenes.get(rv_tipo1Fonico.
                             getChildAdapterPosition(v)).getNameImagen();
 
-                    cargarImagenWebService(rutaImagen, nameImagen);
+                    int idImagen = listaImagenes.get(rv_tipo1Fonico.
+                            getChildAdapterPosition(v)).getIdImagen();
+
+                    cargarImagenWebService(rutaImagen, nameImagen, idImagen);
 
                     //Toast.makeText(getApplicationContext(), "on click: " + rutaImagen, Toast.LENGTH_LONG).show();
                     System.out.println("on click: " + rutaImagen);
@@ -650,7 +749,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    private void cargarImagenWebService(String rutaImagen, final String nameImagen) {
+    private void cargarImagenWebService(String rutaImagen, final String nameImagen, final int idImagen) {
 
         // String ip = context.getString(R.string.ip);
 
@@ -668,24 +767,71 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                     btn_1Activo = false;
                     rv_tipo1Fonico.setVisibility(View.INVISIBLE);
                     txt_id_img1.setText(nameImagen);
+
+                    int fila = 1;
+                    int columna = 1;
+
+                    ejercicioG2HasImagen.setIdImagen(idImagen);
+                    ejercicioG2HasImagen.setFilaImagen(fila);
+                    ejercicioG2HasImagen.setColumnaImagen(columna);
+
+                    listaidImagenes.add(idImagen);
+                    listafilaImagen.add(fila);
+                    listacolumnaImagen.add(columna);
+
                 } else if (btn_2Activo) {
                     btn_img_2.setBackground(null);
                     btn_img_2.setImageBitmap(response);
                     btn_2Activo = false;
                     rv_tipo1Fonico.setVisibility(View.INVISIBLE);
                     txt_id_img2.setText(nameImagen);
+
+                    int fila = 1;
+                    int columna = 2;
+
+                    ejercicioG2HasImagen.setIdImagen(idImagen);
+                    ejercicioG2HasImagen.setFilaImagen(fila);
+                    ejercicioG2HasImagen.setColumnaImagen(columna);
+
+                    listaidImagenes.add(idImagen);
+                    listafilaImagen.add(fila);
+                    listacolumnaImagen.add(columna);
+
                 } else if (btn_3Activo) {
                     btn_img_3.setBackground(null);
                     btn_img_3.setImageBitmap(response);
                     btn_3Activo = false;
                     rv_tipo1Fonico.setVisibility(View.INVISIBLE);
                     txt_id_img3.setText(nameImagen);
+
+                    int fila = 1;
+                    int columna = 3;
+
+                    ejercicioG2HasImagen.setIdImagen(idImagen);
+                    ejercicioG2HasImagen.setFilaImagen(fila);
+                    ejercicioG2HasImagen.setColumnaImagen(columna);
+
+                    listaidImagenes.add(idImagen);
+                    listafilaImagen.add(fila);
+                    listacolumnaImagen.add(columna);
+
                 } else if (btn_4Activo) {
                     btn_img_4.setBackground(null);
                     btn_img_4.setImageBitmap(response);
                     btn_4Activo = false;
                     rv_tipo1Fonico.setVisibility(View.INVISIBLE);
                     txt_id_img4.setText(nameImagen);
+
+                    int fila = 1;
+                    int columna = 4;
+
+                    ejercicioG2HasImagen.setIdImagen(idImagen);
+                    ejercicioG2HasImagen.setFilaImagen(fila);
+                    ejercicioG2HasImagen.setColumnaImagen(columna);
+
+                    listaidImagenes.add(idImagen);
+                    listafilaImagen.add(fila);
+                    listacolumnaImagen.add(columna);
                 }
                 // iv_bank_prueba.setBackground(null);
                 // iv_bank_prueba.setImageBitmap(response);

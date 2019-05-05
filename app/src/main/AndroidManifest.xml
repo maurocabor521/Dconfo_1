@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".presentation.view.activity.docente.fonico.BankImagesActivity"></activity>
+        <activity android:name=".presentation.view.activity.docente.fonico.AsignarEjercicioFonicoActivity"></activity>
+        <activity android:name=".presentation.view.activity.docente.fonico.BankImagesActivity" />
         <activity android:name=".presentation.view.activity.docente.fonico.NewEjercicioFonicoActivity" />
         <activity android:name=".presentation.view.activity.docente.fonico.NewEjercicioFonicoDocenteActivity" />
         <activity android:name=".presentation.view.activity.docente.AsignarEstudianteDeberActivity" />
