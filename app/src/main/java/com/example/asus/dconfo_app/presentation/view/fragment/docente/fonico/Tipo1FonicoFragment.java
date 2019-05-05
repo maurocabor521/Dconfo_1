@@ -21,6 +21,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,12 +32,16 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.domain.model.EjercicioG1;
+import com.example.asus.dconfo_app.domain.model.EjercicioG2;
 import com.example.asus.dconfo_app.domain.model.Imagen;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
@@ -52,6 +58,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -91,6 +98,8 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
     private EditText edt_letraFinal_img4;
     private EditText edt_cantSilaba_img4;
 
+    private EditText edt_nameEjercicio;
+
     private Button btn_img1;
     private ImageView btn_img_1;
     private Button btn_img2;
@@ -127,7 +136,12 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
     File fileImagen;
     Bitmap bitmap;
 
+    String nameDocente="";
+    int idDocente=0;
+
     ArrayList<Imagen> listaImagenes;
+    ArrayList<EjercicioG2> listaEjerciciosG2;
+    ArrayList<EjercicioG1> listaEjercicios;
 
     private final int MIS_PERMISOS = 100;
     private static final int COD_SELECCIONA = 10;
@@ -182,7 +196,13 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tipo1_fonico, container, false);
+
+        nameDocente=getArguments().getString("namedocente");
+        idDocente=getArguments().getInt("iddocente");
+
         edt_letra = (EditText) view.findViewById(R.id.edt_fonico_tipo1_vocal);
+
+        edt_nameEjercicio = (EditText) view.findViewById(R.id.edt_fonico_nameEjercicio);
 
         edt_letraInicial_img1 = (EditText) view.findViewById(R.id.edt_fonico_inicialLetra_img1);
         edt_letraFinal_img1 = (EditText) view.findViewById(R.id.edt_fonico_finalLetra_img1);
@@ -226,6 +246,8 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         btn_crearImg4 = (Button) view.findViewById(R.id.btn_fonico_crearImg4);
 
         listaImagenes = new ArrayList<>();
+        listaEjerciciosG2 = new ArrayList<>();
+        listaEjercicios = new ArrayList<>();
 
 
         btn_img1.setOnClickListener(new View.OnClickListener() {
@@ -301,7 +323,8 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         btn_enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cargarWebService_2();
+                //cargarWebService_2();
+                listarEjerciciosG2Docente();
             }
         });
 
@@ -336,7 +359,9 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
             public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto
 //                progreso.hide();
                 if (response.trim().equalsIgnoreCase("registra")) {
+
                     edt_letra.setText("");
+                    edt_nameEjercicio.setText("");
 
                     Toast.makeText(getContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
                 } else {
@@ -356,9 +381,9 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
-                String idEjercicio = "7";
-                String nameEjercicio = "ejG7";
-                String docente_iddocente = "220";
+                //String idEjercicio = "7";
+                String nameEjercicio = edt_nameEjercicio.getText().toString();
+                String docente_iddocente = String.valueOf(idDocente);
                 String Tipo_idTipo = "1";
                 String Actividad_idActividad = "1";
                 String letra_inicial = edt_letra.getText().toString();
@@ -368,7 +393,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
 
                 Map<String, String> parametros = new HashMap<>();
 
-                parametros.put("idEjercicio", idEjercicio);
+                //parametros.put("idEjercicio", idEjercicio);
                 parametros.put("nameEjercicio", nameEjercicio);
                 parametros.put("docente_iddocente", docente_iddocente);
                 parametros.put("Tipo_idTipo", Tipo_idTipo);
@@ -393,6 +418,131 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
     }
 
     //----------------------------------------------------------------------------------------------
+
+    //******************************WEB SERVICE
+    public void listarEjerciciosG2Docente() {
+        // final String usuario = etUsuario.getText().toString();
+        // final String password = etPass.getText().toString();
+
+        // INICIAR LA CONEXION CON VOLLEY
+
+        String url_lh = Globals.url;
+
+        //String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjerciciosDocente.php?docente_iddocente=" + iddocente;
+        //String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjercicios_Fonico1_Docente.php?"+idDocente;
+        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSON1ConsultarListaEjercicios.php";
+
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+
+        // Initialize a new JsonObjectRequest instance
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // Do something with response
+
+
+
+                      /*  EjercicioG2 ejercicioG2 = null;
+
+
+                        try {
+                            JSONArray json = response.optJSONArray("ejerciciog2");
+                            //JSONARRAY array=new JSONARRAY(response);
+                            for (int i = 0; i < json.length(); i++) {
+                                ejercicioG2 = new EjercicioG2();
+                                JSONObject jsonObject = null;
+                                jsonObject = json.getJSONObject(i);
+                                ejercicioG2.setIdEjercicioG2(jsonObject.optInt("idEjercicioG2"));
+                                ejercicioG2.setNameEjercicioG2(jsonObject.optString("nameEjercicioG2"));
+                                ejercicioG2.setIdDocente(jsonObject.optInt("docente_iddocente"));
+                                ejercicioG2.setIdTipo(jsonObject.optInt("Tipo_idTipo"));
+                                ejercicioG2.setIdActividad(jsonObject.optInt("Tipo_Actividad_idActividad"));
+                                ejercicioG2.setLetra_inicial_EjercicioG2(jsonObject.optString("letra_inicial_EjercicioG2"));
+                                ejercicioG2.setLetra_final_EjercicioG2(jsonObject.optString("letra_final_EjercicioG2"));
+
+                                listaEjerciciosG2.add(ejercicioG2);
+                            }   */
+
+                            EjercicioG1 ejercicioG1 = null;
+
+
+                        try {
+                            JSONArray json = response.optJSONArray("ejerciciog1");
+                            //JSONARRAY array=new JSONARRAY(response);
+                            for (int i = 0; i < json.length(); i++) {
+                                ejercicioG1 = new EjercicioG1();
+                                JSONObject jsonObject = null;
+                                jsonObject = json.getJSONObject(i);
+                                ejercicioG1.setIdEjercicio(jsonObject.optInt("idEjercicioG1"));
+                                ejercicioG1.setNameEjercicio(jsonObject.optString("nameEjercicioG1"));
+                                ejercicioG1.setIdDocente(jsonObject.optInt("docente_iddocente"));
+                                ejercicioG1.setIdTipo(jsonObject.optInt("Tipo_idTipo"));
+                                ejercicioG1.setIdActividad(jsonObject.optInt("Tipo_Actividad_idActividad"));
+
+                                listaEjercicios.add(ejercicioG1);
+                            }
+
+                          /*  final List<String> listaStringEjercicios = new ArrayList<>();
+                            listaStringEjercicios.add("Seleccione Id Ejercicio");
+                            for (int i = 0; i < listaEjerciciosG2.size(); i++) {
+                                listaStringEjercicios.add(listaEjerciciosG2.get(i).getIdEjercicioG2().toString());
+                            }*/
+
+                            System.out.println("Último de lista EG2"+listaEjercicios.get(listaEjercicios.size()).getIdEjercicio());
+
+                            /*ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaStringEjercicios);
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spinnerEjercicios.setAdapter(adapter);
+                            spinnerEjercicios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    if (position != 0) {
+                                        edt_idEjercicio.setText(listaStringEjercicios.get(position));
+                                    } else {
+
+                                    }
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                }
+                            });*/
+
+                           /* Toast.makeText(getApplicationContext(), "lista estudiantes" + listaStringEstudiantes, Toast.LENGTH_LONG).show();
+                            System.out.println("estudiantes size: " + listaEstudiantes.size());
+                            System.out.println("estudiantes: " + listaEstudiantes.get(0).getIdestudiante());*/
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Do something when error occurred
+                        System.out.println();
+                        Log.d("ERROR Ejercicios G2: ", error.toString());
+                    }
+                }
+        );
+        final int MY_DEFAULT_TIMEOUT = 15000;
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_DEFAULT_TIMEOUT,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        requestQueue.add(jsonObjectRequest);
+        //stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //VolleySingleton.getIntanciaVolley(getApplicationContext()).addToRequestQueue(stringRequest);//p21
+    }
+    // ----------------------------------------------------------------------------------------------
 
     private void cargarWebService_1() {
 
