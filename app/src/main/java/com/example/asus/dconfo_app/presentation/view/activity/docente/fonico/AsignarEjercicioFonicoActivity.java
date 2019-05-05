@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.Curso;
 import com.example.asus.dconfo_app.domain.model.EjercicioG1;
+import com.example.asus.dconfo_app.domain.model.EjercicioG2;
 import com.example.asus.dconfo_app.domain.model.Estudiante;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
@@ -44,7 +45,7 @@ public class AsignarEjercicioFonicoActivity extends AppCompatActivity {
     ProgressDialog progreso;
 
     ArrayList<Estudiante> listaEstudiantes;
-    ArrayList<EjercicioG1> listaEjercicios;
+    ArrayList<EjercicioG2> listaEjercicios;
 
     Spinner spinner;
     Spinner spinnerEjercicios;
@@ -65,9 +66,26 @@ public class AsignarEjercicioFonicoActivity extends AppCompatActivity {
 
         iddocente = datos.getInt("iddocente");
         idgrupo = datos.getInt("idgrupo");
+        System.out.println("id GRUPO: "+idgrupo);
         //Toast.makeText(getApplicationContext(), "id docente: " + iddocente, Toast.LENGTH_LONG).show();
         //toolbar.setLabelFor();
         this.setTitle("id docente:" + iddocente);
+        progreso = new ProgressDialog(getApplicationContext());
+
+        edt_idEstudiante = findViewById(R.id.edt_id_fonico_estudiate_deber);
+        edt_idEjercicio = findViewById(R.id.edt_id_fonico_ejercicio_deber);
+        btn_asignar = findViewById(R.id.btn_fonico_asignarDeber_deber);
+
+        spinner = (Spinner) findViewById(R.id.sp_docente_fonico_estudiantes);
+        spinnerEjercicios = (Spinner) findViewById(R.id.sp_docente_fonico_ejercicios);
+
+        btn_asignar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cargarWebService();
+
+            }
+        });
         listarEstudiantes();
         listarEjerciciosDocente();
     }
@@ -170,7 +188,7 @@ public class AsignarEjercicioFonicoActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         // Do something when error occurred
                         System.out.println();
-                        Log.d("ERROR", error.toString());
+                        Log.d("ERROR estudiantes: ", error.toString());
                     }
                 }
         );
@@ -191,7 +209,7 @@ public class AsignarEjercicioFonicoActivity extends AppCompatActivity {
         String url_lh = Globals.url;
 
         //String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjerciciosDocente.php?docente_iddocente=" + iddocente;
-        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSON1ConsultarListaEjercicios.php";
+        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSON1ConsultarListaEjerciciosFonicos.php";
 
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -208,28 +226,28 @@ public class AsignarEjercicioFonicoActivity extends AppCompatActivity {
 
                         listaEjercicios = new ArrayList<>();
 
-                        EjercicioG1 ejercicioG1 = null;
+                        EjercicioG2 ejercicioG2 = null;
 
 
                         try {
-                            JSONArray json = response.optJSONArray("ejerciciog1");
+                            JSONArray json = response.optJSONArray("ejerciciog2");
                             for (int i = 0; i < json.length(); i++) {
-                                ejercicioG1 = new EjercicioG1();
+                                ejercicioG2 = new EjercicioG2();
                                 JSONObject jsonObject = null;
                                 jsonObject = json.getJSONObject(i);
-                                ejercicioG1.setIdEjercicio(jsonObject.optInt("idEjercicioG1"));
-                                ejercicioG1.setNameEjercicio(jsonObject.optString("nameEjercicioG1"));
-                                ejercicioG1.setIdDocente(jsonObject.optInt("docente_iddocente"));
-                                ejercicioG1.setIdTipo(jsonObject.optInt("Tipo_idTipo"));
-                                ejercicioG1.setIdActividad(jsonObject.optInt("Tipo_Actividad_idActividad"));
+                                ejercicioG2.setIdEjercicioG2(jsonObject.optInt("idEjercicioG2"));
+                                ejercicioG2.setNameEjercicioG2(jsonObject.optString("nameEjercicioG2"));
+                                ejercicioG2.setIdDocente(jsonObject.optInt("docente_iddocente"));
+                                ejercicioG2.setIdTipo(jsonObject.optInt("Tipo_idTipo"));
+                                ejercicioG2.setIdActividad(jsonObject.optInt("Tipo_Actividad_idActividad"));
 
-                                listaEjercicios.add(ejercicioG1);
+                                listaEjercicios.add(ejercicioG2);
                             }
 
                             final List<String> listaStringEjercicios = new ArrayList<>();
                             listaStringEjercicios.add("Seleccione Id Ejercicio");
                             for (int i = 0; i < listaEjercicios.size(); i++) {
-                                listaStringEjercicios.add(listaEjercicios.get(i).getIdEjercicio().toString());
+                                listaStringEjercicios.add(listaEjercicios.get(i).getIdEjercicioG2().toString());
                             }
                             ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, listaStringEjercicios);
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -322,7 +340,7 @@ public class AsignarEjercicioFonicoActivity extends AppCompatActivity {
                 Map<String, String> parametros = new HashMap<>();
                 parametros.put("estudiante_idestudiante", idestudiante);
                 parametros.put("docente_iddocente", iddocente1);
-                parametros.put("EjercicioG1_idEjercicioG1", idejercicio);
+                parametros.put("EjercicioG1_idEjercicioG2", idejercicio);
 
 
                 return parametros;
