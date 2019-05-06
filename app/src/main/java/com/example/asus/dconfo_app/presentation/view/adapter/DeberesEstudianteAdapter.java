@@ -1,11 +1,13 @@
 package com.example.asus.dconfo_app.presentation.view.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.asus.dconfo_app.R;
@@ -49,6 +51,10 @@ public class DeberesEstudianteAdapter extends RecyclerView.Adapter<DeberesEstudi
             if (listaDeberes.get(position).getIdEjercicio() != 0) {
                 holder.txtidEjercicio.setText(listaDeberes.get(position).getIdEjercicio().toString());
                 holder.txtActividad.setText("Léxico");
+               // ;
+                int c=holder.ll_ejercicio.getResources().getColor(R.color.colorAccent);
+                holder.ll_ejercicio.setBackgroundColor(c);
+                ;
             } else if (listaDeberes.get(position).getIdEjercicio2() != 0) {
                 holder.txtidEjercicio.setText(listaDeberes.get(position).getIdEjercicio2().toString());
                 holder.txtActividad.setText("Fónico");
@@ -79,13 +85,14 @@ public class DeberesEstudianteAdapter extends RecyclerView.Adapter<DeberesEstudi
 
     public class EjerciciosHolder extends RecyclerView.ViewHolder {
         TextView txtidEjercicio, txtnameDeber, txtActividad, txtidTipo;
+        LinearLayout ll_ejercicio;
 
         public EjerciciosHolder(View itemView) {
             super(itemView);
             txtidEjercicio = (TextView) itemView.findViewById(R.id.txt_deber_idejercicio);
             txtnameDeber = (TextView) itemView.findViewById(R.id.txt_deber_tipodeber);
             txtActividad = (TextView) itemView.findViewById(R.id.txt_actividad_tipodeber);
-
+            ll_ejercicio = (LinearLayout) itemView.findViewById(R.id.ll_item_ejercicio);
 
         }
     }
