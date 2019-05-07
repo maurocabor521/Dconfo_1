@@ -27,6 +27,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.EjercicioG1;
 import com.example.asus.dconfo_app.domain.model.EjercicioG2;
+import com.example.asus.dconfo_app.domain.model.EjercicioG2HasImagen;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
 import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.fonico.Tipo1FonicoFragment;
@@ -60,7 +61,10 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
     private String mParam2;
 
     private int idEjercicio = 0;
+    private int idEjercicioG2 = 0;
+
     private String grupo;
+    private String letraInicial;
 
     StringRequest stringRequest;
     JsonObjectRequest jsonObjectRequest;
@@ -70,6 +74,7 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
 
     private EjercicioG1 ejercicioG1;
     private EjercicioG2 ejercicioG2;
+    private EjercicioG2HasImagen ejercicioG2HasImagen;
 
 
     private OnFragmentInteractionListener mListener;
@@ -146,15 +151,14 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
             url = url.replace(" ", "%20");
             jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
             VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);//p21
+        } else if (grupo.equals("g3")) {
+            String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjerG2_DET.php?idejercicioG2=" + idEjercicio;
+            url = url.replace(" ", "%20");
+            Toast.makeText(getContext(), "consultar lista det imagenes: ", Toast.LENGTH_LONG).show();
+            jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+            VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);//p21
         }
-        //String url = ip+"ejemploBDRemota/wsJSONConsultarLista.php";
-        //reemplazar espacios en blanco del nombre por %20
 
-        //hace el llamado a la url
-        //**************jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);//original
-        // request.add(jsonObjectRequest);
-        //**************VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);//original
-        //Toast.makeText(getContext(), "web service", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -173,7 +177,7 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
         //lectura del Json
 
         //Toast.makeText(getContext(), "onResponse: " + response.toString(), Toast.LENGTH_SHORT).show();
-        if (grupo.equals("g1")) {
+        if (grupo.equals("g1")) {//------------------------------------------------------------------------------------g1
             ejercicioG1 = null;
             JSONArray json = response.optJSONArray("ejerciciog1");
 
@@ -238,9 +242,9 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
 
             }
 
-        } else {
+        } else if (grupo.equals("g2")) {//------------------------------------------------------------------------------------g2
 
-            Toast.makeText(getContext(), "grupo 2 activo: ", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "grupo 2 activo: ", Toast.LENGTH_LONG).show();
 
             ejercicioG2 = null;
             JSONArray json = response.optJSONArray("ejerciciog2");
@@ -270,16 +274,88 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
 
                 int tipoEjercicioG2 = ejercicioG2.getIdTipo();
 
+                idEjercicioG2 = ejercicioG2.getIdEjercicioG2();
 
 
-                System.out.println("el tipoEjercicio G2: " + tipoEjercicioG2);
+                System.out.println("id ejericiog2: " + idEjercicioG2);
 
-                Tipo1FonicoFragment tipo1FonicoFragment=new Tipo1FonicoFragment();
+                Tipo1FonicoFragment tipo1FonicoFragment = new Tipo1FonicoFragment();
+                letraInicial = ejercicioG2.getLetra_inicial_EjercicioG2();
+
+                grupo = "g3";
+                cargarWebService();
 
 
-                Bundle bundle = new Bundle();
+            /*    Bundle bundle = new Bundle();
                 bundle.putInt("idejercicio", idEjercicio);
-                bundle.putString("letrainicial", ejercicioG2.getLetra_inicial_EjercicioG2());
+                bundle.putString("letrainicial", letraInicial);
+
+                if (tipoEjercicioG2 == 1) {
+                    tipo1FonicoFragment.setArguments(bundle);
+                    // inicioEjercicioFragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo1FonicoFragment)
+                            //getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, inicioEjercicioFragment)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                            .addToBackStack(null).commit();
+                }*/
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                //Toast.makeText(getContext(), "No se ha podido establecer conexión: " + response.toString(), Toast.LENGTH_LONG).show();
+
+            }
+
+
+        } else if (grupo.equals("g3")) {//------------------------------------------------------------------------------------g3
+
+            Toast.makeText(getContext(), "grupo g3 activo: ", Toast.LENGTH_LONG).show();
+
+            ejercicioG2HasImagen = null;
+            JSONArray json = response.optJSONArray("ejerg2hasimagen");
+
+            ArrayList<EjercicioG2HasImagen> listaDEjerciciosg2HI = new ArrayList<>();
+            listaDEjerciciosg2HI = new ArrayList<>();
+
+            try {
+                for (int i = 0; i < json.length(); i++) {
+                    ejercicioG2HasImagen = new EjercicioG2HasImagen();
+                    JSONObject jsonObject = null;
+                    jsonObject = json.getJSONObject(i);
+
+                    ejercicioG2HasImagen.setIdEjercicioG2(jsonObject.optInt("EjercicioG2_idEjercicioG2"));
+                    ejercicioG2HasImagen.setIdImagen(jsonObject.optInt("Imagen_idImagen_Ejercicio"));
+                    ejercicioG2HasImagen.setColumnaImagen(jsonObject.optInt("columna_E_H_I"));
+                    ejercicioG2HasImagen.setFilaImagen(jsonObject.optInt("fila_E_h_I"));
+
+                    listaDEjerciciosg2HI.add(ejercicioG2HasImagen);
+
+                }
+                int tipoEjercicioG2 = ejercicioG2.getIdTipo();
+                Tipo1FonicoFragment tipo1FonicoFragment = new Tipo1FonicoFragment();
+
+                // ArrayList<Integer> listaIDimagenes = new ArrayList<>();
+                Bundle bundle = new Bundle();
+                int[] listaidImagenes = new int[listaDEjerciciosg2HI.size()];
+                for (int i = 0; i < listaDEjerciciosg2HI.size(); i++) {
+                    // listaIDimagenes.add(listaDEjerciciosg2HI.get(i).getIdImagen());
+                    listaidImagenes[i] = listaDEjerciciosg2HI.get(i).getIdImagen();
+                    bundle.putInt("idejercicio" + (i + 1) + "", listaDEjerciciosg2HI.get(i).getIdImagen());
+                    bundle.putInt("colejercicio" + (i + 1) + "", listaDEjerciciosg2HI.get(i).getColumnaImagen());
+                    System.out.println("columna imagen: " + listaDEjerciciosg2HI.get(i).getColumnaImagen());
+                    bundle.putInt("filejercicio" + (i + 1) + "", listaDEjerciciosg2HI.get(i).getFilaImagen());
+                }
+
+               /* System.out.println("cadena imagenes: " + listaidImagenes.toString());
+                System.out.println("bundle1: " + bundle.get("idejercicio1"));
+                System.out.println("bundle2: " + bundle.get("idejercicio2"));
+                System.out.println("bundle3: " + bundle.get("idejercicio3"));
+                System.out.println("bundle4: " + bundle.get("idejercicio4"));*/
+
+
+                bundle.putInt("idejercicio", idEjercicio);
+                bundle.putString("letrainicial", letraInicial);
+                //bundle.putIntArray("cadenaidimagenes", listaidImagenes);
 
                 if (tipoEjercicioG2 == 1) {
                     tipo1FonicoFragment.setArguments(bundle);
@@ -291,8 +367,6 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
                 }
 
 
-
-
             } catch (JSONException e) {
                 e.printStackTrace();
                 //Toast.makeText(getContext(), "No se ha podido establecer conexión: " + response.toString(), Toast.LENGTH_LONG).show();
@@ -301,10 +375,11 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
 
 
         }
+
+
     }//onResponse
 
     //**********************************************************************************************
-
 
 
     //**********************************************************************************************

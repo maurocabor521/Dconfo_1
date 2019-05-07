@@ -197,6 +197,8 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
                     int ejerpos1 = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio();
                     int ejerpos2 = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio2();
 
+                    System.out.println("idejerciciog2"+ejerpos2);
+
                     idEjercicio = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio();
                     // cargarWebService1();
 
