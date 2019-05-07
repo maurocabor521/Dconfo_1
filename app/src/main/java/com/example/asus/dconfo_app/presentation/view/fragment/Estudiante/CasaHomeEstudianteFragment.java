@@ -112,7 +112,7 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
         idestudiante = getArguments().getInt("idEstudiante");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Estudiante Home: " + nameestudiante + "id: " + idestudiante);
         cargarWebService();
-       // cargarWebService1();
+        // cargarWebService1();
 
         return view;
     }
@@ -185,7 +185,7 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
                 listaEjercicios.add(ejercicioG1);
             }*/
 
-           System.out.println("listaDeberes: "+listaDeberes.get(3).getIdEjercicio2());
+            System.out.println("listaDeberes: " + listaDeberes.get(3).getIdEjercicio2());
 
 
             DeberesEstudianteAdapter deberesEstudianteAdapter = new DeberesEstudianteAdapter(listaDeberes);
@@ -193,52 +193,45 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
                 @Override
                 public void onClick(View v) {
 
-
                     Log.i("size", "lista: " + listaDeberes.size());
                     int ejerpos1 = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio();
                     int ejerpos2 = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio2();
 
                     idEjercicio = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio();
-                   // cargarWebService1();
-
-
-               /*     try {
-
-                        for (int i = 0; i < jsonArray1.length(); i++) {
-                            ejercicioG1 = new EjercicioG1();
-                            JSONObject jsonObject = null;
-                            jsonObject = jsonArray1.getJSONObject(i);
-                            // jsonObject = new JSONObject(response);
-                            ejercicioG1.setIdTipo(jsonObject.optInt("Tipo_idTipo"));
-
-                            listaEjercicios.add(ejercicioG1);
-                        }
-                    } catch (JSONException e1) {
-
-                    }*/
-
+                    // cargarWebService1();
 
                     String tipo1 = String.valueOf(ejerpos1);
                     String tipo2 = String.valueOf(ejerpos2);
 
+                    String g1 = "g1";
+                    String g2 = "g2";
+
+
                     int ejertipo = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio();
                     Tipo1EstudianteFragment tipo1EstudianteFragment = new Tipo1EstudianteFragment();
-                    InicioEjercicioFragment inicioEjercicioFragment=new InicioEjercicioFragment();
+                    InicioEjercicioFragment inicioEjercicioFragment = new InicioEjercicioFragment();
 
                     Bundle bundle = new Bundle();
-                    if (!tipo1.equals("NULL")) {
+                    //if (!tipo1.equals("NULL")) {//primera que se uso y funciona solo para ejerciciog1
+                    if (ejerpos1!=0) {
                         bundle.putInt("idejercicio", ejerpos1);
+                        bundle.putString("grupo", g1);
                         Log.i("tipo1 :", tipo1);
-                    } else if (!tipo2.equals("NULL")) {
-                        bundle.putInt("idejercicio", ejerpos1);
                         Log.i("tipo2 :", tipo2);
+                    //} else if (!tipo2.equals("NULL")) {
+                    }  if (ejerpos2!=0) {
+                        // bundle.putInt("idejercicio", ejerpos1);
+                        bundle.putInt("idejercicio", ejerpos2);
+                        bundle.putString("grupo", g2);
+                        Log.i("ejercicio g2 :", tipo2);
+                        System.out.println("ejercicio g2 :" + tipo2);
                     }
 
 
                     // if (ejertipo == "tipo1") {
                     tipo1EstudianteFragment.setArguments(bundle);
                     inicioEjercicioFragment.setArguments(bundle);
-                   // getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo1EstudianteFragment)
+                    // getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo1EstudianteFragment)
                     getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, inicioEjercicioFragment)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .addToBackStack(null).commit();
@@ -261,7 +254,7 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
     private void cargarWebService1() {
 
         String url_lh = Globals.url;
-        idEjercicio=27;
+        idEjercicio = 27;
         String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarEjercicio.php?idEjercicioG1="
                 + idEjercicio;
         // + idestudiante + "&docente_iddocente=" + 220;

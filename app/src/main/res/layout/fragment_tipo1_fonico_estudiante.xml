@@ -16,7 +16,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="80dp">
 
         <TextView
             android:id="@+id/txt_estudiante_fonico1_letra"
@@ -25,14 +26,18 @@
             android:gravity="center"
             android:text="L"
             android:textSize="100dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorPrimary"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorAccent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,9 +47,9 @@
 
                 <ImageView
                     android:id="@+id/iv_estudiante_fonico1_f1c1"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_weight=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
                     android:background="@drawable/ic_no_foto_80dp" />
             </LinearLayout>
 
@@ -56,9 +61,9 @@
 
                 <ImageView
                     android:id="@+id/iv_estudiante_fonico1_f1c2"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_weight=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
                     android:background="@drawable/ic_no_foto_80dp" />
             </LinearLayout>
 
@@ -70,9 +75,9 @@
 
                 <ImageView
                     android:id="@+id/iv_estudiante_fonico1_f1c3"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_weight=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
                     android:background="@drawable/ic_no_foto_80dp" />
             </LinearLayout>
 
@@ -86,7 +91,7 @@
                     android:id="@+id/iv_estudiante_fonico1_f1c4"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_weight=""
+
                     android:background="@drawable/ic_no_foto_80dp" />
             </LinearLayout>
 

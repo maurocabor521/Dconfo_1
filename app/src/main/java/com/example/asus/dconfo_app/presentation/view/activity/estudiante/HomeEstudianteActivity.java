@@ -13,6 +13,7 @@ import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.CasaHom
 import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.InicioEjercicioFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.Tipo1EstudianteFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.Tipo2EstudianteFragment;
+import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.fonico.Tipo1FonicoFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -20,7 +21,8 @@ public class HomeEstudianteActivity extends AppCompatActivity implements
         CasaHomeEstudianteFragment.OnFragmentInteractionListener,
         Tipo1EstudianteFragment.OnFragmentInteractionListener,
         Tipo2EstudianteFragment.OnFragmentInteractionListener,
-        InicioEjercicioFragment.OnFragmentInteractionListener {
+        InicioEjercicioFragment.OnFragmentInteractionListener,
+        Tipo1FonicoFragment.OnFragmentInteractionListener {
 
 
     private BottomBar bottomBar;
