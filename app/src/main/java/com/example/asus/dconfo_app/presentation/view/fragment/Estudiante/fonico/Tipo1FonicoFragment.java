@@ -57,6 +57,7 @@ public class Tipo1FonicoFragment extends Fragment
     private String letra;
 
     private int letraIgual = 0;
+    private int letraNoIgual = 0;
     private int letraIgual_correcto = 0;
 
     private boolean flagf1_c1 = false;
@@ -74,6 +75,11 @@ public class Tipo1FonicoFragment extends Fragment
     private int idejercicio3;
     private int idejercicio4;
 
+    private int flagc1 = 0;
+    private int flagc2 = 0;
+    private int flagc3 = 0;
+    private int flagc4 = 0;
+
     private int filejercicio1;
     private int filejercicio2;
     private int filejercicio3;
@@ -90,6 +96,13 @@ public class Tipo1FonicoFragment extends Fragment
     private ImageView iv_f1_c4;
 
     private Button btn_verificar_tipo1;
+
+    private Button btn_selected_c1;
+    private Button btn_selected_c2;
+    private Button btn_selected_c3;
+    private Button btn_selected_c4;
+
+    private TextView txt_resultado;
 
     private Imagen imagen;
     String urlImagen;
@@ -142,7 +155,11 @@ public class Tipo1FonicoFragment extends Fragment
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tipo1_fonico_estudiante, container, false);
+
         txt_letra = view.findViewById(R.id.txt_estudiante_fonico1_letra);
+
+        txt_resultado = view.findViewById(R.id.txt_fonico_resultado_t1);
+
         letra = getArguments().getString("letrainicial");
 
         btn_verificar_tipo1 = (Button) view.findViewById(R.id.btn_estudiante_fonico_enviar_tipo1);
@@ -152,6 +169,12 @@ public class Tipo1FonicoFragment extends Fragment
                 verificarEjercicio();
             }
         });
+
+        btn_selected_c1 = (Button) view.findViewById(R.id.btn_fonico_selected_c1);
+        btn_selected_c2 = (Button) view.findViewById(R.id.btn_fonico_selected_c2);
+        btn_selected_c3 = (Button) view.findViewById(R.id.btn_fonico_selected_c3);
+        btn_selected_c4 = (Button) view.findViewById(R.id.btn_fonico_selected_c4);
+
 
         idejercicio1 = getArguments().getInt("idejercicio1");
         idejercicio2 = getArguments().getInt("idejercicio2");
@@ -200,29 +223,66 @@ public class Tipo1FonicoFragment extends Fragment
         iv_f1_c1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                flagf1_c1 = true;
-                System.out.println(" true flagf1_c1 : ");
+                if (flagc1 == 0) {
+                    flagf1_c1 = true;
+                    flagc1++;
+                    btn_selected_c1.setVisibility(View.VISIBLE);
+                    System.out.println(" flagf1_c1 : " + flagf1_c1);
+                } else {
+                    flagf1_c1 = false;
+                    flagc1--;
+                    btn_selected_c1.setVisibility(View.INVISIBLE);
+                    System.out.println(" flagf1_c1 : " + flagf1_c1);
+                }
+                //btn_selected_c1.setBackground(getResources().getDrawable(R.drawable.selec));
             }
         });
         iv_f1_c2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                flagf1_c2 = true;
-                System.out.println(" true flagf1_c2 : ");
+                if (flagc2 == 0) {
+                    flagf1_c2 = true;
+                    flagc2++;
+                    btn_selected_c2.setVisibility(View.VISIBLE);
+                    System.out.println(" flagf1_c2 : " + flagf1_c2);
+                } else {
+                    flagf1_c2 = false;
+                    flagc2--;
+                    btn_selected_c2.setVisibility(View.INVISIBLE);
+                    System.out.println(" flagf1_c2 : " + flagf1_c2);
+                }
             }
         });
         iv_f1_c3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                flagf1_c3 = true;
-                System.out.println(" true flagf1_c3 : ");
+                if (flagc3 == 0) {
+                    flagf1_c3 = true;
+                    flagc3++;
+                    btn_selected_c3.setVisibility(View.VISIBLE);
+                    System.out.println(" flagf1_c3 : " + flagf1_c3);
+                } else {
+                    flagf1_c3 = false;
+                    flagc3--;
+                    btn_selected_c3.setVisibility(View.INVISIBLE);
+                    System.out.println(" flagf1_c3 : " + flagf1_c3);
+                }
             }
         });
         iv_f1_c4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                flagf1_c4 = true;
-                System.out.println(" true flagf1_c4 : ");
+                if (flagc4 == 0) {
+                    flagf1_c4 = true;
+                    flagc4++;
+                    btn_selected_c4.setVisibility(View.VISIBLE);
+                    System.out.println(" flagf1_c4 : " + flagf1_c4);
+                } else {
+                    flagf1_c4 = false;
+                    flagc4--;
+                    btn_selected_c4.setVisibility(View.INVISIBLE);
+                    System.out.println(" flagf1_c4 : " + flagf1_c4);
+                }
             }
         });
 
@@ -273,8 +333,68 @@ public class Tipo1FonicoFragment extends Fragment
                 System.out.println(" correcto c4: " + letraIgual_correcto);
             }
         }
-        if (letraIgual == letraIgual_correcto) {
+        if (!letraf1_c1.equals(letra) && flagf1_c1 == true) {
+            letraNoIgual++;
+        }
+        if (!letraf1_c2.equals(letra) && flagf1_c2 == true) {
+            letraNoIgual++;
+        }
+        if (!letraf1_c3.equals(letra) && flagf1_c3 == true) {
+            letraNoIgual++;
+        }
+        if (!letraf1_c4.equals(letra) && flagf1_c4 == true) {
+            letraNoIgual++;
+        }
+        if (letraIgual == letraIgual_correcto && letraNoIgual == 0) {
             System.out.println(" Ejercicio aprobado. cant letras igual a letra: " + letraIgual + " = " + letraIgual_correcto);
+            System.out.println(" letra igual - letra no igual: " + letraIgual + " = " + letraNoIgual);
+            txt_resultado.setText("Muy Bien!!!!");
+            letraIgual_correcto = 0;
+            letraIgual = 0;
+            letraNoIgual = 0;
+            flagf1_c1 = false;
+            flagf1_c2 = false;
+            flagf1_c3 = false;
+            flagf1_c4 = false;
+
+            flagc1 = 0;
+            flagc2 = 0;
+            flagc3 = 0;
+            flagc4 = 0;
+
+           /* letraf1_c1 = "";
+            letraf1_c2 = "";
+            letraf1_c3 = "";
+            letraf1_c4 = "";*/
+            btn_selected_c1.setVisibility(View.INVISIBLE);
+            btn_selected_c2.setVisibility(View.INVISIBLE);
+            btn_selected_c3.setVisibility(View.INVISIBLE);
+            btn_selected_c4.setVisibility(View.INVISIBLE);
+        } else {
+            System.out.println("Error letra igual - letra no igual: " + letraIgual + " = " + letraNoIgual);
+            txt_resultado.setText("Intentalo de nuevo");
+            letraIgual_correcto = 0;
+            letraIgual = 0;
+            letraNoIgual = 0;
+
+            flagf1_c1 = false;
+            flagf1_c2 = false;
+            flagf1_c3 = false;
+            flagf1_c4 = false;
+
+            flagc1 = 0;
+            flagc2 = 0;
+            flagc3 = 0;
+            flagc4 = 0;
+
+           /* letraf1_c1 = "";
+            letraf1_c2 = "";
+            letraf1_c3 = "";
+            letraf1_c4 = "";*/
+            btn_selected_c1.setVisibility(View.INVISIBLE);
+            btn_selected_c2.setVisibility(View.INVISIBLE);
+            btn_selected_c3.setVisibility(View.INVISIBLE);
+            btn_selected_c4.setVisibility(View.INVISIBLE);
         }
 
     }
