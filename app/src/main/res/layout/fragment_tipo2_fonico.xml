@@ -1,15 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".presentation.view.fragment.docente.fonico.Tipo2FonicoFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Fónico tipo 2"
-        android:gravity="center_horizontal"/>
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Fónico tipo 2" />
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorAccent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+
+                        <LinearLayout
+                            android:id="@+id/ll_docente_fon2_c1_f1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal">
+
+                            <ImageView
+                                android:id="@+id/iv_docente_fon2_c1_f1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/ic_no_foto_80dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_docente_fon2_c1_f2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal">
+
+                            <ImageView
+                                android:id="@+id/iv_docente_fon2_c1_f2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/ic_no_foto_80dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_docente_fon2_c1_f3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal">
+
+                            <ImageView
+                                android:id="@+id/iv_docente_fon2_c1_f3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/ic_no_foto_80dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_docente_fon2_c1_f4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal">
+
+                            <ImageView
+                                android:id="@+id/iv_docente_fon2_c1_f4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/ic_no_foto_80dp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <LinearLayout
+                            android:id="@+id/ll_docente_fon2_l1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal">
+
+                            <EditText
+                                android:id="@+id/edt_docente_fon2_l1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:digits="abcdefghijlklmnñopqrstuvwxyz
+                             ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+                                android:gravity="center"
+                                android:hint="L1"
+                                android:maxLength="1"
+                                android:text=""
+                                android:textSize="45dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_docente_fon2_l2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal">
+
+                            <EditText
+                                android:id="@+id/edt_docente_fon2_l2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:digits="abcdefghijlklmnñopqrstuvwxyz
+                             ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+                                android:gravity="center"
+                                android:hint="L2"
+                                android:maxLength="1"
+                                android:text=""
+                                android:textSize="45dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_docente_fon2_l3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal">
+
+                            <EditText
+                                android:id="@+id/edt_docente_fon2_l3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:digits="abcdefghijlklmnñopqrstuvwxyz
+                             ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+                                android:gravity="center"
+                                android:hint="L3"
+                                android:maxLength="1"
+                                android:text=""
+                                android:textSize="45dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_docente_fon2_l4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal">
+
+                            <EditText
+                                android:id="@+id/edt_docente_fon2_l4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:digits="abcdefghijlklmnñopqrstuvwxyz
+                             ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+                                android:gravity="center"
+                                android:hint="L4"
+                                android:maxLength="1"
+                                android:text=""
+                                android:textSize="45dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_docente_fon2_enviar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="Enviar"
+                    android:textStyle="bold"
+                    android:theme="@style/RaisedButtonDark" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>

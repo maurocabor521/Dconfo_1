@@ -1,14 +1,28 @@
 package com.example.asus.dconfo_app.presentation.view.fragment.docente.fonico;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
+
+import java.io.File;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +41,50 @@ public class Tipo2FonicoFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ImageView iv_c1f1;
+    private ImageView iv_c1f2;
+    private ImageView iv_c1f3;
+    private ImageView iv_c1f4;
+
+    private EditText edt_l1;
+    private EditText edt_l2;
+    private EditText edt_l3;
+    private EditText edt_l4;
+
+    private LinearLayout ll_c1f1;
+    private LinearLayout ll_c1f2;
+    private LinearLayout ll_c1f3;
+    private LinearLayout ll_c1f4;
+
+    private LinearLayout ll_letra1;
+    private LinearLayout ll_letra2;
+    private LinearLayout ll_letra3;
+    private LinearLayout ll_letra4;
+
+    private Button btn_enviar;
+
+    private String nameDocente;
+    private int idDocente;
+
+    private final int MIS_PERMISOS = 100;
+    private static final int COD_SELECCIONA = 10;
+    private static final int COD_FOTO = 20;
+
+    private static final String CARPETA_PRINCIPAL = "misImagenesApp/";//directorio principal
+    private static final String CARPETA_IMAGEN = "imagenes";//carpeta donde se guardan las fotos
+    private static final String DIRECTORIO_IMAGEN = CARPETA_PRINCIPAL + CARPETA_IMAGEN;//ruta carpeta de directorios
+    private String path;//almacena la ruta de la imagen
+
+    //******** CONEXIÓN CON WEBSERVICE
+    //RequestQueue request;
+    JsonObjectRequest jsonObjectRequest;
+    StringRequest stringRequest;
+
+    ProgressDialog progreso;
+    ImageView imgFoto;
+    File fileImagen;
+    Bitmap bitmap;
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,7 +123,104 @@ public class Tipo2FonicoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tipo2_fonico, container, false);
+        View view = inflater.inflate(R.layout.fragment_tipo2_fonico, container, false);
+
+        nameDocente = getArguments().getString("namedocente");
+        idDocente = getArguments().getInt("iddocente");
+
+        ll_c1f1 = (LinearLayout) view.findViewById(R.id.ll_docente_fon2_c1_f1);
+        ll_c1f2 = (LinearLayout) view.findViewById(R.id.ll_docente_fon2_c1_f2);
+        ll_c1f3 = (LinearLayout) view.findViewById(R.id.ll_docente_fon2_c1_f3);
+        ll_c1f4 = (LinearLayout) view.findViewById(R.id.ll_docente_fon2_c1_f4);
+
+        ll_letra1 = (LinearLayout) view.findViewById(R.id.ll_docente_fon2_l1);
+        ll_letra2 = (LinearLayout) view.findViewById(R.id.ll_docente_fon2_l2);
+        ll_letra3 = (LinearLayout) view.findViewById(R.id.ll_docente_fon2_l3);
+        ll_letra4 = (LinearLayout) view.findViewById(R.id.ll_docente_fon2_l4);
+
+        iv_c1f1 = (ImageView) view.findViewById(R.id.iv_docente_fon2_c1_f1);
+        iv_c1f1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        iv_c1f2 = (ImageView) view.findViewById(R.id.iv_docente_fon2_c1_f2);
+        iv_c1f2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        iv_c1f3 = (ImageView) view.findViewById(R.id.iv_docente_fon2_c1_f3);
+        iv_c1f3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        iv_c1f4 = (ImageView) view.findViewById(R.id.iv_docente_fon2_c1_f4);
+        iv_c1f4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        edt_l1 = (EditText) view.findViewById(R.id.edt_docente_fon2_l1);
+        edt_l2 = (EditText) view.findViewById(R.id.edt_docente_fon2_l2);
+        edt_l3 = (EditText) view.findViewById(R.id.edt_docente_fon2_l3);
+        edt_l4 = (EditText) view.findViewById(R.id.edt_docente_fon2_l4);
+
+        btn_enviar = (Button) view.findViewById(R.id.btn_docente_fon2_enviar);
+
+        return view;
+
+    }
+
+    //**********************************************************************************************
+
+    private void mostrarDialogOpciones() {//part 9
+        final CharSequence[] opciones = {"Elegir de Banco de Imágenes", "Elegir de Galeria", "Cancelar"};
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Elige una Opción");
+        builder.setItems(opciones, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (opciones[i].equals("Elegir de Banco de Imágenes")) {
+                /*    Intent intent = new Intent(getActivity(), BankImagesActivity.class);
+
+                    //intent.setAction(Intent.ACTION_GET_CONTENT);
+                    intent.setAction(Intent.ACTION_PICK);
+                    //intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    //intent.setType("image/*");
+
+                    startActivityForResult(intent.createChooser(intent, "Seleccione"), COD_SELECCIONA);
+                    System.out.println("info: " + intent);
+                    //abriCamara();//part 10 tomar foto
+                    //Toast.makeText(getContext(), "Cargar Cámara", Toast.LENGTH_LONG).show();
+                    */
+                    //cargarWebService_1();
+                    //rv_tipo1Fonico.setVisibility(View.VISIBLE);
+                } else {
+                    if (opciones[i].equals("Elegir de Galeria")) {
+                        /*Intent intent = new Intent(Intent.ACTION_GET_CONTENT,
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);*/
+                        //directamente de galeria
+                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        intent.setType("image/");
+                        startActivityForResult(intent.createChooser(intent, "Seleccione"), COD_SELECCIONA);
+                    } else {
+                        dialogInterface.dismiss();
+                    }
+                }
+            }
+        });
+        builder.show();
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
