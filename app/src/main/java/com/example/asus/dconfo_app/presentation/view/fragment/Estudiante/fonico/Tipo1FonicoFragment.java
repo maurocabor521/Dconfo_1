@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,7 +53,22 @@ public class Tipo1FonicoFragment extends Fragment
     private String mParam2;
 
     private TextView txt_letra;
+
     private String letra;
+
+    private int letraIgual = 0;
+    private int letraIgual_correcto = 0;
+
+    private boolean flagf1_c1 = false;
+    private boolean flagf1_c2 = false;
+    private boolean flagf1_c3 = false;
+    private boolean flagf1_c4 = false;
+
+    private String letraf1_c1;
+    private String letraf1_c2;
+    private String letraf1_c3;
+    private String letraf1_c4;
+
     private int idejercicio1;
     private int idejercicio2;
     private int idejercicio3;
@@ -72,6 +88,8 @@ public class Tipo1FonicoFragment extends Fragment
     private ImageView iv_f1_c2;
     private ImageView iv_f1_c3;
     private ImageView iv_f1_c4;
+
+    private Button btn_verificar_tipo1;
 
     private Imagen imagen;
     String urlImagen;
@@ -127,6 +145,14 @@ public class Tipo1FonicoFragment extends Fragment
         txt_letra = view.findViewById(R.id.txt_estudiante_fonico1_letra);
         letra = getArguments().getString("letrainicial");
 
+        btn_verificar_tipo1 = (Button) view.findViewById(R.id.btn_estudiante_fonico_enviar_tipo1);
+        btn_verificar_tipo1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verificarEjercicio();
+            }
+        });
+
         idejercicio1 = getArguments().getInt("idejercicio1");
         idejercicio2 = getArguments().getInt("idejercicio2");
         idejercicio3 = getArguments().getInt("idejercicio3");
@@ -142,7 +168,7 @@ public class Tipo1FonicoFragment extends Fragment
         colejercicio3 = getArguments().getInt("colejercicio3");
         colejercicio4 = getArguments().getInt("colejercicio4");
 
-        System.out.println("fila ejercicio 1: " + filejercicio1);
+       /* System.out.println("fila ejercicio 1: " + filejercicio1);
         System.out.println("fila ejercicio 2: " + filejercicio2);
         System.out.println("fila ejercicio 3: " + filejercicio3);
         System.out.println("fila ejercicio 4: " + filejercicio4);
@@ -155,7 +181,7 @@ public class Tipo1FonicoFragment extends Fragment
         System.out.println("idejercicio1: " + idejercicio1);
         System.out.println("idejercicio2: " + idejercicio2);
         System.out.println("idejercicio3: " + idejercicio3);
-        System.out.println("idejercicio4: " + idejercicio4);
+        System.out.println("idejercicio4: " + idejercicio4);*/
 
         listaIdImagens = new ArrayList<>();
         listacolImagenes = new ArrayList<>();
@@ -171,6 +197,35 @@ public class Tipo1FonicoFragment extends Fragment
         iv_f1_c3 = (ImageView) view.findViewById(R.id.iv_estudiante_fonico1_f1c3);
         iv_f1_c4 = (ImageView) view.findViewById(R.id.iv_estudiante_fonico1_f1c4);
 
+        iv_f1_c1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flagf1_c1 = true;
+                System.out.println(" true flagf1_c1 : ");
+            }
+        });
+        iv_f1_c2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flagf1_c2 = true;
+                System.out.println(" true flagf1_c2 : ");
+            }
+        });
+        iv_f1_c3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flagf1_c3 = true;
+                System.out.println(" true flagf1_c3 : ");
+            }
+        });
+        iv_f1_c4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flagf1_c4 = true;
+                System.out.println(" true flagf1_c4 : ");
+            }
+        });
+
         System.out.println("lista de imagenes: " + listaIdImagens.toString());
 
         txt_letra.setText(letra);
@@ -180,9 +235,53 @@ public class Tipo1FonicoFragment extends Fragment
         return view;
     }
 
+    private void verificarEjercicio() {
+
+        if (letraf1_c1.equals(letra)) {
+            //Toast.makeText(getContext(), "Son iguales", Toast.LENGTH_SHORT).show();
+            letraIgual++;
+            System.out.println(" Son iguales c1: " + letraIgual);
+            if (flagf1_c1) {
+                letraIgual_correcto++;
+                System.out.println(" correcto c1: " + letraIgual_correcto);
+            }
+        }
+        if (letraf1_c2.equals(letra)) {
+            //Toast.makeText(getContext(), "Son iguales", Toast.LENGTH_SHORT).show();
+            letraIgual++;
+            System.out.println(" Son iguales c2: " + letraIgual);
+            if (flagf1_c2) {
+                letraIgual_correcto++;
+                System.out.println(" correcto c2: " + letraIgual_correcto);
+            }
+        }
+        if (letraf1_c3.equals(letra)) {
+            //Toast.makeText(getContext(), "Son iguales", Toast.LENGTH_SHORT).show();
+            letraIgual++;
+            System.out.println(" Son iguales c3: " + letraIgual);
+            if (flagf1_c3) {
+                letraIgual_correcto++;
+                System.out.println(" correcto c3: " + letraIgual_correcto);
+            }
+        }
+        if (letraf1_c4.equals(letra)) {
+            //Toast.makeText(getContext(), "Son iguales", Toast.LENGTH_SHORT).show();
+            letraIgual++;
+            System.out.println(" Son iguales c4: " + letraIgual);
+            if (flagf1_c4) {
+                letraIgual_correcto++;
+                System.out.println(" correcto c4: " + letraIgual_correcto);
+            }
+        }
+        if (letraIgual == letraIgual_correcto) {
+            System.out.println(" Ejercicio aprobado. cant letras igual a letra: " + letraIgual + " = " + letraIgual_correcto);
+        }
+
+    }
+
     public void llamarWebService() {
         //for (int i = 0; i < listaIdImagens.size(); i++) {
-        if (f<3) {
+        if (f < 3) {
             f++;
             System.out.println("valor f: " + f);
             cargarWebService(listaIdImagens.get(f));
@@ -264,15 +363,20 @@ public class Tipo1FonicoFragment extends Fragment
 
 
                     if (f == 0) {
+                        letraf1_c1 = imagen.getLetraInicialImagen();
+                        System.out.println("  letraf1_c1: " + letraf1_c1);
                         iv_f1_c1.setBackground(null);
                         iv_f1_c1.setImageBitmap(response);
                     } else if (f == 1) {
+                        letraf1_c2 = imagen.getLetraInicialImagen();
                         iv_f1_c2.setBackground(null);
                         iv_f1_c2.setImageBitmap(response);
                     } else if (f == 2) {
+                        letraf1_c3 = imagen.getLetraInicialImagen();
                         iv_f1_c3.setBackground(null);
                         iv_f1_c3.setImageBitmap(response);
                     } else if (f == 3) {
+                        letraf1_c4 = imagen.getLetraInicialImagen();
                         iv_f1_c4.setBackground(null);
                         iv_f1_c4.setImageBitmap(response);
                     }
