@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -170,10 +171,32 @@ public class Tipo2FonicoFragment extends Fragment {
             }
         });
 
+       /* InputFilter[] editFilters = <EditText >.getFilters();
+        InputFilter[] newFilters = new InputFilter[editFilters.length + 1];
+        System.arraycopy(editFilters, 0, newFilters, 0, editFilters.length);
+        newFilters[editFilters.length] = <YOUR_FILTER >; <EditText >.setFilters(newFilters);*/
+
         edt_l1 = (EditText) view.findViewById(R.id.edt_docente_fon2_l1);
+        edt_l1.setFilters(new InputFilter[]
+                {new InputFilter.AllCaps(),
+                        new InputFilter.LengthFilter(1)}
+        );
+
         edt_l2 = (EditText) view.findViewById(R.id.edt_docente_fon2_l2);
+        edt_l2.setFilters(new InputFilter[]
+                {new InputFilter.AllCaps(),
+                        new InputFilter.LengthFilter(1)}
+        );
         edt_l3 = (EditText) view.findViewById(R.id.edt_docente_fon2_l3);
+        edt_l3.setFilters(new InputFilter[]
+                {new InputFilter.AllCaps(),
+                        new InputFilter.LengthFilter(1)}
+        );
         edt_l4 = (EditText) view.findViewById(R.id.edt_docente_fon2_l4);
+        edt_l4.setFilters(new InputFilter[]
+                {new InputFilter.AllCaps(),
+                        new InputFilter.LengthFilter(1)}
+        );
 
         btn_enviar = (Button) view.findViewById(R.id.btn_docente_fon2_enviar);
 
