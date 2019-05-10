@@ -35,6 +35,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.domain.model.EjercicioG2;
 import com.example.asus.dconfo_app.domain.model.EjercicioG2HasImagen;
+import com.example.asus.dconfo_app.domain.model.EjercicioG2HasLetrag2;
 import com.example.asus.dconfo_app.domain.model.Imagen;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
@@ -109,6 +110,8 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
     private LinearLayout ll_letra4;
 
     private EjercicioG2HasImagen ejercicioG2HasImagen;
+    private EjercicioG2HasLetrag2 ejercicioG2HasLetrag2;
+    private EjercicioG2 ejercicioG2;
 
     private RecyclerView rv_imagenesBancoDatos;
 
