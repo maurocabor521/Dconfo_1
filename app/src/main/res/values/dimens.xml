@@ -21,4 +21,5 @@
     <dimen name="imagen_width_250dp">250dp</dimen>
     <dimen name="imagen_height_250dp">250dp</dimen>
     <dimen name="tsize_documento">17sp</dimen>
+    <dimen name="elevation_ciecleimageprofile">10dp</dimen>
 </resources>

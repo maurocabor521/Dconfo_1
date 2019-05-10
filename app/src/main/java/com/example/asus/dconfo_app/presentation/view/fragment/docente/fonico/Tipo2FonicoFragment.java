@@ -10,7 +10,10 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +21,31 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.domain.model.Imagen;
+import com.example.asus.dconfo_app.domain.model.VolleySingleton;
+import com.example.asus.dconfo_app.helpers.Globals;
+import com.example.asus.dconfo_app.presentation.view.adapter.ImagenUrlAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,7 +55,7 @@ import java.io.File;
  * Use the {@link Tipo2FonicoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Tipo2FonicoFragment extends Fragment {
+public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListener, Response.Listener<JSONObject>, View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -47,6 +69,25 @@ public class Tipo2FonicoFragment extends Fragment {
     private ImageView iv_c1f2;
     private ImageView iv_c1f3;
     private ImageView iv_c1f4;
+
+    private CircleImageView cv_c1f1;
+    private CircleImageView cv_c1f2;
+    private CircleImageView cv_c1f3;
+    private CircleImageView cv_c1f4;
+
+    private RadioButton rb_letraInicial;
+    private RadioButton rb_letraFinal;
+
+    private boolean flag_iv_c1f1;
+    private boolean flag_iv_c1f2;
+    private boolean flag_iv_c1f3;
+    private boolean flag_iv_c1f4;
+
+    private TextView txt_name_c1f1;
+    private TextView txt_name_c1f2;
+    private TextView txt_name_c1f3;
+    private TextView txt_name_c1f4;
+
 
     private EditText edt_l1;
     private EditText edt_l2;
@@ -63,7 +104,11 @@ public class Tipo2FonicoFragment extends Fragment {
     private LinearLayout ll_letra3;
     private LinearLayout ll_letra4;
 
+    private RecyclerView rv_imagenesBancoDatos;
+
     private Button btn_enviar;
+
+    ArrayList<Imagen> listaImagenes;
 
     private String nameDocente;
     private int idDocente;
@@ -129,6 +174,13 @@ public class Tipo2FonicoFragment extends Fragment {
         nameDocente = getArguments().getString("namedocente");
         idDocente = getArguments().getInt("iddocente");
 
+        listaImagenes = new ArrayList<>();
+
+        rv_imagenesBancoDatos = (RecyclerView) view.findViewById(R.id.rv_docente_fon2_imgs);
+        rv_imagenesBancoDatos.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_imagenesBancoDatos.setHasFixedSize(true);
+        //rv_imagenesBancoDatos.setVisibility(View.INVISIBLE);
+
         ll_c1f1 = (LinearLayout) view.findViewById(R.id.ll_docente_fon2_c1_f1);
         ll_c1f2 = (LinearLayout) view.findViewById(R.id.ll_docente_fon2_c1_f2);
         ll_c1f3 = (LinearLayout) view.findViewById(R.id.ll_docente_fon2_c1_f3);
@@ -139,37 +191,26 @@ public class Tipo2FonicoFragment extends Fragment {
         ll_letra3 = (LinearLayout) view.findViewById(R.id.ll_docente_fon2_l3);
         ll_letra4 = (LinearLayout) view.findViewById(R.id.ll_docente_fon2_l4);
 
-        iv_c1f1 = (ImageView) view.findViewById(R.id.iv_docente_fon2_c1_f1);
+        txt_name_c1f1 = (TextView) view.findViewById(R.id.txt_docente_fon2_nom_c1f1);
+        txt_name_c1f2 = (TextView) view.findViewById(R.id.txt_docente_fon2_nom_c1f2);
+        txt_name_c1f3 = (TextView) view.findViewById(R.id.txt_docente_fon2_nom_c1f3);
+        txt_name_c1f4 = (TextView) view.findViewById(R.id.txt_docente_fon2_nom_c1f4);
+
+
+        cv_c1f1 = (CircleImageView) view.findViewById(R.id.iv_docente_fon2_c1_f1);
+        cv_c1f2 = (CircleImageView) view.findViewById(R.id.iv_docente_fon2_c1_f2);
+        cv_c1f3 = (CircleImageView) view.findViewById(R.id.iv_docente_fon2_c1_f3);
+        cv_c1f4 = (CircleImageView) view.findViewById(R.id.iv_docente_fon2_c1_f4);
+
+        /*iv_c1f1 = (ImageView) view.findViewById(R.id.iv_docente_fon2_c1_f1);
         iv_c1f1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mostrarDialogOpciones();
             }
-        });
+        });*/
 
-        iv_c1f2 = (ImageView) view.findViewById(R.id.iv_docente_fon2_c1_f2);
-        iv_c1f2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
-
-        iv_c1f3 = (ImageView) view.findViewById(R.id.iv_docente_fon2_c1_f3);
-        iv_c1f3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        iv_c1f4 = (ImageView) view.findViewById(R.id.iv_docente_fon2_c1_f4);
-        iv_c1f4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
        /* InputFilter[] editFilters = <EditText >.getFilters();
         InputFilter[] newFilters = new InputFilter[editFilters.length + 1];
@@ -198,11 +239,254 @@ public class Tipo2FonicoFragment extends Fragment {
                         new InputFilter.LengthFilter(1)}
         );
 
+//        iv_c1f1.setOnClickListener(this);
+        cv_c1f1.setOnClickListener(this);
+        cv_c1f2.setOnClickListener(this);
+        cv_c1f3.setOnClickListener(this);
+        cv_c1f4.setOnClickListener(this);
+
+
         btn_enviar = (Button) view.findViewById(R.id.btn_docente_fon2_enviar);
+
+        consultarListaImagenes();
 
         return view;
 
     }
+    //**********************************************************************************************
+
+ /*   Button button = (Button)findViewById(R.id.corky);
+        button.setOnClickListener(this);
+}*/
+
+    // Implement the OnClickListener callback
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_docente_fon2_c1_f1:
+                mostrarDialogOpciones();
+                flag_iv_c1f1 = true;
+                break;
+            case R.id.iv_docente_fon2_c1_f2:
+                mostrarDialogOpciones();
+                flag_iv_c1f2 = true;
+                break;
+            case R.id.iv_docente_fon2_c1_f3:
+                mostrarDialogOpciones();
+                flag_iv_c1f3 = true;
+                break;
+            case R.id.iv_docente_fon2_c1_f4:
+                mostrarDialogOpciones();
+                flag_iv_c1f4 = true;
+                break;
+        }
+    }
+
+    //**********************************************************************************************
+
+    private void cargarImagenWebService(String rutaImagen, final String nameImagen, final int idImagen) {
+
+        // String ip = context.getString(R.string.ip);
+
+        String url_lh = Globals.url;
+
+        String urlImagen = "http://" + url_lh + "/proyecto_dconfo/" + rutaImagen;
+        urlImagen = urlImagen.replace(" ", "%20");
+
+        ImageRequest imageRequest = new ImageRequest(urlImagen, new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap response) {
+                if (flag_iv_c1f1) {
+                    cv_c1f1.setBackground(null);
+                    cv_c1f1.setImageBitmap(response);
+                    //iv_c1f1.setBackground(null);
+                    //iv_c1f1.setImageBitmap(response);
+                    flag_iv_c1f1 = false;
+                    rv_imagenesBancoDatos.setVisibility(View.GONE);
+                    txt_name_c1f1.setText(nameImagen);
+
+                    int fila = 1;
+                    int columna = 1;
+
+                    /*  ejercicioG2HasImagen.setIdImagen(idImagen);
+                    ejercicioG2HasImagen.setFilaImagen(fila);
+                    ejercicioG2HasImagen.setColumnaImagen(columna);
+
+                    listaidImagenes.add(idImagen);
+                    listafilaImagen.add(fila);
+                    listacolumnaImagen.add(columna);*/
+
+                }
+                if (flag_iv_c1f2) {
+                    cv_c1f2.setBackground(null);
+                    cv_c1f2.setImageBitmap(response);
+                    flag_iv_c1f2 = false;
+                    rv_imagenesBancoDatos.setVisibility(View.GONE);
+                    txt_name_c1f2.setText(nameImagen);
+
+                    int fila = 1;
+                    int columna = 1;
+
+                    /*  ejercicioG2HasImagen.setIdImagen(idImagen);
+                    ejercicioG2HasImagen.setFilaImagen(fila);
+                    ejercicioG2HasImagen.setColumnaImagen(columna);
+
+                    listaidImagenes.add(idImagen);
+                    listafilaImagen.add(fila);
+                    listacolumnaImagen.add(columna);*/
+
+                }
+                if (flag_iv_c1f3) {
+                    cv_c1f3.setBackground(null);
+                    cv_c1f3.setImageBitmap(response);
+                    flag_iv_c1f3 = false;
+                    rv_imagenesBancoDatos.setVisibility(View.GONE);
+                    txt_name_c1f3.setText(nameImagen);
+
+                    int fila = 1;
+                    int columna = 1;
+
+                    /*  ejercicioG2HasImagen.setIdImagen(idImagen);
+                    ejercicioG2HasImagen.setFilaImagen(fila);
+                    ejercicioG2HasImagen.setColumnaImagen(columna);
+
+                    listaidImagenes.add(idImagen);
+                    listafilaImagen.add(fila);
+                    listacolumnaImagen.add(columna);*/
+
+                }
+                if (flag_iv_c1f4) {
+                    cv_c1f4.setBackground(null);
+                    cv_c1f4.setImageBitmap(response);
+                    flag_iv_c1f4 = false;
+                    rv_imagenesBancoDatos.setVisibility(View.GONE);
+                    txt_name_c1f4.setText(nameImagen);
+
+                    int fila = 1;
+                    int columna = 1;
+
+                    /*  ejercicioG2HasImagen.setIdImagen(idImagen);
+                    ejercicioG2HasImagen.setFilaImagen(fila);
+                    ejercicioG2HasImagen.setColumnaImagen(columna);
+
+                    listaidImagenes.add(idImagen);
+                    listafilaImagen.add(fila);
+                    listacolumnaImagen.add(columna);*/
+
+                }
+
+                // iv_bank_prueba.setBackground(null);
+                // iv_bank_prueba.setImageBitmap(response);
+            }
+        }, 0, 0, ImageView.ScaleType.CENTER, null, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "Error al cargar la imagen", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //request.add(imageRequest);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(imageRequest);
+    }
+
+
+    //----------------------------------------------------------------------------------------------
+
+    private void consultarListaImagenes() {
+
+
+        String iddoc = "20181";
+        String url_lh = Globals.url;
+
+        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSON1ConsultarListaImagenes.php";
+
+        url = url.replace(" ", "%20");
+        //hace el llamado a la url
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+
+        final int MY_DEFAULT_TIMEOUT = 15000;
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_DEFAULT_TIMEOUT,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        // request.add(jsonObjectRequest);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);//p21
+        //Toast.makeText(getApplicationContext(), "web service 1111", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        //progreso.hide();
+        Toast.makeText(getContext(), "No se puede cone , grupo doc" + error.toString(), Toast.LENGTH_LONG).show();
+        System.out.println();
+        Log.d("ERROR", error.toString());
+        //progreso.hide();
+    }
+
+    // si esta bien el llamado a la url entonces entra a este metodo
+    @Override
+    public void onResponse(final JSONObject response) {
+        //progreso.hide();
+        //Toast.makeText(getApplicationContext(), "Mensaje: " + response.toString(), Toast.LENGTH_SHORT).show();
+        Imagen imagen = null;
+        JSONArray json = response.optJSONArray("imagen");
+
+        try {
+            for (int i = 0; i < json.length(); i++) {
+                imagen = new Imagen();
+                JSONObject jsonObject = null;
+                jsonObject = json.getJSONObject(i);
+                // jsonObject = new JSONObject(response);
+                imagen.setIdImagen(jsonObject.optInt("idImagen_Ejercicio"));
+                imagen.setNameImagen(jsonObject.optString("name_Imagen_Ejercicio"));
+                imagen.setRutaImagen(jsonObject.optString("ruta_Imagen_Ejercicio"));
+                imagen.setLetraInicialImagen(jsonObject.optString("letra_inicial_Imagen"));
+                imagen.setLetraFinalImagen(jsonObject.optString("letra_final_Imagen"));
+                imagen.setCantSilabasImagen(jsonObject.optInt("cant_silabas_Imagen"));
+
+                listaImagenes.add(imagen);
+
+//idgrupo,namegrupo,curso_idcurso,curso_Instituto_idInstituto
+            }
+
+            ImagenUrlAdapter imagenUrlAdapter = new ImagenUrlAdapter(listaImagenes, getContext());
+            imagenUrlAdapter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    String rutaImagen = listaImagenes.get(rv_imagenesBancoDatos.
+                            getChildAdapterPosition(v)).getRutaImagen();
+
+                    String nameImagen = listaImagenes.get(rv_imagenesBancoDatos.
+                            getChildAdapterPosition(v)).getNameImagen();
+
+                    int idImagen = listaImagenes.get(rv_imagenesBancoDatos.
+                            getChildAdapterPosition(v)).getIdImagen();
+
+                    cargarImagenWebService(rutaImagen, nameImagen, idImagen);
+
+                    //Toast.makeText(getApplicationContext(), "on click: " + rutaImagen, Toast.LENGTH_LONG).show();
+                    System.out.println("on click: " + rutaImagen);
+                    //Toast.makeText(getApplicationContext(), "on click: " , Toast.LENGTH_LONG).show();
+
+                }
+            });
+
+            rv_imagenesBancoDatos.setAdapter(imagenUrlAdapter);
+
+            //Toast.makeText(getApplicationContext(), "listagrupos: " + listaGrupos.size(), Toast.LENGTH_LONG).show();
+            //Log.i("size", "lista Imágenes: " + listaImagenes.get(0).getNameImagen());
+
+            //rv_bankimages.setAdapter(gruposDocenteAdapter);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.d("error", response.toString());
+
+            Toast.makeText(getContext(), "No se ha podido establecer conexión: " + response.toString(), Toast.LENGTH_LONG).show();
+
+            //progreso.hide();
+        }
+    }
+
 
     //**********************************************************************************************
 
@@ -214,20 +498,8 @@ public class Tipo2FonicoFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (opciones[i].equals("Elegir de Banco de Imágenes")) {
-                /*    Intent intent = new Intent(getActivity(), BankImagesActivity.class);
 
-                    //intent.setAction(Intent.ACTION_GET_CONTENT);
-                    intent.setAction(Intent.ACTION_PICK);
-                    //intent.addCategory(Intent.CATEGORY_OPENABLE);
-                    //intent.setType("image/*");
-
-                    startActivityForResult(intent.createChooser(intent, "Seleccione"), COD_SELECCIONA);
-                    System.out.println("info: " + intent);
-                    //abriCamara();//part 10 tomar foto
-                    //Toast.makeText(getContext(), "Cargar Cámara", Toast.LENGTH_LONG).show();
-                    */
-                    //cargarWebService_1();
-                    //rv_tipo1Fonico.setVisibility(View.VISIBLE);
+                    rv_imagenesBancoDatos.setVisibility(View.VISIBLE);
                 } else {
                     if (opciones[i].equals("Elegir de Galeria")) {
                         /*Intent intent = new Intent(Intent.ACTION_GET_CONTENT,
