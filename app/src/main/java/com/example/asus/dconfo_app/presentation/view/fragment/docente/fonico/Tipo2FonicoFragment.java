@@ -33,6 +33,8 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.domain.model.EjercicioG2;
+import com.example.asus.dconfo_app.domain.model.EjercicioG2HasImagen;
 import com.example.asus.dconfo_app.domain.model.Imagen;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
@@ -106,11 +108,14 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
     private LinearLayout ll_letra3;
     private LinearLayout ll_letra4;
 
+    private EjercicioG2HasImagen ejercicioG2HasImagen;
+
     private RecyclerView rv_imagenesBancoDatos;
 
     private Button btn_enviar;
 
     ArrayList<Imagen> listaImagenes;
+    ArrayList<EjercicioG2> listaEjerciciosG2;
 
     private String nameDocente;
     private int idDocente;
