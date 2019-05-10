@@ -82,6 +82,8 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
     private boolean flag_iv_c1f2;
     private boolean flag_iv_c1f3;
     private boolean flag_iv_c1f4;
+    private boolean estado_RbletraInicial;
+    private boolean estado_RbletraFinal;
 
     private TextView txt_name_c1f1;
     private TextView txt_name_c1f2;
@@ -169,7 +171,7 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_tipo2_fonico, container, false);
+        final View view = inflater.inflate(R.layout.fragment_tipo2_fonico, container, false);
 
         nameDocente = getArguments().getString("namedocente");
         idDocente = getArguments().getInt("iddocente");
@@ -180,6 +182,11 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
         rv_imagenesBancoDatos.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_imagenesBancoDatos.setHasFixedSize(true);
         //rv_imagenesBancoDatos.setVisibility(View.INVISIBLE);
+
+        rb_letraInicial = (RadioButton) view.findViewById(R.id.rb_letraInicial);
+        rb_letraFinal = (RadioButton) view.findViewById(R.id.rb_letraFinal);
+
+        //verificaRadioButton();
 
         ll_c1f1 = (LinearLayout) view.findViewById(R.id.ll_docente_fon2_c1_f1);
         ll_c1f2 = (LinearLayout) view.findViewById(R.id.ll_docente_fon2_c1_f2);
@@ -247,11 +254,29 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
 
 
         btn_enviar = (Button) view.findViewById(R.id.btn_docente_fon2_enviar);
+        btn_enviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verificaRadioButton();
+            }
+        });
 
         consultarListaImagenes();
 
         return view;
 
+    }
+
+    public void verificaRadioButton() {
+        if (rb_letraInicial.isChecked() == true) {
+            estado_RbletraInicial = rb_letraInicial.isChecked();
+            System.out.println("Radio letra inicial estado: " + estado_RbletraInicial);
+            //System.out.println("Radio letra final estado: "+estado_RbletraFinal);
+        } else if (rb_letraFinal.isChecked() == true) {
+            //System.out.println("Radio letra inicial estado: "+estado_RbletraInicial);
+            estado_RbletraFinal = rb_letraFinal.isChecked();
+            System.out.println("Radio letra final estado: " + estado_RbletraFinal);
+        }
     }
     //**********************************************************************************************
 

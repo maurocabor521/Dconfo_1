@@ -282,13 +282,14 @@
                         <RadioGroup
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:checkedButton="@id/rb_letraInicial">
 
                             <RadioButton
                                 android:id="@+id/rb_letraInicial"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="true"
+
                                 android:text="Letra Inicial"
                                 android:layout_marginLeft="50dp"/>
 
@@ -296,9 +297,11 @@
                                 android:id="@+id/rb_letraFinal"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="true"
+
                                 android:text="Letra Final"
                                 android:layout_marginLeft="50dp"/>
+
+
                         </RadioGroup>
 
 
