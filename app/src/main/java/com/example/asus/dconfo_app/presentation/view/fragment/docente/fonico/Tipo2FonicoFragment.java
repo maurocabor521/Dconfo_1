@@ -876,7 +876,7 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
     // ----------------------------------------------------------------------------------------------
 
 
-    private void webService_CrearEjercicioG2_Has_Letra(final int id_Imagen, final int fila_imagen, final int columna_imagen) {//f8
+    private void webService_CrearEjercicioG2_Has_Letra(final String letra, final int fila_letra, final int columna_letra) {//f8
        /* progreso = new ProgressDialog(getContext());
         progreso.setMessage("Cargando...");
         progreso.show();*/
@@ -916,9 +916,9 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
 
                 String EjercicioG2_idEjercicioG2 = String.valueOf(idEjercicio2);
                 //String EjercicioG2_idEjercicioG2 = String.valueOf(10);
-                String Letra = edt_l1.getText().toString();
-                String fila_Eg2H_Lg2 = String.valueOf(fila_imagen);
-                String col_Eg2H_Lge = String.valueOf(columna_imagen);
+                String Letra = String.valueOf(letra);
+                String fila_Eg2H_Lg2 = String.valueOf(fila_letra);
+                String col_Eg2H_Lge = String.valueOf(columna_letra);
 
                 //System.out.println("letra inicial" + letra_inicial);
 
