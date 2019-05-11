@@ -25,6 +25,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -47,6 +48,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -98,6 +101,7 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
     private EditText edt_l2;
     private EditText edt_l3;
     private EditText edt_l4;
+    private EditText edt_nameEjercicio;
 
     private LinearLayout ll_c1f1;
     private LinearLayout ll_c1f2;
@@ -122,6 +126,9 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
 
     private String nameDocente;
     private int idDocente;
+    private String letra_inicial;
+    private String letra_final;
+
 
     private final int MIS_PERMISOS = 100;
     private static final int COD_SELECCIONA = 10;
@@ -232,6 +239,8 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
         System.arraycopy(editFilters, 0, newFilters, 0, editFilters.length);
         newFilters[editFilters.length] = <YOUR_FILTER >; <EditText >.setFilters(newFilters);*/
 
+        edt_nameEjercicio = (EditText) view.findViewById(R.id.edt_docente_fon2_nameEjercicio);
+
         edt_l1 = (EditText) view.findViewById(R.id.edt_docente_fon2_l1);
         edt_l1.setFilters(new InputFilter[]
                 {new InputFilter.AllCaps(),
@@ -266,6 +275,9 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
             @Override
             public void onClick(View v) {
                 verificaRadioButton();
+                cargarWS_CrearEjerciciog2_tipo2();
+                //System.out.println("id del docente: " + idDocente);
+                //verificaRadioButton();
             }
         });
 
@@ -280,10 +292,12 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
             estado_RbletraInicial = rb_letraInicial.isChecked();
             System.out.println("Radio letra inicial estado: " + estado_RbletraInicial);
             //System.out.println("Radio letra final estado: "+estado_RbletraFinal);
+            Toast.makeText(getContext(), "Radio letra inicial estado: " + estado_RbletraInicial, Toast.LENGTH_SHORT).show();
         } else if (rb_letraFinal.isChecked() == true) {
             //System.out.println("Radio letra inicial estado: "+estado_RbletraInicial);
             estado_RbletraFinal = rb_letraFinal.isChecked();
             System.out.println("Radio letra final estado: " + estado_RbletraFinal);
+            Toast.makeText(getContext(), "Radio letra final estado: " + estado_RbletraFinal, Toast.LENGTH_SHORT).show();
         }
     }
     //**********************************************************************************************
@@ -313,6 +327,103 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
                 break;
         }
     }
+
+    //----------------------------------------------------------------------------------------------
+    //******************************WEB SERVICE
+    //para iniciar el proceso de llamado al webservice
+    private void cargarWS_CrearEjerciciog2_tipo2() {
+       /* progreso = new ProgressDialog(getContext());
+        progreso.setMessage("Cargando...");
+        progreso.show();*/
+        String ip = Globals.url;
+        String url = "http://" + ip + "/proyecto_dconfo/wsJSONRegistroTipo1Fonico.php";//p12.buena
+
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto
+//                progreso.hide();
+                if (response.trim().equalsIgnoreCase("registra")) {
+
+                    //edt_letra.setText("");
+                    edt_nameEjercicio.setText("");
+
+                    Toast.makeText(getContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "No se ha cargado con éxito" + response.toString(), Toast.LENGTH_LONG).show();
+                    System.out.println("response: " + response.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "No se ha podido conectar", Toast.LENGTH_LONG).show();
+                String ERROR = "error";
+                Log.d(ERROR, error.toString());
+                System.out.println("error" + error.toString());
+                //progreso.hide();
+            }
+        }) {//enviar para metros a webservice, mediante post
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                //String idEjercicio = "7";
+                String nameEjercicio = edt_nameEjercicio.getText().toString();
+                System.out.println("edt_nameejercicio" + nameEjercicio);
+                String docente_iddocente = String.valueOf(idDocente);
+                String Tipo_idTipo = "2";
+                String Actividad_idActividad = "1";
+                if (estado_RbletraInicial) {
+
+                    letra_inicial = "s";
+                    letra_final = "n";
+
+                    System.out.println("estado_RbletraInicial :" + estado_RbletraInicial);
+                    System.out.println("letra_inicial 1 :" + letra_inicial);
+                    System.out.println("letra_final 1 :" + letra_final);
+                }
+                if (estado_RbletraFinal) {
+
+                    letra_inicial = "n";
+                    letra_final = "s";
+
+                    System.out.println("estado_RbletraFinal :" + estado_RbletraFinal);
+                    System.out.println("letra_inicial 2:" + letra_inicial);
+                    System.out.println("letra_final 2:" + letra_final);
+                }
+
+
+                // System.out.println("letra inicial" + letra_inicial);
+
+                Map<String, String> parametros = new HashMap<>();
+
+                //parametros.put("idEjercicio", idEjercicio);
+                parametros.put("nameEjercicio", nameEjercicio);
+                parametros.put("docente_iddocente", docente_iddocente);
+                parametros.put("Tipo_idTipo", Tipo_idTipo);
+                parametros.put("Actividad_idActividad", Actividad_idActividad);
+                parametros.put("letra_inicial", letra_inicial);
+                parametros.put("letra_final", letra_final);
+
+                return parametros;
+                // Map<String, String> parametros = new HashMap<>();
+                // return parametros;
+            }
+        };
+        //request.add(stringRequest);
+        //p25 duplicar tiempo x defecto
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(stringRequest);//p21
+        //listarEjerciciosG2Docente();
+
+        //reemplazar espacios en blanco del nombre por %20
+        // url = url.replace(" ", "%20");
+
+        //hace el llamado a la url,no usa en p12
+        /*jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        request.add(jsonObjectRequest);*/
+    }
+
+    //----------------------------------------------------------------------------------------------
 
     //**********************************************************************************************
 

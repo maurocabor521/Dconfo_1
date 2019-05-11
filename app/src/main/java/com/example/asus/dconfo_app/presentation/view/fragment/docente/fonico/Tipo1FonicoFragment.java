@@ -204,6 +204,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         View view = inflater.inflate(R.layout.fragment_tipo1_fonico, container, false);
 
         nameDocente = getArguments().getString("namedocente");
+
         idDocente = getArguments().getInt("iddocente");
 
         ejercicioG2HasImagen = new EjercicioG2HasImagen();
