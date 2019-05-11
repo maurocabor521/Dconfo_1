@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -28,12 +29,15 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.asus.dconfo_app.R;
+import com.example.asus.dconfo_app.domain.model.EjercicioG1;
 import com.example.asus.dconfo_app.domain.model.EjercicioG2;
 import com.example.asus.dconfo_app.domain.model.EjercicioG2HasImagen;
 import com.example.asus.dconfo_app.domain.model.EjercicioG2HasLetrag2;
@@ -123,9 +127,14 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
 
     ArrayList<Imagen> listaImagenes;
     ArrayList<EjercicioG2> listaEjerciciosG2;
+    ArrayList<EjercicioG1> listaEjercicios;
+    ArrayList<Integer> listaidImagenes;
+    ArrayList<Integer> listafilaImagen;
+    ArrayList<Integer> listacolumnaImagen;
 
     private String nameDocente;
     private int idDocente;
+    private int idEjercicio2;
     private String letra_inicial;
     private String letra_final;
 
@@ -191,7 +200,15 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
         nameDocente = getArguments().getString("namedocente");
         idDocente = getArguments().getInt("iddocente");
 
+        ejercicioG2HasImagen = new EjercicioG2HasImagen();
+        ejercicioG2HasLetrag2 = new EjercicioG2HasLetrag2();
+
         listaImagenes = new ArrayList<>();
+        listaEjerciciosG2 = new ArrayList<>();
+        listaEjercicios = new ArrayList<>();
+        listaidImagenes = new ArrayList<>();
+        listafilaImagen = new ArrayList<>();
+        listacolumnaImagen = new ArrayList<>();
 
         rv_imagenesBancoDatos = (RecyclerView) view.findViewById(R.id.rv_docente_fon2_imgs);
         rv_imagenesBancoDatos.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -281,13 +298,14 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
             }
         });
 
+        imgFoto = new ImageView(getContext());
         consultarListaImagenes();
 
         return view;
 
     }
 
-    public void verificaRadioButton() {
+    public void verificaRadioButton() {//f1
         if (rb_letraInicial.isChecked() == true) {
             estado_RbletraInicial = rb_letraInicial.isChecked();
             System.out.println("Radio letra inicial estado: " + estado_RbletraInicial);
@@ -307,7 +325,7 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
 }*/
 
     // Implement the OnClickListener callback
-    public void onClick(View v) {
+    public void onClick(View v) {//f2
         switch (v.getId()) {
             case R.id.iv_docente_fon2_c1_f1:
                 mostrarDialogOpciones();
@@ -331,7 +349,7 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
     //----------------------------------------------------------------------------------------------
     //******************************WEB SERVICE
     //para iniciar el proceso de llamado al webservice
-    private void cargarWS_CrearEjerciciog2_tipo2() {
+    private void cargarWS_CrearEjerciciog2_tipo2() {//f3
        /* progreso = new ProgressDialog(getContext());
         progreso.setMessage("Cargando...");
         progreso.show();*/
@@ -346,6 +364,7 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
 
                     //edt_letra.setText("");
                     edt_nameEjercicio.setText("");
+                    listarEjerciciosG2Docente();
 
                     Toast.makeText(getContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
                 } else {
@@ -413,7 +432,7 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
         //p25 duplicar tiempo x defecto
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(stringRequest);//p21
-        //listarEjerciciosG2Docente();
+
 
         //reemplazar espacios en blanco del nombre por %20
         // url = url.replace(" ", "%20");
@@ -427,7 +446,7 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
 
     //**********************************************************************************************
 
-    private void cargarImagenWebService(String rutaImagen, final String nameImagen, final int idImagen) {
+    private void cargarImagenWebService(String rutaImagen, final String nameImagen, final int idImagen) {//f4
 
         // String ip = context.getString(R.string.ip);
 
@@ -451,13 +470,13 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
                     int fila = 1;
                     int columna = 1;
 
-                    /*  ejercicioG2HasImagen.setIdImagen(idImagen);
+                    ejercicioG2HasImagen.setIdImagen(idImagen);
                     ejercicioG2HasImagen.setFilaImagen(fila);
                     ejercicioG2HasImagen.setColumnaImagen(columna);
 
                     listaidImagenes.add(idImagen);
                     listafilaImagen.add(fila);
-                    listacolumnaImagen.add(columna);*/
+                    listacolumnaImagen.add(columna);
 
                 }
                 if (flag_iv_c1f2) {
@@ -467,16 +486,16 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
                     rv_imagenesBancoDatos.setVisibility(View.GONE);
                     txt_name_c1f2.setText(nameImagen);
 
-                    int fila = 1;
+                    int fila = 2;
                     int columna = 1;
 
-                    /*  ejercicioG2HasImagen.setIdImagen(idImagen);
+                    ejercicioG2HasImagen.setIdImagen(idImagen);
                     ejercicioG2HasImagen.setFilaImagen(fila);
                     ejercicioG2HasImagen.setColumnaImagen(columna);
 
                     listaidImagenes.add(idImagen);
                     listafilaImagen.add(fila);
-                    listacolumnaImagen.add(columna);*/
+                    listacolumnaImagen.add(columna);
 
                 }
                 if (flag_iv_c1f3) {
@@ -486,16 +505,16 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
                     rv_imagenesBancoDatos.setVisibility(View.GONE);
                     txt_name_c1f3.setText(nameImagen);
 
-                    int fila = 1;
+                    int fila = 3;
                     int columna = 1;
 
-                    /*  ejercicioG2HasImagen.setIdImagen(idImagen);
+                    ejercicioG2HasImagen.setIdImagen(idImagen);
                     ejercicioG2HasImagen.setFilaImagen(fila);
                     ejercicioG2HasImagen.setColumnaImagen(columna);
 
                     listaidImagenes.add(idImagen);
                     listafilaImagen.add(fila);
-                    listacolumnaImagen.add(columna);*/
+                    listacolumnaImagen.add(columna);
 
                 }
                 if (flag_iv_c1f4) {
@@ -505,16 +524,16 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
                     rv_imagenesBancoDatos.setVisibility(View.GONE);
                     txt_name_c1f4.setText(nameImagen);
 
-                    int fila = 1;
+                    int fila = 4;
                     int columna = 1;
 
-                    /*  ejercicioG2HasImagen.setIdImagen(idImagen);
+                    ejercicioG2HasImagen.setIdImagen(idImagen);
                     ejercicioG2HasImagen.setFilaImagen(fila);
                     ejercicioG2HasImagen.setColumnaImagen(columna);
 
                     listaidImagenes.add(idImagen);
                     listafilaImagen.add(fila);
-                    listacolumnaImagen.add(columna);*/
+                    listacolumnaImagen.add(columna);
 
                 }
 
@@ -534,7 +553,7 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
 
     //----------------------------------------------------------------------------------------------
 
-    private void consultarListaImagenes() {
+    private void consultarListaImagenes() {//f5
 
 
         String iddoc = "20181";
@@ -634,7 +653,7 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
 
     //**********************************************************************************************
 
-    private void mostrarDialogOpciones() {//part 9
+    private void mostrarDialogOpciones() {//part 9 //f6
         final CharSequence[] opciones = {"Elegir de Banco de Imágenes", "Elegir de Galeria", "Cancelar"};
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Elige una Opción");
@@ -660,7 +679,278 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
         });
         builder.show();
 
+    }//*********************************************************************************************
+
+    // ----------------------------------------------------------------------------------------------
+
+    //******************************WEB SERVICE
+    public void listarEjerciciosG2Docente() {//f7
+
+
+        String url_lh = Globals.url;
+
+        //String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjerciciosDocente.php?docente_iddocente=" + iddocente;
+        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjercicios_Fonico1_Docente.php?iddocente=" + idDocente;
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+
+        // Initialize a new JsonObjectRequest instance
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // Do something with response
+
+                        EjercicioG2 ejercicioG2 = null;
+                        Toast.makeText(getContext(), "listar ejercicios g2: ", Toast.LENGTH_LONG).show();
+
+                        try {
+                            JSONArray json = response.optJSONArray("ejerciciog2");
+                            //JSONARRAY array=new JSONARRAY(response);
+                            for (int i = 0; i < json.length(); i++) {
+                                ejercicioG2 = new EjercicioG2();
+                                JSONObject jsonObject = null;
+                                jsonObject = json.getJSONObject(i);
+                                ejercicioG2.setIdEjercicioG2(jsonObject.optInt("idEjercicioG2"));
+                                ejercicioG2.setNameEjercicioG2(jsonObject.optString("nameEjercicioG2"));
+                                ejercicioG2.setIdDocente(jsonObject.optInt("docente_iddocente"));
+                                ejercicioG2.setIdTipo(jsonObject.optInt("Tipo_idTipo"));
+                                ejercicioG2.setIdActividad(jsonObject.optInt("Tipo_Actividad_idActividad"));
+                                ejercicioG2.setLetra_inicial_EjercicioG2(jsonObject.optString("letra_inicial_EjercicioG2"));
+                                ejercicioG2.setLetra_final_EjercicioG2(jsonObject.optString("letra_final_EjercicioG2"));
+
+                                listaEjerciciosG2.add(ejercicioG2);
+                            }
+                            idEjercicio2 = listaEjerciciosG2.get(listaEjerciciosG2.size() - 1).getIdEjercicioG2();
+                            System.out.println("Último de lista EG2: " + idEjercicio2);
+
+                            if (idEjercicio2 > 0) {
+
+                                ejerciciog2HI_adjuntarImagenes();
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Do something when error occurred
+                        System.out.println();
+                        Log.d("ERROR Ejercicios G2: ", error.toString());
+                    }
+                }
+        );
+        final int MY_DEFAULT_TIMEOUT = 15000;
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_DEFAULT_TIMEOUT,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        requestQueue.add(jsonObjectRequest);
+        //stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //VolleySingleton.getIntanciaVolley(getApplicationContext()).addToRequestQueue(stringRequest);//p21
     }
+
+    private void ejerciciog2HI_adjuntarImagenes() {//f9
+
+        System.out.println("ejerciciog2HI_adjuntarImagenes: ");
+
+        for (int i = 0; i < listaidImagenes.size(); i++) {
+            webService_CrearEjercicioG2_Has_Imagen(listaidImagenes.get(i), listafilaImagen.get(i), listacolumnaImagen.get(i));
+            try {
+                Thread.sleep(100);
+                System.out.println("Dormir for... " + listaidImagenes.get(i));
+            } catch (InterruptedException e) {
+
+            }
+        }
+        edt_nameEjercicio.setText("");
+        edt_l1.setText("");
+        edt_l2.setText("");
+        edt_l3.setText("");
+        edt_l4.setText("");
+        imgFoto.setBackgroundResource(R.drawable.ic_no_foto_80dp);
+        Drawable drawable = imgFoto.getDrawable();
+        cv_c1f1.setImageResource(R.drawable.ic_no_foto_80dp);
+        cv_c1f2.setImageResource(R.drawable.ic_no_foto_80dp);
+        cv_c1f3.setImageResource(R.drawable.ic_no_foto_80dp);
+        cv_c1f4.setImageResource(R.drawable.ic_no_foto_80dp);
+
+        txt_name_c1f1.setText("imagen 1");
+        txt_name_c1f2.setText("imagen 2");
+        txt_name_c1f3.setText("imagen 3");
+        txt_name_c1f4.setText("imagen 4");
+
+        /*btn_img_1.setBackgroundResource(R.drawable.ic_no_foto_80dp);
+        btn_img_2.setBackgroundResource(R.drawable.ic_no_foto_80dp);
+        btn_img_3.setBackgroundResource(R.drawable.ic_no_foto_80dp);
+        btn_img_4.setBackgroundResource(R.drawable.ic_no_foto_80dp);*/
+
+
+    }
+    // ----------------------------------------------------------------------------------------------
+
+
+    //para iniciar el proceso de llamado al webservice
+
+    private void webService_CrearEjercicioG2_Has_Imagen(final int id_Imagen, final int fila_imagen, final int columna_imagen) {//f8
+       /* progreso = new ProgressDialog(getContext());
+        progreso.setMessage("Cargando...");
+        progreso.show();*/
+        System.out.println(" Entrando a CREAR EG2_HAS_IMG" );
+        String ip = Globals.url;
+        String url = "http://" + ip + "/proyecto_dconfo/wsJSONCrearEjercicio2HasImagen.php";//p12.buena
+
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto
+//                progreso.hide();
+                if (response.trim().equalsIgnoreCase("registra")) {
+
+                    //edt_letra.setText("");
+                    // edt_nameEjercicio.setText("");
+                    System.out.println("CREAR EG2_HAS_IMG" + response.toString());
+
+                    Toast.makeText(getContext(), "Se ha cargado con éxito EHI", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "No se ha cargado con éxito EHI", Toast.LENGTH_LONG).show();
+                    System.out.println("error no cargado con exito crearEHI");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "No se ha podido conectar EHI", Toast.LENGTH_LONG).show();
+                String ERROR = "error";
+                Log.d(ERROR, error.toString());
+                System.out.println("error" + error.toString());
+                //progreso.hide();
+            }
+        }) {//enviar para metros a webservice, mediante post
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+
+                String EjercicioG2_idEjercicioG2 = String.valueOf(idEjercicio2);
+                //String EjercicioG2_idEjercicioG2 = String.valueOf(10);
+                String Imagen_idImagen_Ejercicio = String.valueOf(id_Imagen);
+                String fila_E_h_I = String.valueOf(fila_imagen);
+                String columna_E_H_I = String.valueOf(columna_imagen);
+
+                //System.out.println("letra inicial" + letra_inicial);
+
+                Map<String, String> parametros = new HashMap<>();
+
+                //parametros.put("idEjercicio", idEjercicio);
+                parametros.put("EjercicioG2_idEjercicioG2", EjercicioG2_idEjercicioG2);
+                parametros.put("Imagen_idImagen_Ejercicio", Imagen_idImagen_Ejercicio);
+                parametros.put("fila_E_h_I", fila_E_h_I);
+                parametros.put("columna_E_H_I", columna_E_H_I);
+
+                System.out.println("Parametros: " + parametros.toString());
+
+
+                return parametros;
+            }
+        };
+        //request.add(stringRequest);
+        //p25 duplicar tiempo x defecto
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(stringRequest);//p21
+
+        //reemplazar espacios en blanco del nombre por %20
+        // url = url.replace(" ", "%20");
+
+        //hace el llamado a la url,no usa en p12
+        /*jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        request.add(jsonObjectRequest);*/
+    }
+    // ----------------------------------------------------------------------------------------------
+
+
+    private void webService_CrearEjercicioG2_Has_Letra(final int id_Imagen, final int fila_imagen, final int columna_imagen) {//f8
+       /* progreso = new ProgressDialog(getContext());
+        progreso.setMessage("Cargando...");
+        progreso.show();*/
+        System.out.println(" Entrando a CREAR EG2_HAS_LETRA" );
+        String ip = Globals.url;
+        String url = "http://" + ip + "/proyecto_dconfo/wsJSONCrearEjercicio2HasLetra.php";//p12.buena
+
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto
+//                progreso.hide();
+                if (response.trim().equalsIgnoreCase("registra")) {
+
+                    //edt_letra.setText("");
+                    // edt_nameEjercicio.setText("");
+                    System.out.println("CREAR EG2_HAS_LETRA" + response.toString());
+
+                    Toast.makeText(getContext(), "Se ha cargado con éxito EHL", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "No se ha cargado con éxito EHL", Toast.LENGTH_LONG).show();
+                    System.out.println("error no cargado con exito crearEHL");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "No se ha podido conectar EHL", Toast.LENGTH_LONG).show();
+                String ERROR = "error";
+                Log.d(ERROR, error.toString());
+                System.out.println("error" + error.toString());
+                //progreso.hide();
+            }
+        }) {//enviar para metros a webservice, mediante post
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+
+                String EjercicioG2_idEjercicioG2 = String.valueOf(idEjercicio2);
+                //String EjercicioG2_idEjercicioG2 = String.valueOf(10);
+                String Letra = edt_l1.getText().toString();
+                String fila_Eg2H_Lg2 = String.valueOf(fila_imagen);
+                String col_Eg2H_Lge = String.valueOf(columna_imagen);
+
+                //System.out.println("letra inicial" + letra_inicial);
+
+                Map<String, String> parametros = new HashMap<>();
+
+                //parametros.put("idEjercicio", idEjercicio);
+                parametros.put("EjercicioG2_idEjercicioG2", EjercicioG2_idEjercicioG2);
+                parametros.put("Letra", Letra);
+                parametros.put("fila_Eg2H_Lg2", fila_Eg2H_Lg2);
+                parametros.put("col_Eg2H_Lge", col_Eg2H_Lge);
+
+                System.out.println("Parametros: " + parametros.toString());
+
+
+                return parametros;
+            }
+        };
+        //request.add(stringRequest);
+        //p25 duplicar tiempo x defecto
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(stringRequest);//p21
+
+        //reemplazar espacios en blanco del nombre por %20
+        // url = url.replace(" ", "%20");
+
+        //hace el llamado a la url,no usa en p12
+        /*jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        request.add(jsonObjectRequest);*/
+    }
+    // ----------------------------------------------------------------------------------------------
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
