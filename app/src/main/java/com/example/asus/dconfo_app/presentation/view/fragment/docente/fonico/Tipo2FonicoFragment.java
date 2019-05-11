@@ -132,9 +132,14 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
     ArrayList<Integer> listafilaImagen;
     ArrayList<Integer> listacolumnaImagen;
 
+    ArrayList<String> listaLetras;
+    ArrayList<Integer> listafilaLetra;
+    ArrayList<Integer> listacolumnaLetra;
+
     private String nameDocente;
     private int idDocente;
     private int idEjercicio2;
+    private int cont = 0;
     private String letra_inicial;
     private String letra_final;
 
@@ -209,6 +214,10 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
         listaidImagenes = new ArrayList<>();
         listafilaImagen = new ArrayList<>();
         listacolumnaImagen = new ArrayList<>();
+
+        listaLetras = new ArrayList<>();
+        listafilaLetra = new ArrayList<>();
+        listacolumnaLetra = new ArrayList<>();
 
         rv_imagenesBancoDatos = (RecyclerView) view.findViewById(R.id.rv_docente_fon2_imgs);
         rv_imagenesBancoDatos.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -292,6 +301,7 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
             @Override
             public void onClick(View v) {
                 verificaRadioButton();
+                cargarEdt_letras();
                 cargarWS_CrearEjerciciog2_tipo2();
                 //System.out.println("id del docente: " + idDocente);
                 //verificaRadioButton();
@@ -301,8 +311,27 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
         imgFoto = new ImageView(getContext());
         consultarListaImagenes();
 
+
         return view;
 
+    }//--------------------------------------------------------------------------------ONCREATE-----
+
+    private void cargarEdt_letras() {
+        listaLetras.add(edt_l1.getText().toString());
+        listafilaLetra.add(1);
+        listacolumnaLetra.add(1);
+
+        listaLetras.add(edt_l2.getText().toString());
+        listafilaLetra.add(2);
+        listacolumnaLetra.add(1);
+
+        listaLetras.add(edt_l3.getText().toString());
+        listafilaLetra.add(3);
+        listacolumnaLetra.add(1);
+
+        listaLetras.add(edt_l4.getText().toString());
+        listafilaLetra.add(4);
+        listacolumnaLetra.add(1);
     }
 
     public void verificaRadioButton() {//f1
@@ -764,10 +793,29 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
         System.out.println("ejerciciog2HI_adjuntarImagenes: ");
 
         for (int i = 0; i < listaidImagenes.size(); i++) {
+
+            System.out.println(" listaidImagenes :" + listaidImagenes.toString());
+
             webService_CrearEjercicioG2_Has_Imagen(listaidImagenes.get(i), listafilaImagen.get(i), listacolumnaImagen.get(i));
+            webService_CrearEjercicioG2_Has_Letra(listaLetras.get(i), listafilaLetra.get(i), listacolumnaLetra.get(i));
+
+
+            System.out.println(" i :" + i);
+
+          /*  if (cont == 4) {
+                Toast.makeText(getContext(), "limpia listas: " + i, Toast.LENGTH_LONG).show();
+                listaidImagenes.clear();
+                listafilaImagen.clear();
+                listacolumnaImagen.clear();
+                listacolumnaLetra.clear();
+                listafilaLetra.clear();
+                listaLetras.clear();
+                System.out.println(" listaidImagenes :" + listacolumnaLetra.toString());
+
+            }*/
             try {
                 Thread.sleep(100);
-                System.out.println("Dormir for... " + listaidImagenes.get(i));
+                //System.out.println("Dormir for... " + listaidImagenes.get(i));
             } catch (InterruptedException e) {
 
             }
@@ -805,7 +853,7 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
        /* progreso = new ProgressDialog(getContext());
         progreso.setMessage("Cargando...");
         progreso.show();*/
-        System.out.println(" Entrando a CREAR EG2_HAS_IMG" );
+        System.out.println(" Entrando a CREAR EG2_HAS_IMG");
         String ip = Globals.url;
         String url = "http://" + ip + "/proyecto_dconfo/wsJSONCrearEjercicio2HasImagen.php";//p12.buena
 
@@ -818,6 +866,7 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
                     //edt_letra.setText("");
                     // edt_nameEjercicio.setText("");
                     System.out.println("CREAR EG2_HAS_IMG" + response.toString());
+
 
                     Toast.makeText(getContext(), "Se ha cargado con éxito EHI", Toast.LENGTH_LONG).show();
                 } else {
@@ -876,11 +925,11 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
     // ----------------------------------------------------------------------------------------------
 
 
-    private void webService_CrearEjercicioG2_Has_Letra(final String letra, final int fila_letra, final int columna_letra) {//f8
+    private void webService_CrearEjercicioG2_Has_Letra(final String letra, final int fila_letra, final int columna_letra) {//f10
        /* progreso = new ProgressDialog(getContext());
         progreso.setMessage("Cargando...");
         progreso.show();*/
-        System.out.println(" Entrando a CREAR EG2_HAS_LETRA" );
+        System.out.println(" Entrando a CREAR EG2_HAS_LETRA");
         String ip = Globals.url;
         String url = "http://" + ip + "/proyecto_dconfo/wsJSONCrearEjercicio2HasLetra.php";//p12.buena
 
@@ -892,12 +941,25 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
 
                     //edt_letra.setText("");
                     // edt_nameEjercicio.setText("");
-                    System.out.println("CREAR EG2_HAS_LETRA" + response.toString());
+                    cont++;
+                    System.out.println("CREAR EG2_HAS_LETRA ,cont: " + cont);
+                    if (cont == 4) {
+                        // Toast.makeText(getContext(), "limpia listas: " + i, Toast.LENGTH_LONG).show();
+                        listaidImagenes.clear();
+                        listafilaImagen.clear();
+                        listacolumnaImagen.clear();
+                        listacolumnaLetra.clear();
+                        listafilaLetra.clear();
+                        listaLetras.clear();
+                        System.out.println(" listaidImagenes :" + listacolumnaLetra.toString());
 
-                    Toast.makeText(getContext(), "Se ha cargado con éxito EHL", Toast.LENGTH_LONG).show();
+                    }
+
+
+                    //Toast.makeText(getContext(), "Se ha cargado con éxito EHL", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getContext(), "No se ha cargado con éxito EHL", Toast.LENGTH_LONG).show();
-                    System.out.println("error no cargado con exito crearEHL");
+                    System.out.println("error no cargado con exito crearEHL" + response.toString());
                 }
             }
         }, new Response.ErrorListener() {
@@ -925,6 +987,7 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
                 Map<String, String> parametros = new HashMap<>();
 
                 //parametros.put("idEjercicio", idEjercicio);
+
                 parametros.put("EjercicioG2_idEjercicioG2", EjercicioG2_idEjercicioG2);
                 parametros.put("Letra", Letra);
                 parametros.put("fila_Eg2H_Lg2", fila_Eg2H_Lg2);
@@ -949,7 +1012,6 @@ public class Tipo2FonicoFragment extends Fragment implements Response.ErrorListe
         request.add(jsonObjectRequest);*/
     }
     // ----------------------------------------------------------------------------------------------
-
 
 
     // TODO: Rename method, update argument and hook method into UI event
