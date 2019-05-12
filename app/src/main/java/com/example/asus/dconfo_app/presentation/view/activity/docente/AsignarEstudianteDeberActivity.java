@@ -214,8 +214,8 @@ public class AsignarEstudianteDeberActivity extends AppCompatActivity {
 
         String url_lh = Globals.url;
 
-        //String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjerciciosDocente.php?docente_iddocente=" + iddocente;
-        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSON1ConsultarListaEjercicios.php";
+        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjerciciosDocente.php?iddocente=" + iddocente;
+        //String url = "http://" + url_lh + "/proyecto_dconfo/wsJSON1ConsultarListaEjercicios.php";
 
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());

@@ -58,6 +58,7 @@ public class AsignarEjercicioFonicoActivity extends AppCompatActivity {
     StringRequest stringRequest;
 
     public int iddocente = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +67,7 @@ public class AsignarEjercicioFonicoActivity extends AppCompatActivity {
 
         iddocente = datos.getInt("iddocente");
         idgrupo = datos.getInt("idgrupo");
-        System.out.println("id GRUPO: "+idgrupo);
+        System.out.println("id GRUPO: " + idgrupo);
         //Toast.makeText(getApplicationContext(), "id docente: " + iddocente, Toast.LENGTH_LONG).show();
         //toolbar.setLabelFor();
         this.setTitle("id docente:" + iddocente);
@@ -208,8 +209,10 @@ public class AsignarEjercicioFonicoActivity extends AppCompatActivity {
 
         String url_lh = Globals.url;
 
-        //String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjerciciosDocente.php?docente_iddocente=" + iddocente;
-        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSON1ConsultarListaEjerciciosFonicos.php";
+        System.out.println("Ejercicio Fonico docente buscar: " + iddocente);
+
+        //String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjerciciosDocente.php?iddocente=" + iddocente;
+        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjercicios_Fonico1_Docente.php?iddocente=" + iddocente;
 
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
