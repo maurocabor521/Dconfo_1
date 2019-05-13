@@ -368,7 +368,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         rv_tipo1Fonico = (RecyclerView) view.findViewById(R.id.rv_tipo1Fonico);
         rv_tipo1Fonico.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_tipo1Fonico.setHasFixedSize(true);
-        rv_tipo1Fonico.setVisibility(View.INVISIBLE);
+        rv_tipo1Fonico.setVisibility(View.GONE);
 
         btn_crearImg1.setOnClickListener(this);
         btn_crearImg2.setOnClickListener(this);
@@ -766,7 +766,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                     btn_img_1.setBackground(null);
                     btn_img_1.setImageBitmap(response);
                     btn_1Activo = false;
-                    rv_tipo1Fonico.setVisibility(View.INVISIBLE);
+                    rv_tipo1Fonico.setVisibility(View.GONE);
                     txt_id_img1.setText(nameImagen);
 
                     int fila = 1;
@@ -784,7 +784,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                     btn_img_2.setBackground(null);
                     btn_img_2.setImageBitmap(response);
                     btn_2Activo = false;
-                    rv_tipo1Fonico.setVisibility(View.INVISIBLE);
+                    rv_tipo1Fonico.setVisibility(View.GONE);
                     txt_id_img2.setText(nameImagen);
 
                     int fila = 1;
@@ -802,7 +802,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                     btn_img_3.setBackground(null);
                     btn_img_3.setImageBitmap(response);
                     btn_3Activo = false;
-                    rv_tipo1Fonico.setVisibility(View.INVISIBLE);
+                    rv_tipo1Fonico.setVisibility(View.GONE);
                     txt_id_img3.setText(nameImagen);
 
                     int fila = 1;
@@ -820,7 +820,7 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
                     btn_img_4.setBackground(null);
                     btn_img_4.setImageBitmap(response);
                     btn_4Activo = false;
-                    rv_tipo1Fonico.setVisibility(View.INVISIBLE);
+                    rv_tipo1Fonico.setVisibility(View.GONE);
                     txt_id_img4.setText(nameImagen);
 
                     int fila = 1;

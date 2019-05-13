@@ -56,13 +56,23 @@
                         android:textSize="20dp"
                         android:textStyle="bold" />
 
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_tipo1Fonico"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
+
+                    </android.support.v7.widget.RecyclerView>
 
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -84,11 +94,11 @@
                                 android:background="@drawable/ic_no_foto_80dp" />
 
                             <TextView
+                                android:id="@+id/txt_fonico_id_img1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5dp"
                                 android:gravity="center"
-                                android:id="@+id/txt_fonico_id_img1"
                                 android:text="Imagen 1" />
                         </LinearLayout>
 
@@ -107,11 +117,11 @@
                                 android:background="@drawable/ic_no_foto_80dp" />
 
                             <TextView
+                                android:id="@+id/txt_fonico_id_img2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5dp"
                                 android:gravity="center"
-                                android:id="@+id/txt_fonico_id_img2"
                                 android:text="Imagen 2" />
                         </LinearLayout>
 
@@ -138,11 +148,11 @@
                                 android:background="@drawable/ic_no_foto_80dp" />
 
                             <TextView
+                                android:id="@+id/txt_fonico_id_img3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5dp"
                                 android:gravity="center"
-                                android:id="@+id/txt_fonico_id_img3"
                                 android:text="Imagen 3" />
                         </LinearLayout>
 
@@ -161,22 +171,23 @@
                                 android:background="@drawable/ic_no_foto_80dp" />
 
                             <TextView
+                                android:id="@+id/txt_fonico_id_img4"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5dp"
                                 android:gravity="center"
-                                android:id="@+id/txt_fonico_id_img4"
                                 android:text="Imagen 4" />
                         </LinearLayout>
 
 
                     </LinearLayout>
+
                     <EditText
+                        android:id="@+id/edt_fonico_nameEjercicio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="30dp"
-                        android:id="@+id/edt_fonico_nameEjercicio"
-                        android:hint="Ingrese Nombre Ejercicio"/>
+                        android:hint="Ingrese Nombre Ejercicio" />
 
                     <Button
                         android:id="@+id/btn_fonico_doc_enviar"
@@ -187,13 +198,6 @@
                         android:textStyle="bold"
                         android:theme="@style/RaisedButtonDark" />
                 </LinearLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_tipo1Fonico"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </android.support.v7.widget.RecyclerView>
 
 
             </LinearLayout>
