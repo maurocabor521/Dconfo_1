@@ -31,6 +31,7 @@ import com.example.asus.dconfo_app.domain.model.EjercicioG2HasImagen;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
 import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.fonico.Tipo1FonicoFragment;
+import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.fonico.Tipo2FonicoFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -333,6 +334,7 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
                 }
                 int tipoEjercicioG2 = ejercicioG2.getIdTipo();
                 Tipo1FonicoFragment tipo1FonicoFragment = new Tipo1FonicoFragment();
+                Tipo2FonicoFragment tipo2FonicoFragment = new Tipo2FonicoFragment();
 
                 // ArrayList<Integer> listaIDimagenes = new ArrayList<>();
                 Bundle bundle = new Bundle();
@@ -361,6 +363,15 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
                     tipo1FonicoFragment.setArguments(bundle);
                     // inicioEjercicioFragment.setArguments(bundle);
                     getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo1FonicoFragment)
+                            //getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, inicioEjercicioFragment)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                            .addToBackStack(null).commit();
+                }
+
+                if (tipoEjercicioG2 == 2) {
+                    tipo1FonicoFragment.setArguments(bundle);
+                    // inicioEjercicioFragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo2FonicoFragment)
                             //getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, inicioEjercicioFragment)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .addToBackStack(null).commit();

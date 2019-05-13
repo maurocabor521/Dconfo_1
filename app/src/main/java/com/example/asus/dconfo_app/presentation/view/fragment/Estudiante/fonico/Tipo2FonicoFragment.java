@@ -7,8 +7,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
+
+import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +35,30 @@ public class Tipo2FonicoFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private CircleImageView cv_est_ft2_c1f1;
+    private CircleImageView cv_est_ft2_c1f2;
+    private CircleImageView cv_est_ft2_c1f3;
+    private CircleImageView cv_est_ft2_c1f4;
+
+    private TextView txt_name_img_est_ft2_c1f1;
+    private TextView txt_name_img_est_ft2_c1f2;
+    private TextView txt_name_img_est_ft2_c1f3;
+    private TextView txt_name_img_est_ft2_c1f4;
+
+    private TextView txt_letra_est_ft2_c1f1;
+    private TextView txt_letra_est_ft2_c1f2;
+    private TextView txt_letra_est_ft2_c1f3;
+    private TextView txt_letra_est_ft2_c1f4;
+
+    private Button btn_enviar_est_ft2;
+
+    ArrayList<Integer> listaIdImagens;
+    ArrayList<Integer> listafilImagenes;
+    ArrayList<Integer> listacolImagenes;
+
+    StringRequest stringRequest;
+    JsonObjectRequest jsonObjectRequest;
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,7 +97,26 @@ public class Tipo2FonicoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_tipo2_fonico2, container, false);
+        View view = inflater.inflate(R.layout.fragment_tipo2_fonico2, container, false);
+
+        cv_est_ft2_c1f1 = (CircleImageView) view.findViewById(R.id.iv_estudiante_fon2_c1_f1);
+        cv_est_ft2_c1f2 = (CircleImageView) view.findViewById(R.id.iv_estudiante_fon2_c1_f2);
+        cv_est_ft2_c1f3 = (CircleImageView) view.findViewById(R.id.iv_estudiante_fon2_c1_f3);
+        cv_est_ft2_c1f4 = (CircleImageView) view.findViewById(R.id.iv_estudiante_fon2_c1_f4);
+
+        txt_name_img_est_ft2_c1f1 = (TextView) view.findViewById(R.id.txt_estudiante_fon2_nom_c1f1);
+        txt_name_img_est_ft2_c1f2 = (TextView) view.findViewById(R.id.txt_estudiante_fon2_nom_c1f2);
+        txt_name_img_est_ft2_c1f3 = (TextView) view.findViewById(R.id.txt_estudiante_fon2_nom_c1f3);
+        txt_name_img_est_ft2_c1f4 = (TextView) view.findViewById(R.id.txt_estudiante_fon2_nom_c1f4);
+
+        txt_letra_est_ft2_c1f1 = (TextView) view.findViewById(R.id.edt_estudiante_fon2_l1);
+        txt_letra_est_ft2_c1f2 = (TextView) view.findViewById(R.id.edt_estudiante_fon2_l2);
+        txt_letra_est_ft2_c1f3 = (TextView) view.findViewById(R.id.edt_estudiante_fon2_l3);
+        txt_letra_est_ft2_c1f4 = (TextView) view.findViewById(R.id.edt_estudiante_fon2_l4);
+
+        btn_enviar_est_ft2 = (Button) view.findViewById(R.id.btn_fonico_t2_estudiante_enviar);
+
+
         return view;
     }
 
