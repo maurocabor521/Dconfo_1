@@ -70,6 +70,8 @@ public class Tipo2FonicoFragment extends Fragment
     private TextView txt_letra_est_ft2_c1f3;
     private TextView txt_letra_est_ft2_c1f4;
 
+    private TextView txt_resultado;
+
     private LinearLayout ll_cv_c1f1;
     private LinearLayout ll_cv_c1f2;
     private LinearLayout ll_cv_c1f3;
@@ -136,9 +138,37 @@ public class Tipo2FonicoFragment extends Fragment
     private boolean pareja3 = false;
     private boolean pareja4 = false;
 
+    private boolean resPareja1 = false;
+    private boolean resPareja2 = false;
+    private boolean resPareja3 = false;
+    private boolean resPareja4 = false;
+
     ArrayList<Integer> listaIdImagens;
     ArrayList<Integer> listafilImagenes;
     ArrayList<Integer> listacolImagenes;
+
+    ArrayList<Integer> listaIdImagenes;
+
+    ArrayList<Integer> pareja_1;
+    ArrayList<Integer> pareja_2;
+    ArrayList<Integer> pareja_3;
+    ArrayList<Integer> pareja_4;
+
+    private String letraInicialc1f1;
+    private String letraFinalc1f1;
+
+    private String letraInicialc1f2;
+    private String letraFinalc1f2;
+
+    private String letraInicialc1f3;
+    private String letraFinalc1f3;
+
+    private String letraInicialc1f4;
+    private String letraFinalc1f4;
+
+    private String letraInicial;
+    private String letraFinal;
+
 
     ArrayList<String> listaLetras;
     ArrayList<Integer> listafilLetras;
@@ -205,6 +235,8 @@ public class Tipo2FonicoFragment extends Fragment
         txt_name_img_est_ft2_c1f3 = (TextView) view.findViewById(R.id.txt_estudiante_fon2_nom_c1f3);
         txt_name_img_est_ft2_c1f4 = (TextView) view.findViewById(R.id.txt_estudiante_fon2_nom_c1f4);
 
+        txt_resultado = (TextView) view.findViewById(R.id.txt_resultado);
+
         txt_letra_est_ft2_c1f1 = (TextView) view.findViewById(R.id.edt_estudiante_fon2_l1);
         txt_letra_est_ft2_c1f2 = (TextView) view.findViewById(R.id.edt_estudiante_fon2_l2);
         txt_letra_est_ft2_c1f3 = (TextView) view.findViewById(R.id.edt_estudiante_fon2_l3);
@@ -226,14 +258,33 @@ public class Tipo2FonicoFragment extends Fragment
         ll_txt_c1f4 = (LinearLayout) view.findViewById(R.id.ll_estudiante_fon2_l4);
 
         btn_enviar_est_ft2 = (Button) view.findViewById(R.id.btn_fonico_t2_estudiante_enviar);
+        btn_enviar_est_ft2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verificarResultado();
+            }
+        });
+
+        pareja_1 = new ArrayList<>();
+        pareja_2 = new ArrayList<>();
+        pareja_3 = new ArrayList<>();
+        pareja_4 = new ArrayList<>();
+
+        listaIdImagenes = new ArrayList<>();
 
         idImagen1 = getArguments().getInt("idejercicio1");
+        listaIdImagenes.add(idImagen1);
         idImagen2 = getArguments().getInt("idejercicio2");
+        listaIdImagenes.add(idImagen2);
         idImagen3 = getArguments().getInt("idejercicio3");
+        listaIdImagenes.add(idImagen3);
         idImagen4 = getArguments().getInt("idejercicio4");
+        listaIdImagenes.add(idImagen4);
+
+        System.out.println("Lista Id Imágenes: " + listaIdImagenes.toString());
 
         filejercicio1 = getArguments().getInt("filejercicio1");
-        System.out.println("fila1 :" + filejercicio1);
+        // System.out.println("fila1 :" + filejercicio1);
         filejercicio2 = getArguments().getInt("filejercicio2");
         filejercicio3 = getArguments().getInt("filejercicio3");
         filejercicio4 = getArguments().getInt("filejercicio4");
@@ -258,14 +309,14 @@ public class Tipo2FonicoFragment extends Fragment
         listaIdImagens.add(idImagen4);
 
         llamarWebService();
+
         cargarLetras();
 
         return view;
     }//on create
 
-    // Implement the OnClickListener callback
-    //**********************************************************************************************
 
+    // Implement the OnClickListener callback
 
     private void verificaParejas() {
         if ((col_imgs && col_letras) == true) {
@@ -295,16 +346,14 @@ public class Tipo2FonicoFragment extends Fragment
     //**********************************************************************************************
 
     private void crearParejas() {
-        ArrayList<Integer> pareja_1 = new ArrayList<>();
-        ArrayList<Integer> pareja_2 = new ArrayList<>();
-        ArrayList<Integer> pareja_3 = new ArrayList<>();
-        ArrayList<Integer> pareja_4 = new ArrayList<>();
+
 
         if (pareja1 == false) {//---------------------------------------pareja 1
             //**************************************************** c1
             if (cv_c1f1_isactived && txt_c1f1_isactived) {
 
                 pareja_1.add(1);
+                System.out.println("pareja 1: " + pareja_1.toString());
                 pareja1 = true;
                 cv_c1f1_desactivado = true;
                 txt_c1f1_desactivado = true;
@@ -360,7 +409,7 @@ public class Tipo2FonicoFragment extends Fragment
                 cv_c1f2_desactivado = true;
                 txt_c1f3_desactivado = true;
                 ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
-                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
 
             } else if (cv_c1f2_isactived && txt_c1f4_isactived) {
                 pareja_1.add(8);
@@ -455,6 +504,7 @@ public class Tipo2FonicoFragment extends Fragment
 
             } else if (cv_c1f1_isactived && txt_c1f2_isactived) {
                 pareja_2.add(2);
+
                 pareja2 = true;
                 cv_c1f1_desactivado = true;
                 txt_c1f2_desactivado = true;
@@ -489,6 +539,7 @@ public class Tipo2FonicoFragment extends Fragment
 
             } else if (cv_c1f2_isactived && txt_c1f2_isactived) {
                 pareja_2.add(6);
+                System.out.println("pareja 2: " + pareja_2.toString());
                 pareja2 = true;
                 cv_c1f2_desactivado = true;
                 txt_c1f2_desactivado = true;
@@ -535,7 +586,7 @@ public class Tipo2FonicoFragment extends Fragment
                 cv_c1f3_desactivado = true;
                 txt_c1f3_desactivado = true;
                 ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
             } else if (cv_c1f3_isactived && txt_c1f4_isactived) {
                 pareja_2.add(12);
@@ -603,6 +654,7 @@ public class Tipo2FonicoFragment extends Fragment
 
             } else if (cv_c1f1_isactived && txt_c1f3_isactived) {
                 pareja_3.add(3);
+
                 pareja3 = true;
                 cv_c1f1_desactivado = true;
                 txt_c1f3_desactivado = true;
@@ -671,6 +723,7 @@ public class Tipo2FonicoFragment extends Fragment
 
             } else if (cv_c1f3_isactived && txt_c1f3_isactived) {
                 pareja_3.add(11);
+                System.out.println("pareja 3: " + pareja_3.toString());
                 pareja3 = true;
                 cv_c1f3_desactivado = true;
                 txt_c1f3_desactivado = true;
@@ -753,6 +806,7 @@ public class Tipo2FonicoFragment extends Fragment
             } else if (cv_c1f1_isactived && txt_c1f4_isactived) {
                 pareja_4.add(4);
                 pareja4 = true;
+
                 cv_c1f1_desactivado = true;
                 txt_c1f4_desactivado = true;
                 ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
@@ -840,6 +894,7 @@ public class Tipo2FonicoFragment extends Fragment
                 pareja4 = true;
                 cv_c1f4_desactivado = true;
                 txt_c1f2_desactivado = true;
+
                 ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
@@ -854,9 +909,10 @@ public class Tipo2FonicoFragment extends Fragment
             } else if (cv_c1f4_isactived && txt_c1f4_isactived) {
                 pareja_4.add(16);
                 pareja4 = true;
+                System.out.println("pareja 4: " + pareja_4.toString());
                 cv_c1f4_desactivado = true;
                 txt_c1f4_desactivado = true;
-                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             }
             //****************************************************
@@ -864,6 +920,577 @@ public class Tipo2FonicoFragment extends Fragment
 
 
     }//******************crear parejas
+
+    //**********************************************************************************************
+
+    private void verificarResultado() {
+        if (pareja4 == true) {
+           /* System.out.println("pareja 1: " + pareja_1.toString() + " pareja 2: " + pareja_2.toString() +
+                    " pareja 3: " + pareja_3.toString() + " pareja 4: " + pareja_4.toString());
+
+            System.out.println("letra inicial c1f1: " + letraInicialc1f1 +
+                    ", letra inicial c1f2: " + letraInicialc1f2 +
+                    ", letra inicial c1f3: " + letraInicialc1f3 +
+                    ", letra inicial c1f4: " + letraInicialc1f4);
+
+            System.out.println("letra final c1f1: " + letraFinalc1f1 +
+                    ", letra inicial c1f2: " + letraFinalc1f2 +
+                    ", letra inicial c1f3: " + letraFinalc1f3 +
+                    ", letra inicial c1f4: " + letraFinalc1f4);*/
+            //--------------------------------------------------------------------------------------GRUPO1
+
+            if (pareja_1.get(0) == 1) {
+                if (letraInicialc1f1.equals(letrac1f1)) {
+                    System.out.println("G1 letra inicial imagen c1f1 y letra c1f1: SON IGUALES ");
+                    resPareja1 = true;
+                } else {
+                    System.out.println("G1 letra inicial imagen c1f1 y letra c1f1: NO SON IGUALES ");
+                }
+            } else if (pareja_1.get(0) == 2) {
+                if (letraInicialc1f1.equals(letrac1f2)) {
+                    System.out.println("G1 letra inicial imagen c1f1 y letra c1f2: SON IGUALES ");
+                    resPareja1 = true;
+                } else {
+                    System.out.println("G1 letra inicial imagen c1f1 y letra c1f2: NO SON IGUALES " + letraInicialc1f1 + " - " + letrac1f2);
+                }
+            } else if (pareja_1.get(0) == 3) {
+                if (letraInicialc1f1.equals(letrac1f3)) {
+                    System.out.println("G1 letra inicial imagen c1f1 y letra c1f3: SON IGUALES ");
+                    resPareja1 = true;
+                } else {
+                    System.out.println("G1 letra inicial imagen c1f1 y letra c1f3: NO SON IGUALES ");
+                }
+            } else if (pareja_1.get(0) == 4) {
+                if (letraInicialc1f1.equals(letrac1f4)) {
+                    System.out.println("G1 letra inicial imagen c1f1 y letra c1f4: SON IGUALES ");
+                    resPareja1 = true;
+                } else {
+                    System.out.println("G1 letra inicial imagen c1f1 y letra c1f4: NO SON IGUALES " + letraInicialc1f1 + " - " + letrac1f2);
+                }
+            } else
+                //-------------------------------------------------------------------------------------- I1
+                // --------------------------------------------------------------------------------------I2
+
+                if (pareja_1.get(0) == 5) {
+                    if (letraInicialc1f2.equals(letrac1f1)) {
+                        System.out.println("G1 letra inicial imagen c1f2 y letra c1f1: SON IGUALES ");
+                        resPareja1 = true;
+                    } else {
+                        System.out.println("G1 letra inicial imagen c1f2 y letra c1f1: NO SON IGUALES ");
+                    }
+                } else if (pareja_1.get(0) == 6) {
+                    if (letraInicialc1f2.equals(letrac1f2)) {
+                        System.out.println("G1 letra inicial imagen c1f2 y letra c1f2: SON IGUALES ");
+                        resPareja1 = true;
+                    } else {
+                        System.out.println("G1 letra inicial imagen c1f2 y letra c1f2: NO SON IGUALES " + letraInicialc1f2 + " - " + letrac1f2);
+                    }
+                } else if (pareja_1.get(0) == 7) {
+                    if (letraInicialc1f2.equals(letrac1f3)) {
+                        System.out.println("G1 letra inicial imagen c1f2 y letra c1f3: SON IGUALES ");
+                        resPareja1 = true;
+                    } else {
+                        System.out.println("G1 letra inicial imagen c1f2 y letra c1f3: NO SON IGUALES ");
+                    }
+                } else if (pareja_1.get(0) == 8) {
+                    if (letraInicialc1f2.equals(letrac1f4)) {
+                        System.out.println("G1 letra inicial imagen c1f2 y letra c1f4: SON IGUALES ");
+                        resPareja1 = true;
+                    } else {
+                        System.out.println("G1 letra inicial imagen c1f2 y letra c1f4: NO SON IGUALES " + letraInicialc1f2 + " - " + letrac1f2);
+                    }
+                }
+            //--------------------------------------------------------------------------------------I2
+            // --------------------------------------------------------------------------------------I3
+
+            if (pareja_1.get(0) == 9) {
+                if (letraInicialc1f3.equals(letrac1f1)) {
+                    System.out.println("G1 letra inicial imagen c1f3 y letra c1f1: SON IGUALES ");
+                    resPareja1 = true;
+                } else {
+                    System.out.println("G1 letra inicial imagen c1f3 y letra c1f1: NO SON IGUALES ");
+                }
+            } else if (pareja_1.get(0) == 10) {
+                if (letraInicialc1f3.equals(letrac1f2)) {
+                    System.out.println("G1 letra inicial imagen c1f3 y letra c1f2: SON IGUALES ");
+                    resPareja1 = true;
+                } else {
+                    System.out.println("G1 letra inicial imagen c1f3 y letra c1f2: NO SON IGUALES " + letraInicialc1f3 + " - " + letrac1f2);
+                }
+            } else if (pareja_1.get(0) == 11) {
+                if (letraInicialc1f3.equals(letrac1f3)) {
+                    System.out.println("G1 letra inicial imagen c1f3 y letra c1f3: SON IGUALES ");
+                    resPareja1 = true;
+                } else {
+                    System.out.println("G1 letra inicial imagen c1f3 y letra c1f3: NO SON IGUALES ");
+                }
+            } else if (pareja_1.get(0) == 12) {
+                if (letraInicialc1f3.equals(letrac1f4)) {
+                    System.out.println("G1 letra inicial imagen c1f3 y letra c1f4: SON IGUALES ");
+                    resPareja1 = true;
+                } else {
+                    System.out.println("G1 letra inicial imagen c1f3 y letra c1f4: NO SON IGUALES " + letraInicialc1f3 + " - " + letrac1f2);
+                }
+            }
+            //--------------------------------------------------------------------------------------I3
+            // --------------------------------------------------------------------------------------I4
+
+            if (pareja_1.get(0) == 13) {
+                if (letraInicialc1f4.equals(letrac1f1)) {
+                    System.out.println("G1 letra inicial imagen c1f4 y letra c1f1: SON IGUALES ");
+                    resPareja1 = true;
+                } else {
+                    System.out.println("G1 letra inicial imagen c1f4 y letra c1f1: NO SON IGUALES ");
+                }
+            } else if (pareja_1.get(0) == 14) {
+                if (letraInicialc1f4.equals(letrac1f2)) {
+                    System.out.println("G1 letra inicial imagen c1f4 y letra c1f2: SON IGUALES ");
+                    resPareja1 = true;
+                } else {
+                    System.out.println("G1 letra inicial imagen c1f4 y letra c1f2: NO SON IGUALES " + letraInicialc1f4 + " - " + letrac1f2);
+                }
+            } else if (pareja_1.get(0) == 15) {
+                if (letraInicialc1f4.equals(letrac1f3)) {
+                    System.out.println("G1 letra inicial imagen c1f4 y letra c1f3: SON IGUALES ");
+                    resPareja1 = true;
+                } else {
+                    System.out.println("G1 letra inicial imagen c1f4 y letra c1f3: NO SON IGUALES ");
+                }
+            } else if (pareja_1.get(0) == 16) {
+                if (letraInicialc1f4.equals(letrac1f4)) {
+                    System.out.println("G1 letra inicial imagen c1f4 y letra c1f4: SON IGUALES ");
+                    resPareja1 = true;
+                } else {
+                    System.out.println("G1 letra inicial imagen c1f4 y letra c1f4: NO SON IGUALES " + letraInicialc1f4 + " - " + letrac1f2);
+                }
+            } else
+                //--------------------------------------------------------------------------------------I4 GRUPO 1
+                //--------------------------------------------------------------------------------------GRUPO2
+
+                if (pareja_2.get(0) == 1) {
+                    if (letraInicialc1f1.equals(letrac1f1)) {
+                        System.out.println("G2 letra inicial imagen c1f1 y letra c1f1: SON IGUALES ");
+                        resPareja2 = true;
+                    } else {
+                        System.out.println("G2 letra inicial imagen c1f1 y letra c1f1: NO SON IGUALES ");
+                    }
+                } else if (pareja_2.get(0) == 2) {
+                    if (letraInicialc1f1.equals(letrac1f2)) {
+                        System.out.println("G2 letra inicial imagen c1f1 y letra c1f2: SON IGUALES ");
+                        resPareja2 = true;
+                    } else {
+                        System.out.println("G2 letra inicial imagen c1f1 y letra c1f2: NO SON IGUALES " + letraInicialc1f1 + " - " + letrac1f2);
+                    }
+                } else if (pareja_2.get(0) == 3) {
+                    if (letraInicialc1f1.equals(letrac1f3)) {
+                        System.out.println("G2 letra inicial imagen c1f1 y letra c1f3: SON IGUALES ");
+                        resPareja2 = true;
+                    } else {
+                        System.out.println("G2 letra inicial imagen c1f1 y letra c1f3: NO SON IGUALES ");
+                    }
+                } else if (pareja_2.get(0) == 4) {
+                    if (letraInicialc1f1.equals(letrac1f4)) {
+                        System.out.println("G2 letra inicial imagen c1f1 y letra c1f4: SON IGUALES ");
+                        resPareja2 = true;
+                    } else {
+                        System.out.println("G2 letra inicial imagen c1f1 y letra c1f4: NO SON IGUALES " + letraInicialc1f1 + " - " + letrac1f2);
+                    }
+                } else
+                    //-------------------------------------------------------------------------------------- I1
+                    // --------------------------------------------------------------------------------------I2
+
+                    if (pareja_2.get(0) == 5) {
+                        if (letraInicialc1f2.equals(letrac1f1)) {
+                            System.out.println("G2 letra inicial imagen c1f2 y letra c1f1: SON IGUALES ");
+                            resPareja2 = true;
+                        } else {
+                            System.out.println("G2 letra inicial imagen c1f2 y letra c1f1: NO SON IGUALES ");
+                        }
+                    } else if (pareja_2.get(0) == 6) {
+                        if (letraInicialc1f2.equals(letrac1f2)) {
+                            System.out.println("G2 letra inicial imagen c1f2 y letra c1f2: SON IGUALES ");
+                            resPareja2 = true;
+                        } else {
+                            System.out.println("G2 letra inicial imagen c1f2 y letra c1f2: NO SON IGUALES " + letraInicialc1f2 + " - " + letrac1f2);
+                        }
+                    } else if (pareja_2.get(0) == 7) {
+                        if (letraInicialc1f2.equals(letrac1f3)) {
+                            System.out.println("G2 letra inicial imagen c1f2 y letra c1f3: SON IGUALES ");
+                            resPareja2 = true;
+                        } else {
+                            System.out.println("G2 letra inicial imagen c1f2 y letra c1f3: NO SON IGUALES ");
+                        }
+                    } else if (pareja_2.get(0) == 8) {
+                        if (letraInicialc1f2.equals(letrac1f4)) {
+                            System.out.println("G2 letra inicial imagen c1f2 y letra c1f4: SON IGUALES ");
+                            resPareja2 = true;
+                        } else {
+                            System.out.println("G2 letra inicial imagen c1f2 y letra c1f4: NO SON IGUALES " + letraInicialc1f2 + " - " + letrac1f2);
+                        }
+                    }
+            //--------------------------------------------------------------------------------------I2
+            // --------------------------------------------------------------------------------------I3
+
+            if (pareja_2.get(0) == 9) {
+                if (letraInicialc1f3.equals(letrac1f1)) {
+                    System.out.println("G2 letra inicial imagen c1f3 y letra c1f1: SON IGUALES ");
+                    resPareja2 = true;
+                } else {
+                    System.out.println("G2 letra inicial imagen c1f3 y letra c1f1: NO SON IGUALES ");
+                }
+            } else if (pareja_2.get(0) == 10) {
+                if (letraInicialc1f3.equals(letrac1f2)) {
+                    System.out.println("G2 letra inicial imagen c1f3 y letra c1f2: SON IGUALES ");
+                    resPareja2 = true;
+                } else {
+                    System.out.println("G2 letra inicial imagen c1f3 y letra c1f2: NO SON IGUALES " + letraInicialc1f3 + " - " + letrac1f2);
+                }
+            } else if (pareja_2.get(0) == 11) {
+                if (letraInicialc1f3.equals(letrac1f3)) {
+                    System.out.println("G2 letra inicial imagen c1f3 y letra c1f3: SON IGUALES ");
+                    resPareja2 = true;
+                } else {
+                    System.out.println("G2 letra inicial imagen c1f3 y letra c1f3: NO SON IGUALES ");
+                }
+            } else if (pareja_2.get(0) == 12) {
+                if (letraInicialc1f3.equals(letrac1f4)) {
+                    System.out.println("G2 letra inicial imagen c1f3 y letra c1f4: SON IGUALES ");
+                    resPareja2 = true;
+                } else {
+                    System.out.println("G2 letra inicial imagen c1f3 y letra c1f4: NO SON IGUALES " + letraInicialc1f3 + " - " + letrac1f2);
+                }
+            }
+            //--------------------------------------------------------------------------------------I3
+            // --------------------------------------------------------------------------------------I4
+
+            if (pareja_2.get(0) == 13) {
+                if (letraInicialc1f4.equals(letrac1f1)) {
+                    System.out.println("G2 letra inicial imagen c1f4 y letra c1f1: SON IGUALES ");
+                    resPareja2 = true;
+                } else {
+                    System.out.println("G2 letra inicial imagen c1f4 y letra c1f1: NO SON IGUALES ");
+                }
+            } else if (pareja_2.get(0) == 14) {
+                if (letraInicialc1f4.equals(letrac1f2)) {
+                    System.out.println("G2 letra inicial imagen c1f4 y letra c1f2: SON IGUALES ");
+                    resPareja2 = true;
+                } else {
+                    System.out.println("G2 letra inicial imagen c1f4 y letra c1f2: NO SON IGUALES " + letraInicialc1f4 + " - " + letrac1f2);
+                }
+            } else if (pareja_2.get(0) == 15) {
+                if (letraInicialc1f4.equals(letrac1f3)) {
+                    System.out.println("G2 letra inicial imagen c1f4 y letra c1f3: SON IGUALES ");
+                    resPareja2 = true;
+                } else {
+                    System.out.println("G2 letra inicial imagen c1f4 y letra c1f3: NO SON IGUALES ");
+                }
+            } else if (pareja_2.get(0) == 16) {
+                if (letraInicialc1f4.equals(letrac1f4)) {
+                    System.out.println("G2 letra inicial imagen c1f4 y letra c1f4: SON IGUALES ");
+                    resPareja2 = true;
+                } else {
+                    System.out.println("G2 letra inicial imagen c1f4 y letra c1f4: NO SON IGUALES " + letraInicialc1f4 + " - " + letrac1f2);
+                }
+            }
+            //--------------------------------------------------------------------------------------I4 GRUPO 2
+
+            //--------------------------------------------------------------------------------------GRUPO3
+
+            if (pareja_3.get(0) == 1) {
+                if (letraInicialc1f1.equals(letrac1f1)) {
+                    System.out.println("G3 letra inicial imagen c1f1 y letra c1f1: SON IGUALES ");
+                    resPareja3 = true;
+                } else {
+                    System.out.println("G3 letra inicial imagen c1f1 y letra c1f1: NO SON IGUALES ");
+                }
+            } else if (pareja_3.get(0) == 2) {
+                if (letraInicialc1f1.equals(letrac1f2)) {
+                    System.out.println("G3 letra inicial imagen c1f1 y letra c1f2: SON IGUALES ");
+                    resPareja3 = true;
+                } else {
+                    System.out.println("G3 letra inicial imagen c1f1 y letra c1f2: NO SON IGUALES " + letraInicialc1f1 + " - " + letrac1f2);
+                }
+            } else if (pareja_3.get(0) == 3) {
+                if (letraInicialc1f1.equals(letrac1f3)) {
+                    System.out.println("G3 letra inicial imagen c1f1 y letra c1f3: SON IGUALES ");
+                    resPareja3 = true;
+                } else {
+                    System.out.println("G3 letra inicial imagen c1f1 y letra c1f3: NO SON IGUALES ");
+                }
+            } else if (pareja_3.get(0) == 4) {
+                if (letraInicialc1f1.equals(letrac1f4)) {
+                    System.out.println("G3 letra inicial imagen c1f1 y letra c1f4: SON IGUALES ");
+                    resPareja3 = true;
+                } else {
+                    System.out.println("G3 letra inicial imagen c1f1 y letra c1f4: NO SON IGUALES " + letraInicialc1f1 + " - " + letrac1f2);
+                }
+            } else
+                //-------------------------------------------------------------------------------------- I1
+                // --------------------------------------------------------------------------------------I2
+
+                if (pareja_3.get(0) == 5) {
+                    if (letraInicialc1f2.equals(letrac1f1)) {
+                        System.out.println("G3 letra inicial imagen c1f2 y letra c1f1: SON IGUALES ");
+                        resPareja3 = true;
+                    } else {
+                        System.out.println("G3 letra inicial imagen c1f2 y letra c1f1: NO SON IGUALES ");
+                    }
+                } else if (pareja_3.get(0) == 6) {
+                    if (letraInicialc1f2.equals(letrac1f2)) {
+                        System.out.println("G3 letra inicial imagen c1f2 y letra c1f2: SON IGUALES ");
+                        resPareja3 = true;
+                    } else {
+                        System.out.println("G3 letra inicial imagen c1f2 y letra c1f2: NO SON IGUALES " + letraInicialc1f2 + " - " + letrac1f2);
+                    }
+                } else if (pareja_3.get(0) == 7) {
+                    if (letraInicialc1f2.equals(letrac1f3)) {
+                        System.out.println("G3 letra inicial imagen c1f2 y letra c1f3: SON IGUALES ");
+                        resPareja3 = true;
+                    } else {
+                        System.out.println("G3 letra inicial imagen c1f2 y letra c1f3: NO SON IGUALES ");
+                    }
+                } else if (pareja_3.get(0) == 8) {
+                    if (letraInicialc1f2.equals(letrac1f4)) {
+                        System.out.println("G3 letra inicial imagen c1f2 y letra c1f4: SON IGUALES ");
+                        resPareja3 = true;
+                    } else {
+                        System.out.println("G3 letra inicial imagen c1f2 y letra c1f4: NO SON IGUALES " + letraInicialc1f2 + " - " + letrac1f2);
+                    }
+                }
+            //--------------------------------------------------------------------------------------I2
+            // --------------------------------------------------------------------------------------I3
+
+            if (pareja_3.get(0) == 9) {
+                if (letraInicialc1f3.equals(letrac1f1)) {
+                    System.out.println("G3 letra inicial imagen c1f3 y letra c1f1: SON IGUALES ");
+                    resPareja3 = true;
+                } else {
+                    System.out.println("G3 letra inicial imagen c1f3 y letra c1f1: NO SON IGUALES ");
+                }
+            } else if (pareja_3.get(0) == 10) {
+                if (letraInicialc1f3.equals(letrac1f2)) {
+                    System.out.println("G3 letra inicial imagen c1f3 y letra c1f2: SON IGUALES ");
+                    resPareja3 = true;
+                } else {
+                    System.out.println("G3 letra inicial imagen c1f3 y letra c1f2: NO SON IGUALES " + letraInicialc1f3 + " - " + letrac1f2);
+                }
+            } else if (pareja_3.get(0) == 11) {
+                if (letraInicialc1f3.equals(letrac1f3)) {
+                    System.out.println("G3 letra inicial imagen c1f3 y letra c1f3: SON IGUALES ");
+                    resPareja3 = true;
+                } else {
+                    System.out.println("G3 letra inicial imagen c1f3 y letra c1f3: NO SON IGUALES ");
+                }
+            } else if (pareja_3.get(0) == 12) {
+                if (letraInicialc1f3.equals(letrac1f4)) {
+                    System.out.println("G3 letra inicial imagen c1f3 y letra c1f4: SON IGUALES ");
+                    resPareja3 = true;
+                } else {
+                    System.out.println("G3 letra inicial imagen c1f3 y letra c1f4: NO SON IGUALES " + letraInicialc1f3 + " - " + letrac1f2);
+                }
+            }
+            //--------------------------------------------------------------------------------------I3
+            // --------------------------------------------------------------------------------------I4
+
+            if (pareja_3.get(0) == 13) {
+                if (letraInicialc1f4.equals(letrac1f1)) {
+                    System.out.println("G3 letra inicial imagen c1f4 y letra c1f1: SON IGUALES ");
+                    resPareja3 = true;
+                } else {
+                    System.out.println("G3 letra inicial imagen c1f4 y letra c1f1: NO SON IGUALES ");
+                }
+            } else if (pareja_3.get(0) == 14) {
+                if (letraInicialc1f4.equals(letrac1f2)) {
+                    System.out.println("G3 letra inicial imagen c1f4 y letra c1f2: SON IGUALES ");
+                    resPareja3 = true;
+                } else {
+                    System.out.println("G3 letra inicial imagen c1f4 y letra c1f2: NO SON IGUALES " + letraInicialc1f4 + " - " + letrac1f2);
+                }
+            } else if (pareja_3.get(0) == 15) {
+                if (letraInicialc1f4.equals(letrac1f3)) {
+                    System.out.println("G3 letra inicial imagen c1f4 y letra c1f3: SON IGUALES ");
+                    resPareja3 = true;
+                } else {
+                    System.out.println("G3 letra inicial imagen c1f4 y letra c1f3: NO SON IGUALES ");
+                }
+            } else if (pareja_3.get(0) == 16) {
+                if (letraInicialc1f4.equals(letrac1f4)) {
+                    System.out.println("G3 letra inicial imagen c1f4 y letra c1f4: SON IGUALES ");
+                    resPareja3 = true;
+                } else {
+                    System.out.println("G3 letra inicial imagen c1f4 y letra c1f4: NO SON IGUALES " + letraInicialc1f4 + " - " + letrac1f2);
+                }
+            } else
+                //--------------------------------------------------------------------------------------I4 GRUPO 3
+                //--------------------------------------------------------------------------------------GRUPO4
+
+                if (pareja_4.get(0) == 1) {
+                    if (letraInicialc1f1.equals(letrac1f1)) {
+                        System.out.println("G4 letra inicial imagen c1f1 y letra c1f1: SON IGUALES ");
+                        resPareja4 = true;
+                    } else {
+                        System.out.println("G4 letra inicial imagen c1f1 y letra c1f1: NO SON IGUALES ");
+                    }
+                } else if (pareja_4.get(0) == 2) {
+                    if (letraInicialc1f1.equals(letrac1f2)) {
+                        System.out.println("G4 letra inicial imagen c1f1 y letra c1f2: SON IGUALES ");
+                        resPareja4 = true;
+                    } else {
+                        System.out.println("G4 letra inicial imagen c1f1 y letra c1f2: NO SON IGUALES " + letraInicialc1f1 + " - " + letrac1f2);
+                    }
+                } else if (pareja_4.get(0) == 3) {
+                    if (letraInicialc1f1.equals(letrac1f3)) {
+                        System.out.println("G4 letra inicial imagen c1f1 y letra c1f3: SON IGUALES ");
+                        resPareja4 = true;
+                    } else {
+                        System.out.println("G4 letra inicial imagen c1f1 y letra c1f3: NO SON IGUALES ");
+                    }
+                } else if (pareja_4.get(0) == 4) {
+                    if (letraInicialc1f1.equals(letrac1f4)) {
+                        System.out.println("G4 letra inicial imagen c1f1 y letra c1f4: SON IGUALES ");
+                        resPareja4 = true;
+                    } else {
+                        System.out.println("G4 letra inicial imagen c1f1 y letra c1f4: NO SON IGUALES " + letraInicialc1f1 + " - " + letrac1f2);
+                    }
+                } else
+                    //-------------------------------------------------------------------------------------- I1
+                    // --------------------------------------------------------------------------------------I2
+
+                    if (pareja_4.get(0) == 5) {
+                        if (letraInicialc1f2.equals(letrac1f1)) {
+                            System.out.println("G4 letra inicial imagen c1f2 y letra c1f1: SON IGUALES ");
+                            resPareja4 = true;
+                        } else {
+                            System.out.println("G4 letra inicial imagen c1f2 y letra c1f1: NO SON IGUALES ");
+                        }
+                    } else if (pareja_4.get(0) == 6) {
+                        if (letraInicialc1f2.equals(letrac1f2)) {
+                            System.out.println("G4 letra inicial imagen c1f2 y letra c1f2: SON IGUALES ");
+                            resPareja4 = true;
+                        } else {
+                            System.out.println("G4 letra inicial imagen c1f2 y letra c1f2: NO SON IGUALES " + letraInicialc1f2 + " - " + letrac1f2);
+                        }
+                    } else if (pareja_4.get(0) == 7) {
+                        if (letraInicialc1f2.equals(letrac1f3)) {
+                            System.out.println("G4 letra inicial imagen c1f2 y letra c1f3: SON IGUALES ");
+                            resPareja4 = true;
+                        } else {
+                            System.out.println("G4 letra inicial imagen c1f2 y letra c1f3: NO SON IGUALES ");
+                        }
+                    } else if (pareja_4.get(0) == 8) {
+                        if (letraInicialc1f2.equals(letrac1f4)) {
+                            System.out.println("G4 letra inicial imagen c1f2 y letra c1f4: SON IGUALES ");
+                            resPareja4 = true;
+                        } else {
+                            System.out.println("G4 letra inicial imagen c1f2 y letra c1f4: NO SON IGUALES " + letraInicialc1f2 + " - " + letrac1f2);
+                        }
+                    }
+            //--------------------------------------------------------------------------------------I2
+            // --------------------------------------------------------------------------------------I3
+
+            if (pareja_4.get(0) == 9) {
+                if (letraInicialc1f3.equals(letrac1f1)) {
+                    System.out.println("G4 letra inicial imagen c1f3 y letra c1f1: SON IGUALES ");
+                    resPareja4 = true;
+                } else {
+                    System.out.println("G4 letra inicial imagen c1f3 y letra c1f1: NO SON IGUALES ");
+                }
+            } else if (pareja_4.get(0) == 10) {
+                if (letraInicialc1f3.equals(letrac1f2)) {
+                    System.out.println("G4 letra inicial imagen c1f3 y letra c1f2: SON IGUALES ");
+                    resPareja4 = true;
+                } else {
+                    System.out.println("G4 letra inicial imagen c1f3 y letra c1f2: NO SON IGUALES " + letraInicialc1f3 + " - " + letrac1f2);
+                }
+            } else if (pareja_4.get(0) == 11) {
+                if (letraInicialc1f3.equals(letrac1f3)) {
+                    System.out.println("G4 letra inicial imagen c1f3 y letra c1f3: SON IGUALES ");
+                    resPareja4 = true;
+                } else {
+                    System.out.println("G4 letra inicial imagen c1f3 y letra c1f3: NO SON IGUALES ");
+                }
+            } else if (pareja_4.get(0) == 12) {
+                if (letraInicialc1f3.equals(letrac1f4)) {
+                    System.out.println("G4 letra inicial imagen c1f3 y letra c1f4: SON IGUALES ");
+                    resPareja4 = true;
+                } else {
+                    System.out.println("G4 letra inicial imagen c1f3 y letra c1f4: NO SON IGUALES " + letraInicialc1f3 + " - " + letrac1f2);
+                }
+            }
+            //--------------------------------------------------------------------------------------I3
+            // --------------------------------------------------------------------------------------I4
+
+            if (pareja_4.get(0) == 13) {
+                if (letraInicialc1f4.equals(letrac1f1)) {
+                    System.out.println("G4 letra inicial imagen c1f4 y letra c1f1: SON IGUALES ");
+                    resPareja4 = true;
+                } else {
+                    System.out.println("G4 letra inicial imagen c1f4 y letra c1f1: NO SON IGUALES ");
+                }
+            } else if (pareja_4.get(0) == 14) {
+                if (letraInicialc1f4.equals(letrac1f2)) {
+                    System.out.println("G4 letra inicial imagen c1f4 y letra c1f2: SON IGUALES ");
+                    resPareja4 = true;
+                } else {
+                    System.out.println("G4 letra inicial imagen c1f4 y letra c1f2: NO SON IGUALES " + letraInicialc1f4 + " - " + letrac1f2);
+                }
+            } else if (pareja_4.get(0) == 15) {
+                if (letraInicialc1f4.equals(letrac1f3)) {
+                    System.out.println("G4 letra inicial imagen c1f4 y letra c1f3: SON IGUALES ");
+                    resPareja4 = true;
+                } else {
+                    System.out.println("G4 letra inicial imagen c1f4 y letra c1f3: NO SON IGUALES ");
+                }
+            } else if (pareja_4.get(0) == 16) {
+                if (letraInicialc1f4.equals(letrac1f4)) {
+                    System.out.println("G4 letra inicial imagen c1f4 y letra c1f4: SON IGUALES ");
+                    resPareja4 = true;
+                } else {
+                    System.out.println("G4 letra inicial imagen c1f4 y letra c1f4: NO SON IGUALES " + letraInicialc1f4 + " - " + letrac1f2);
+                }
+            }
+            //--------------------------------------------------------------------------------------I4 GRUPO 4
+
+            if (resPareja1 == true && resPareja2 == true && resPareja3 == true && resPareja4 == true) {
+                txt_resultado.setText(" ¡¡¡ BIEN HECHO 100% !!!");
+            } else if (resPareja1 == true && resPareja2 == true && resPareja3 == true && resPareja4 == false) {
+                txt_resultado.setText(" ¡¡¡ CASI 75% !!!");
+            } else if (resPareja1 == true && resPareja2 == true && resPareja3 == false && resPareja4 == true) {
+                txt_resultado.setText(" ¡¡¡ CASI 75% !!!");
+            } else if (resPareja1 == true && resPareja2 == false && resPareja3 == true && resPareja4 == true) {
+                txt_resultado.setText(" ¡¡¡ CASI 75% !!!");
+            } else if (resPareja1 == false && resPareja2 == true && resPareja3 == true && resPareja4 == true) {
+                txt_resultado.setText(" ¡¡¡ CASI 75% !!!");
+            } else if (resPareja1 == false && resPareja2 == false && resPareja3 == true && resPareja4 == true) {
+                txt_resultado.setText(" ¡¡¡  50% !!!");
+            } else if (resPareja1 == false && resPareja2 == true && resPareja3 == false && resPareja4 == true) {
+                txt_resultado.setText(" ¡¡¡  50% !!!");
+            } else if (resPareja1 == false && resPareja2 == true && resPareja3 == true && resPareja4 == false) {
+                txt_resultado.setText(" ¡¡¡  50% !!!");
+            } else if (resPareja1 == true && resPareja2 == true && resPareja3 == false && resPareja4 == false) {
+                txt_resultado.setText(" ¡¡¡  50% !!!");
+            } else if (resPareja1 == true && resPareja2 == false && resPareja3 == false && resPareja4 == true) {
+                txt_resultado.setText(" ¡¡¡  50% !!!");
+            } else if (resPareja1 == false && resPareja2 == true && resPareja3 == false && resPareja4 == true) {
+                txt_resultado.setText(" ¡¡¡  50% !!!");
+
+            } else if (resPareja1 == false && resPareja2 == false && resPareja3 == false && resPareja4 == true) {
+                txt_resultado.setText(" ¡¡¡  25% !!!");
+            } else if (resPareja1 == false && resPareja2 == false && resPareja3 == true && resPareja4 == false) {
+                txt_resultado.setText(" ¡¡¡  25% !!!");
+            } else if (resPareja1 == false && resPareja2 == true && resPareja3 == false && resPareja4 == false) {
+                txt_resultado.setText(" ¡¡¡  25% !!!");
+            } else if (resPareja1 == true && resPareja2 == false && resPareja3 == false && resPareja4 == false) {
+                txt_resultado.setText(" ¡¡¡  25% !!!");
+            } else if (resPareja1 == false && resPareja2 == false && resPareja3 == false && resPareja4 == false) {
+                txt_resultado.setText(" ¡¡¡  NO ACERTASTE NINGUNA !!!");
+            }
+
+        }
+    }
+
+
+    //**********************************************************************************************
 
     //**********************************************************************************************
     public void onClick(View v) {//f2
@@ -874,23 +1501,6 @@ public class Tipo2FonicoFragment extends Fragment
                     cv_c1f1_isactived = true;
                     col_imgs = true;
                     contadorColImgs++;
-
-                    //ll_cv_c1f1.setBackgroundColor(Color.YELLOW);
-
-                 /*   if (pareja1 == false) {
-                        ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
-                        //ll_cv_c1f1.setBackground(getResources().getDrawable(R.drawable.alarma));
-                    } else if (pareja1 == true) {
-                        ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.bb_darkBackgroundColor));
-                    } else if (pareja2 == true) {
-                        ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                    } else if (pareja3 == true) {
-                        ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
-                    }
-
-                    ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                    ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                    ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.colorAccent));*/
 
                     cv_c1f2_isactived = false;
                     cv_c1f3_isactived = false;
@@ -1058,20 +1668,14 @@ public class Tipo2FonicoFragment extends Fragment
 
     public void cargarWebService(int idejercicio) {
 
-        String url_lh = Globals.url;
-        // System.out.println("f: " + f);
-        // String ip = getString(R.string.ip);
+        //if ()
 
-        //String url = "http://192.168.0.13/proyecto_dconfo/wsJSONConsultarListaCursos.php";
+        String url_lh = Globals.url;
         String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarImagen.php?idImagen_Ejercicio=" + idejercicio;
-        //String url = ip+"ejemploBDRemota/wsJSONConsultarLista.php";
-        //reemplazar espacios en blanco del nombre por %20
         url = url.replace(" ", "%20");
-        //hace el llamado a la url
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-        // request.add(jsonObjectRequest);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);//p21
-        //Toast.makeText(getContext(), "web service", Toast.LENGTH_LONG).show();
+
     }
 
     @Override
@@ -1113,6 +1717,8 @@ public class Tipo2FonicoFragment extends Fragment
             }
            /* textOracion = ejercicioG1.getOracion();
             cantLexemas = ejercicioG1.getCantidadValida();*/
+            letraInicial = imagen.getLetraInicialImagen();
+            letraFinal = imagen.getLetraFinalImagen();
 
             String url_lh = Globals.url;
 
@@ -1132,18 +1738,27 @@ public class Tipo2FonicoFragment extends Fragment
                         //System.out.println("  letraf1_c1: " + letraf1_c1);
                         cv_est_ft2_c1f1.setBackground(null);
                         cv_est_ft2_c1f1.setImageBitmap(response);
+                        letraInicialc1f1 = letraInicial;
+                        letraFinalc1f1 = letraFinal;
+
                     } else if (f == 1) {
                         //letraf1_c2 = imagen.getLetraInicialImagen();
                         cv_est_ft2_c1f2.setBackground(null);
                         cv_est_ft2_c1f2.setImageBitmap(response);
+                        letraInicialc1f2 = letraInicial;
+                        letraFinalc1f2 = letraFinal;
                     } else if (f == 2) {
                         //letraf1_c3 = imagen.getLetraInicialImagen();
                         cv_est_ft2_c1f3.setBackground(null);
                         cv_est_ft2_c1f3.setImageBitmap(response);
+                        letraInicialc1f3 = letraInicial;
+                        letraFinalc1f3 = letraFinal;
                     } else if (f == 3) {
                         //letraf1_c4 = imagen.getLetraInicialImagen();
                         cv_est_ft2_c1f4.setBackground(null);
                         cv_est_ft2_c1f4.setImageBitmap(response);
+                        letraInicialc1f4 = letraInicial;
+                        letraFinalc1f4 = letraFinal;
                     }
                     llamarWebService();
 
