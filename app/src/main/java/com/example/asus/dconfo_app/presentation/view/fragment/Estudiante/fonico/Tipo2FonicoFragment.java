@@ -2,6 +2,8 @@ package com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.fonico
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +45,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * create an instance of this fragment.
  */
 public class Tipo2FonicoFragment extends Fragment
-        implements Response.Listener<JSONObject>, Response.ErrorListener {
+        implements Response.Listener<JSONObject>, Response.ErrorListener, View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -67,6 +70,16 @@ public class Tipo2FonicoFragment extends Fragment
     private TextView txt_letra_est_ft2_c1f3;
     private TextView txt_letra_est_ft2_c1f4;
 
+    private LinearLayout ll_cv_c1f1;
+    private LinearLayout ll_cv_c1f2;
+    private LinearLayout ll_cv_c1f3;
+    private LinearLayout ll_cv_c1f4;
+
+    private LinearLayout ll_txt_c1f1;
+    private LinearLayout ll_txt_c1f2;
+    private LinearLayout ll_txt_c1f3;
+    private LinearLayout ll_txt_c1f4;
+
     private Button btn_enviar_est_ft2;
 
     private int idImagen1;
@@ -88,6 +101,40 @@ public class Tipo2FonicoFragment extends Fragment
     private String letrac1f2;
     private String letrac1f3;
     private String letrac1f4;
+
+    private boolean cv_c1f1_isactived = false;
+    private boolean cv_c1f2_isactived = false;
+    private boolean cv_c1f3_isactived = false;
+    private boolean cv_c1f4_isactived = false;
+
+    private boolean cv_c1f1_desactivado = false;
+    private boolean cv_c1f2_desactivado = false;
+    private boolean cv_c1f3_desactivado = false;
+    private boolean cv_c1f4_desactivado = false;
+
+
+    private boolean txt_c1f1_isactived = false;
+    private boolean txt_c1f2_isactived = false;
+    private boolean txt_c1f3_isactived = false;
+    private boolean txt_c1f4_isactived = false;
+
+    private boolean txt_c1f1_desactivado = false;
+    private boolean txt_c1f2_desactivado = false;
+    private boolean txt_c1f3_desactivado = false;
+    private boolean txt_c1f4_desactivado = false;
+
+    private boolean col_imgs = false;
+    private boolean col_letras = false;
+    private boolean parejaCreada = false;
+    private int contadorParejas = 0;
+
+    private int contadorColImgs = 0;
+    private int contadorColLetras = 0;
+
+    private boolean pareja1 = false;
+    private boolean pareja2 = false;
+    private boolean pareja3 = false;
+    private boolean pareja4 = false;
 
     ArrayList<Integer> listaIdImagens;
     ArrayList<Integer> listafilImagenes;
@@ -148,6 +195,11 @@ public class Tipo2FonicoFragment extends Fragment
         cv_est_ft2_c1f3 = (CircleImageView) view.findViewById(R.id.iv_estudiante_fon2_c1_f3);
         cv_est_ft2_c1f4 = (CircleImageView) view.findViewById(R.id.iv_estudiante_fon2_c1_f4);
 
+        cv_est_ft2_c1f1.setOnClickListener(this);
+        cv_est_ft2_c1f2.setOnClickListener(this);
+        cv_est_ft2_c1f3.setOnClickListener(this);
+        cv_est_ft2_c1f4.setOnClickListener(this);
+
         txt_name_img_est_ft2_c1f1 = (TextView) view.findViewById(R.id.txt_estudiante_fon2_nom_c1f1);
         txt_name_img_est_ft2_c1f2 = (TextView) view.findViewById(R.id.txt_estudiante_fon2_nom_c1f2);
         txt_name_img_est_ft2_c1f3 = (TextView) view.findViewById(R.id.txt_estudiante_fon2_nom_c1f3);
@@ -157,6 +209,21 @@ public class Tipo2FonicoFragment extends Fragment
         txt_letra_est_ft2_c1f2 = (TextView) view.findViewById(R.id.edt_estudiante_fon2_l2);
         txt_letra_est_ft2_c1f3 = (TextView) view.findViewById(R.id.edt_estudiante_fon2_l3);
         txt_letra_est_ft2_c1f4 = (TextView) view.findViewById(R.id.edt_estudiante_fon2_l4);
+
+        txt_letra_est_ft2_c1f1.setOnClickListener(this);
+        txt_letra_est_ft2_c1f2.setOnClickListener(this);
+        txt_letra_est_ft2_c1f3.setOnClickListener(this);
+        txt_letra_est_ft2_c1f4.setOnClickListener(this);
+
+        ll_cv_c1f1 = (LinearLayout) view.findViewById(R.id.ll_estudiante_fon2_c1_f1);
+        ll_cv_c1f2 = (LinearLayout) view.findViewById(R.id.ll_estudiante_fon2_c1_f2);
+        ll_cv_c1f3 = (LinearLayout) view.findViewById(R.id.ll_estudiante_fon2_c1_f3);
+        ll_cv_c1f4 = (LinearLayout) view.findViewById(R.id.ll_estudiante_fon2_c1_f4);
+
+        ll_txt_c1f1 = (LinearLayout) view.findViewById(R.id.ll_estudiante_fon2_l1);
+        ll_txt_c1f2 = (LinearLayout) view.findViewById(R.id.ll_estudiante_fon2_l2);
+        ll_txt_c1f3 = (LinearLayout) view.findViewById(R.id.ll_estudiante_fon2_l3);
+        ll_txt_c1f4 = (LinearLayout) view.findViewById(R.id.ll_estudiante_fon2_l4);
 
         btn_enviar_est_ft2 = (Button) view.findViewById(R.id.btn_fonico_t2_estudiante_enviar);
 
@@ -196,6 +263,491 @@ public class Tipo2FonicoFragment extends Fragment
         return view;
     }//on create
 
+    // Implement the OnClickListener callback
+    //**********************************************************************************************
+
+
+    private void verificaParejas() {
+        if ((col_imgs && col_letras) == true) {
+
+            if ((contadorColImgs == 1 && contadorColLetras == 1)) {
+                System.out.println(" VALIDO --- cont imagenes :" + contadorColImgs + " cont letras :" + contadorColLetras);
+                contadorColLetras--;
+                contadorColImgs--;
+                col_letras = false;
+                col_imgs = false;
+                System.out.println(" parejas 1" + pareja1);
+                crearParejas();
+
+            } else {
+                System.out.println("NO VALIDO --- cont imagenes :" + contadorColImgs + " cont letras :" + contadorColLetras);
+            }
+        } else if (contadorColImgs > 1) {
+            System.out.println("ACCIÓN NO VALIDA img");
+            contadorColImgs--;
+        }
+        if (contadorColLetras > 1) {
+            System.out.println("ACCIÓN NO VALIDA letra");
+            contadorColLetras--;
+        }
+    }
+
+    //**********************************************************************************************
+
+    private void crearParejas() {
+        ArrayList<Integer> pareja_1 = new ArrayList<>();
+        ArrayList<Integer> pareja_2 = new ArrayList<>();
+        ArrayList<Integer> pareja_3 = new ArrayList<>();
+        ArrayList<Integer> pareja_4 = new ArrayList<>();
+
+        if (pareja1 == false) {//---------------------------------------pareja 1
+            //**************************************************** c1
+            if (cv_c1f1_isactived && txt_c1f1_isactived) {
+
+                pareja_1.add(1);
+                pareja1 = true;
+                cv_c1f1_desactivado = true;
+                txt_c1f1_desactivado = true;
+
+                ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+
+            } else if (cv_c1f1_isactived && txt_c1f2_isactived) {
+                pareja_1.add(2);
+                pareja1 = true;
+                cv_c1f1_desactivado = true;
+                txt_c1f2_desactivado = true;
+                ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+
+            } else if (cv_c1f1_isactived && txt_c1f3_isactived) {
+                pareja_1.add(3);
+                pareja1 = true;
+                cv_c1f1_desactivado = true;
+                txt_c1f3_desactivado = true;
+                ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+
+            } else if (cv_c1f1_isactived && txt_c1f4_isactived) {
+                pareja_1.add(4);
+                pareja1 = true;
+                cv_c1f1_desactivado = true;
+                txt_c1f4_desactivado = true;
+                ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+
+            } else if (cv_c1f2_isactived && txt_c1f1_isactived) {// **************************************************** c2
+
+                pareja_1.add(5);
+                pareja1 = true;
+                cv_c1f2_desactivado = true;
+                txt_c1f1_desactivado = true;
+
+                ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+
+            } else if (cv_c1f2_isactived && txt_c1f2_isactived) {
+                pareja_1.add(6);
+                pareja1 = true;
+                cv_c1f2_desactivado = true;
+                txt_c1f2_desactivado = true;
+                ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+
+            } else if (cv_c1f2_isactived && txt_c1f3_isactived) {
+                pareja_1.add(7);
+                pareja1 = true;
+                cv_c1f2_desactivado = true;
+                txt_c1f3_desactivado = true;
+                ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+
+            } else if (cv_c1f2_isactived && txt_c1f4_isactived) {
+                pareja_1.add(8);
+                pareja1 = true;
+                cv_c1f2_desactivado = true;
+                txt_c1f4_desactivado = true;
+                ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+
+            } else if (cv_c1f3_isactived && txt_c1f1_isactived) {// **************************************************** c3
+
+                pareja_1.add(9);
+                pareja1 = true;
+                cv_c1f3_desactivado = true;
+                txt_c1f1_desactivado = true;
+
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+
+            } else if (cv_c1f2_isactived && txt_c1f2_isactived) {
+                pareja_1.add(10);
+                pareja1 = true;
+                cv_c1f3_desactivado = true;
+                txt_c1f2_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+
+            } else if (cv_c1f2_isactived && txt_c1f3_isactived) {
+                pareja_1.add(11);
+                pareja1 = true;
+                cv_c1f3_desactivado = true;
+                txt_c1f3_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+
+            } else if (cv_c1f2_isactived && txt_c1f4_isactived) {
+                pareja_1.add(12);
+                pareja1 = true;
+                cv_c1f3_desactivado = true;
+                txt_c1f4_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+            } else if (cv_c1f4_isactived && txt_c1f1_isactived) {// **************************************************** c4
+
+                pareja_1.add(13);
+                pareja1 = true;
+                cv_c1f4_desactivado = true;
+                txt_c1f1_desactivado = true;
+
+                ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+
+            } else if (cv_c1f4_isactived && txt_c1f2_isactived) {
+                pareja_1.add(14);
+                pareja1 = true;
+                cv_c1f4_desactivado = true;
+                txt_c1f2_desactivado = true;
+                ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+
+            } else if (cv_c1f2_isactived && txt_c1f3_isactived) {
+                pareja_1.add(15);
+                pareja1 = true;
+                cv_c1f4_desactivado = true;
+                txt_c1f3_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+
+            } else if (cv_c1f2_isactived && txt_c1f4_isactived) {
+                pareja_1.add(16);
+                pareja1 = true;
+                cv_c1f4_desactivado = true;
+                txt_c1f4_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+            }
+            //****************************************************
+        }//***************************************************************************if pareja 1 false
+
+
+        else if (pareja1 == true && pareja2 == false) {//---------------------------------------pareja 2
+            //**************************************************** c1
+            if (cv_c1f1_isactived && txt_c1f1_isactived) {
+
+                pareja_1.add(1);
+                cv_c1f1_desactivado = true;
+                txt_c1f1_desactivado = true;
+
+                ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            } else if (cv_c1f1_isactived && txt_c1f2_isactived) {
+                pareja_1.add(2);
+
+                cv_c1f1_desactivado = true;
+                txt_c1f2_desactivado = true;
+                ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            } else if (cv_c1f1_isactived && txt_c1f3_isactived) {
+                pareja_1.add(3);
+
+                cv_c1f1_desactivado = true;
+                txt_c1f3_desactivado = true;
+                ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            } else if (cv_c1f1_isactived && txt_c1f4_isactived) {
+                pareja_1.add(4);
+
+                cv_c1f1_desactivado = true;
+                txt_c1f4_desactivado = true;
+                ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            } else if (cv_c1f2_isactived && txt_c1f1_isactived) {// **************************************************** c2
+
+                pareja_1.add(5);
+                cv_c1f2_desactivado = true;
+                txt_c1f1_desactivado = true;
+
+                ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            } else if (cv_c1f2_isactived && txt_c1f2_isactived) {
+                pareja_1.add(6);
+
+                cv_c1f2_desactivado = true;
+                txt_c1f2_desactivado = true;
+                ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            } else if (cv_c1f2_isactived && txt_c1f3_isactived) {
+                pareja_1.add(7);
+
+                cv_c1f2_desactivado = true;
+                txt_c1f3_desactivado = true;
+                ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            } else if (cv_c1f2_isactived && txt_c1f4_isactived) {
+                pareja_1.add(8);
+
+                cv_c1f2_desactivado = true;
+                txt_c1f4_desactivado = true;
+                ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            } else if (cv_c1f3_isactived && txt_c1f1_isactived) {// **************************************************** c3
+
+                pareja_1.add(9);
+                cv_c1f3_desactivado = true;
+                txt_c1f1_desactivado = true;
+
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            } else if (cv_c1f2_isactived && txt_c1f2_isactived) {
+                pareja_1.add(10);
+
+                cv_c1f3_desactivado = true;
+                txt_c1f2_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            } else if (cv_c1f2_isactived && txt_c1f3_isactived) {
+                pareja_1.add(11);
+
+                cv_c1f3_desactivado = true;
+                txt_c1f3_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+
+            } else if (cv_c1f2_isactived && txt_c1f4_isactived) {
+                pareja_1.add(12);
+
+                cv_c1f3_desactivado = true;
+                txt_c1f4_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            } else if (cv_c1f4_isactived && txt_c1f1_isactived) {// **************************************************** c4
+
+                pareja_1.add(13);
+                cv_c1f4_desactivado = true;
+                txt_c1f1_desactivado = true;
+
+                ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            } else if (cv_c1f4_isactived && txt_c1f2_isactived) {
+                pareja_1.add(14);
+
+                cv_c1f4_desactivado = true;
+                txt_c1f2_desactivado = true;
+                ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            } else if (cv_c1f2_isactived && txt_c1f3_isactived) {
+                pareja_1.add(15);
+
+                cv_c1f4_desactivado = true;
+                txt_c1f3_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            } else if (cv_c1f2_isactived && txt_c1f4_isactived) {
+                pareja_1.add(16);
+
+                cv_c1f4_desactivado = true;
+                txt_c1f4_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            }
+            //****************************************************
+        }//***************************************************************************if pareja 2 false
+
+
+    }//******************crear parejas
+
+    //**********************************************************************************************
+    public void onClick(View v) {//f2
+        switch (v.getId()) {
+            case R.id.iv_estudiante_fon2_c1_f1:
+                if (cv_c1f1_isactived == false && cv_c1f1_desactivado == false) {
+
+                    cv_c1f1_isactived = true;
+                    col_imgs = true;
+                    contadorColImgs++;
+
+                    //ll_cv_c1f1.setBackgroundColor(Color.YELLOW);
+
+                 /*   if (pareja1 == false) {
+                        ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                        //ll_cv_c1f1.setBackground(getResources().getDrawable(R.drawable.alarma));
+                    } else if (pareja1 == true) {
+                        ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.bb_darkBackgroundColor));
+                    } else if (pareja2 == true) {
+                        ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                    } else if (pareja3 == true) {
+                        ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
+                    }
+
+                    ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.colorAccent));*/
+
+                    cv_c1f2_isactived = false;
+                    cv_c1f3_isactived = false;
+                    cv_c1f4_isactived = false;
+
+                    verificaParejas();
+
+                }
+                System.out.println("imagen 1");
+                //Drawable drawable=;
+                //ll_cv_c1f1.setBackgroundColor(Color.WHITE);
+                Toast.makeText(getContext(), "imagen c1f1 :" + cv_c1f1_isactived, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.iv_estudiante_fon2_c1_f2:
+
+                if (cv_c1f2_isactived == false && cv_c1f2_desactivado == false) {
+                    cv_c1f2_isactived = true;
+                    col_imgs = true;
+                    contadorColImgs++;
+
+                  /*  ll_cv_c1f2.setBackgroundColor(Color.WHITE);
+
+                    ll_cv_c1f1.setBackgroundColor(Color.RED);
+                    ll_cv_c1f3.setBackgroundColor(Color.RED);
+                    ll_cv_c1f4.setBackgroundColor(Color.RED);*/
+
+                    cv_c1f1_isactived = false;
+                    cv_c1f3_isactived = false;
+                    cv_c1f4_isactived = false;
+
+                    verificaParejas();
+
+                }
+                System.out.println("imagen 2");
+                break;
+            case R.id.iv_estudiante_fon2_c1_f3:
+                if (cv_c1f3_isactived == false && cv_c1f3_desactivado == false) {
+                    cv_c1f3_isactived = true;
+                    col_imgs = true;
+                    contadorColImgs++;
+
+                 /*   ll_cv_c1f3.setBackgroundColor(Color.WHITE);
+
+                    ll_cv_c1f1.setBackgroundColor(Color.RED);
+                    ll_cv_c1f2.setBackgroundColor(Color.RED);
+                    ll_cv_c1f4.setBackgroundColor(Color.RED);*/
+
+                    cv_c1f1_isactived = false;
+                    cv_c1f2_isactived = false;
+                    cv_c1f4_isactived = false;
+
+                    verificaParejas();
+                }
+                System.out.println("imagen 3");
+                break;
+            case R.id.iv_estudiante_fon2_c1_f4:
+
+                if (cv_c1f4_isactived == false && cv_c1f4_desactivado == false) {
+                    cv_c1f4_isactived = true;
+                    col_imgs = true;
+                    contadorColImgs++;
+
+                  /*  ll_cv_c1f4.setBackgroundColor(Color.WHITE);
+
+                    ll_cv_c1f1.setBackgroundColor(Color.RED);
+                    ll_cv_c1f3.setBackgroundColor(Color.RED);
+                    ll_cv_c1f2.setBackgroundColor(Color.RED);*/
+
+                    cv_c1f1_isactived = false;
+                    cv_c1f3_isactived = false;
+                    cv_c1f2_isactived = false;
+
+                    verificaParejas();
+                }
+                System.out.println("imagen 4");
+                break;
+            case R.id.edt_estudiante_fon2_l1:
+                if (txt_c1f1_isactived == false && txt_c1f1_desactivado == false) {
+                    txt_c1f1_isactived = true;
+                    col_letras = true;
+                    contadorColLetras++;
+
+                    txt_c1f2_isactived = false;
+                    txt_c1f3_isactived = false;
+                    txt_c1f4_isactived = false;
+                    //col_imgs = false;
+
+                    verificaParejas();
+                    System.out.println("letra 1");
+                }
+                break;
+            case R.id.edt_estudiante_fon2_l2:
+                if (txt_c1f2_isactived == false && txt_c1f2_desactivado == false) {
+                    txt_c1f2_isactived = true;
+                    col_letras = true;
+                    contadorColLetras++;
+
+                    txt_c1f1_isactived = false;
+                    txt_c1f3_isactived = false;
+                    txt_c1f4_isactived = false;
+                    //col_imgs = false;
+                    System.out.println("letra 2");
+
+                    verificaParejas();
+                }
+                break;
+            case R.id.edt_estudiante_fon2_l3:
+                if (txt_c1f3_isactived == false && txt_c1f3_desactivado == false) {
+                    txt_c1f3_isactived = true;
+                    col_letras = true;
+                    contadorColLetras++;
+
+                    txt_c1f1_isactived = false;
+                    txt_c1f2_isactived = false;
+                    txt_c1f4_isactived = false;
+                    //col_imgs = false;
+                    System.out.println("letra 3");
+
+                    verificaParejas();
+                }
+                break;
+            case R.id.edt_estudiante_fon2_l4:
+                if (txt_c1f4_isactived == false && txt_c1f4_desactivado == false) {
+                    txt_c1f4_isactived = true;
+                    col_letras = true;
+                    contadorColLetras++;
+
+                    txt_c1f1_isactived = false;
+                    txt_c1f2_isactived = false;
+                    txt_c1f3_isactived = false;
+                    //col_imgs = false;
+                    System.out.println("letra 4");
+                    System.out.println("col letras" + col_letras);
+                    System.out.println("col imagenes" + col_imgs);
+
+                    verificaParejas();
+                }
+                break;
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
     private void cargarLetras() {
         txt_letra_est_ft2_c1f1.setText(letrac1f1);
         txt_letra_est_ft2_c1f2.setText(letrac1f2);
@@ -216,6 +768,8 @@ public class Tipo2FonicoFragment extends Fragment
 
         //}
     }
+
+    //----------------------------------------------------------------------------------------------
 
     public void cargarWebService(int idejercicio) {
 
@@ -352,6 +906,7 @@ public class Tipo2FonicoFragment extends Fragment
         super.onDetach();
         mListener = null;
     }
+
 
     /**
      * This interface must be implemented by activities that contain this
