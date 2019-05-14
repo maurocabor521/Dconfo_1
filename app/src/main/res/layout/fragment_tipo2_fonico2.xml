@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:background="@android:color/holo_red_dark"
+                    android:background="@android:color/holo_purple"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="10dp">
@@ -147,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:background="@color/colorPrimary"
+                    android:background="@android:color/holo_purple"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="10dp">

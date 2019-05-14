@@ -276,7 +276,7 @@ public class Tipo2FonicoFragment extends Fragment
                 contadorColImgs--;
                 col_letras = false;
                 col_imgs = false;
-                System.out.println(" parejas 1" + pareja1);
+                System.out.println(" parejas 1: " + pareja1 + " parejas 2: " + pareja2 + " parejas 3: " + pareja3);
                 crearParejas();
 
             } else {
@@ -380,7 +380,7 @@ public class Tipo2FonicoFragment extends Fragment
                 ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
                 ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
 
-            } else if (cv_c1f2_isactived && txt_c1f2_isactived) {
+            } else if (cv_c1f3_isactived && txt_c1f2_isactived) {
                 pareja_1.add(10);
                 pareja1 = true;
                 cv_c1f3_desactivado = true;
@@ -388,7 +388,7 @@ public class Tipo2FonicoFragment extends Fragment
                 ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
                 ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
 
-            } else if (cv_c1f2_isactived && txt_c1f3_isactived) {
+            } else if (cv_c1f3_isactived && txt_c1f3_isactived) {
                 pareja_1.add(11);
                 pareja1 = true;
                 cv_c1f3_desactivado = true;
@@ -396,7 +396,7 @@ public class Tipo2FonicoFragment extends Fragment
                 ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
                 ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
 
-            } else if (cv_c1f2_isactived && txt_c1f4_isactived) {
+            } else if (cv_c1f3_isactived && txt_c1f4_isactived) {
                 pareja_1.add(12);
                 pareja1 = true;
                 cv_c1f3_desactivado = true;
@@ -421,7 +421,7 @@ public class Tipo2FonicoFragment extends Fragment
                 ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
                 ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
 
-            } else if (cv_c1f2_isactived && txt_c1f3_isactived) {
+            } else if (cv_c1f4_isactived && txt_c1f3_isactived) {
                 pareja_1.add(15);
                 pareja1 = true;
                 cv_c1f4_desactivado = true;
@@ -429,7 +429,7 @@ public class Tipo2FonicoFragment extends Fragment
                 ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
                 ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
 
-            } else if (cv_c1f2_isactived && txt_c1f4_isactived) {
+            } else if (cv_c1f4_isactived && txt_c1f4_isactived) {
                 pareja_1.add(16);
                 pareja1 = true;
                 cv_c1f4_desactivado = true;
@@ -445,7 +445,8 @@ public class Tipo2FonicoFragment extends Fragment
             //**************************************************** c1
             if (cv_c1f1_isactived && txt_c1f1_isactived) {
 
-                pareja_1.add(1);
+                pareja_2.add(1);
+                pareja2 = true;
                 cv_c1f1_desactivado = true;
                 txt_c1f1_desactivado = true;
 
@@ -453,24 +454,24 @@ public class Tipo2FonicoFragment extends Fragment
                 ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
             } else if (cv_c1f1_isactived && txt_c1f2_isactived) {
-                pareja_1.add(2);
-
+                pareja_2.add(2);
+                pareja2 = true;
                 cv_c1f1_desactivado = true;
                 txt_c1f2_desactivado = true;
                 ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
             } else if (cv_c1f1_isactived && txt_c1f3_isactived) {
-                pareja_1.add(3);
-
+                pareja_2.add(3);
+                pareja2 = true;
                 cv_c1f1_desactivado = true;
                 txt_c1f3_desactivado = true;
                 ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
             } else if (cv_c1f1_isactived && txt_c1f4_isactived) {
-                pareja_1.add(4);
-
+                pareja_2.add(4);
+                pareja2 = true;
                 cv_c1f1_desactivado = true;
                 txt_c1f4_desactivado = true;
                 ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -478,7 +479,8 @@ public class Tipo2FonicoFragment extends Fragment
 
             } else if (cv_c1f2_isactived && txt_c1f1_isactived) {// **************************************************** c2
 
-                pareja_1.add(5);
+                pareja_2.add(5);
+                pareja2 = true;
                 cv_c1f2_desactivado = true;
                 txt_c1f1_desactivado = true;
 
@@ -486,24 +488,24 @@ public class Tipo2FonicoFragment extends Fragment
                 ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
             } else if (cv_c1f2_isactived && txt_c1f2_isactived) {
-                pareja_1.add(6);
-
+                pareja_2.add(6);
+                pareja2 = true;
                 cv_c1f2_desactivado = true;
                 txt_c1f2_desactivado = true;
                 ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
             } else if (cv_c1f2_isactived && txt_c1f3_isactived) {
-                pareja_1.add(7);
-
+                pareja_2.add(7);
+                pareja2 = true;
                 cv_c1f2_desactivado = true;
                 txt_c1f3_desactivado = true;
                 ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
             } else if (cv_c1f2_isactived && txt_c1f4_isactived) {
-                pareja_1.add(8);
-
+                pareja_2.add(8);
+                pareja2 = true;
                 cv_c1f2_desactivado = true;
                 txt_c1f4_desactivado = true;
                 ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -511,39 +513,41 @@ public class Tipo2FonicoFragment extends Fragment
 
             } else if (cv_c1f3_isactived && txt_c1f1_isactived) {// **************************************************** c3
 
-                pareja_1.add(9);
+                pareja_2.add(9);
+                pareja2 = true;
                 cv_c1f3_desactivado = true;
                 txt_c1f1_desactivado = true;
 
                 ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
-            } else if (cv_c1f2_isactived && txt_c1f2_isactived) {
-                pareja_1.add(10);
-
+            } else if (cv_c1f3_isactived && txt_c1f2_isactived) {
+                pareja_2.add(10);
+                pareja2 = true;
                 cv_c1f3_desactivado = true;
                 txt_c1f2_desactivado = true;
                 ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
-            } else if (cv_c1f2_isactived && txt_c1f3_isactived) {
-                pareja_1.add(11);
-
+            } else if (cv_c1f3_isactived && txt_c1f3_isactived) {
+                pareja_2.add(11);
+                pareja2 = true;
                 cv_c1f3_desactivado = true;
                 txt_c1f3_desactivado = true;
                 ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.editTextColorWhite));
 
-            } else if (cv_c1f2_isactived && txt_c1f4_isactived) {
-                pareja_1.add(12);
-
+            } else if (cv_c1f3_isactived && txt_c1f4_isactived) {
+                pareja_2.add(12);
+                pareja2 = true;
                 cv_c1f3_desactivado = true;
                 txt_c1f4_desactivado = true;
                 ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             } else if (cv_c1f4_isactived && txt_c1f1_isactived) {// **************************************************** c4
 
-                pareja_1.add(13);
+                pareja_2.add(13);
+                pareja2 = true;
                 cv_c1f4_desactivado = true;
                 txt_c1f1_desactivado = true;
 
@@ -551,31 +555,312 @@ public class Tipo2FonicoFragment extends Fragment
                 ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
             } else if (cv_c1f4_isactived && txt_c1f2_isactived) {
-                pareja_1.add(14);
-
+                pareja_2.add(14);
+                pareja2 = true;
                 cv_c1f4_desactivado = true;
                 txt_c1f2_desactivado = true;
                 ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
-            } else if (cv_c1f2_isactived && txt_c1f3_isactived) {
-                pareja_1.add(15);
-
+            } else if (cv_c1f4_isactived && txt_c1f3_isactived) {
+                pareja_2.add(15);
+                pareja2 = true;
                 cv_c1f4_desactivado = true;
                 txt_c1f3_desactivado = true;
-                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
-            } else if (cv_c1f2_isactived && txt_c1f4_isactived) {
-                pareja_1.add(16);
-
+            } else if (cv_c1f4_isactived && txt_c1f4_isactived) {
+                pareja_2.add(16);
+                pareja2 = true;
                 cv_c1f4_desactivado = true;
                 txt_c1f4_desactivado = true;
-                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             }
             //****************************************************
         }//***************************************************************************if pareja 2 false
+
+        else if (pareja1 == true && pareja2 == true && pareja3 == false) {//---------------------------------------pareja 3
+            //**************************************************** c1
+            if (cv_c1f1_isactived && txt_c1f1_isactived) {
+
+                pareja_3.add(1);
+                pareja3 = true;
+                cv_c1f1_desactivado = true;
+                txt_c1f1_desactivado = true;
+
+                ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+            } else if (cv_c1f1_isactived && txt_c1f2_isactived) {
+                pareja_3.add(2);
+                pareja3 = true;
+                cv_c1f1_desactivado = true;
+                txt_c1f2_desactivado = true;
+                ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+            } else if (cv_c1f1_isactived && txt_c1f3_isactived) {
+                pareja_3.add(3);
+                pareja3 = true;
+                cv_c1f1_desactivado = true;
+                txt_c1f3_desactivado = true;
+                ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+            } else if (cv_c1f1_isactived && txt_c1f4_isactived) {
+                pareja_3.add(4);
+                pareja3 = true;
+                cv_c1f1_desactivado = true;
+                txt_c1f4_desactivado = true;
+                ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+            } else if (cv_c1f2_isactived && txt_c1f1_isactived) {// **************************************************** c2
+
+                pareja_3.add(5);
+                pareja3 = true;
+                cv_c1f2_desactivado = true;
+                txt_c1f1_desactivado = true;
+
+                ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+            } else if (cv_c1f2_isactived && txt_c1f2_isactived) {
+                pareja_3.add(6);
+                pareja3 = true;
+                cv_c1f2_desactivado = true;
+                txt_c1f2_desactivado = true;
+                ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+            } else if (cv_c1f2_isactived && txt_c1f3_isactived) {
+                pareja_3.add(7);
+                pareja3 = true;
+                cv_c1f2_desactivado = true;
+                txt_c1f3_desactivado = true;
+                ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+            } else if (cv_c1f2_isactived && txt_c1f4_isactived) {
+                pareja_3.add(8);
+                pareja3 = true;
+                cv_c1f2_desactivado = true;
+                txt_c1f4_desactivado = true;
+                ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+            } else if (cv_c1f3_isactived && txt_c1f1_isactived) {// **************************************************** c3
+
+                pareja_3.add(9);
+                pareja3 = true;
+                cv_c1f3_desactivado = true;
+                txt_c1f1_desactivado = true;
+
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+            } else if (cv_c1f3_isactived && txt_c1f2_isactived) {
+                pareja_3.add(10);
+                pareja3 = true;
+                cv_c1f3_desactivado = true;
+                txt_c1f2_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+            } else if (cv_c1f3_isactived && txt_c1f3_isactived) {
+                pareja_3.add(11);
+                pareja3 = true;
+                cv_c1f3_desactivado = true;
+                txt_c1f3_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+            } else if (cv_c1f3_isactived && txt_c1f4_isactived) {
+                pareja_3.add(12);
+                pareja3 = true;
+                cv_c1f3_desactivado = true;
+                txt_c1f4_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            } else if (cv_c1f4_isactived && txt_c1f1_isactived) {// **************************************************** c4
+
+                pareja_3.add(13);
+                pareja3 = true;
+                cv_c1f4_desactivado = true;
+                txt_c1f1_desactivado = true;
+
+                ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+            } else if (cv_c1f4_isactived && txt_c1f2_isactived) {
+                pareja_3.add(14);
+                pareja3 = true;
+                cv_c1f4_desactivado = true;
+                txt_c1f2_desactivado = true;
+                ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+            } else if (cv_c1f4_isactived && txt_c1f3_isactived) {
+                pareja_3.add(15);
+                pareja3 = true;
+                cv_c1f4_desactivado = true;
+                txt_c1f3_desactivado = true;
+                ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+            } else if (cv_c1f4_isactived && txt_c1f4_isactived) {
+                pareja_3.add(16);
+                pareja3 = true;
+                cv_c1f4_desactivado = true;
+                txt_c1f4_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            }
+            //****************************************************
+        }//***************************************************************************if pareja 3 false
+
+
+        else if (pareja1 == true && pareja2 == true && pareja3 == true && pareja4 == false) {//---------------------------------------pareja 4
+            //**************************************************** c1
+            if (cv_c1f1_isactived && txt_c1f1_isactived) {
+
+                pareja_4.add(1);
+                pareja4 = true;
+                cv_c1f1_desactivado = true;
+                txt_c1f1_desactivado = true;
+
+                ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            } else if (cv_c1f1_isactived && txt_c1f2_isactived) {
+                pareja_4.add(2);
+                pareja4 = true;
+                cv_c1f1_desactivado = true;
+                txt_c1f2_desactivado = true;
+                ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            } else if (cv_c1f1_isactived && txt_c1f3_isactived) {
+                pareja_4.add(3);
+                pareja4 = true;
+                cv_c1f1_desactivado = true;
+                txt_c1f3_desactivado = true;
+                ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            } else if (cv_c1f1_isactived && txt_c1f4_isactived) {
+                pareja_4.add(4);
+                pareja4 = true;
+                cv_c1f1_desactivado = true;
+                txt_c1f4_desactivado = true;
+                ll_cv_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            } else if (cv_c1f2_isactived && txt_c1f1_isactived) {// **************************************************** c2
+
+                pareja_4.add(5);
+                pareja4 = true;
+                cv_c1f2_desactivado = true;
+                txt_c1f1_desactivado = true;
+
+                ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            } else if (cv_c1f2_isactived && txt_c1f2_isactived) {
+                pareja_4.add(6);
+                pareja4 = true;
+                cv_c1f2_desactivado = true;
+                txt_c1f2_desactivado = true;
+                ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            } else if (cv_c1f2_isactived && txt_c1f3_isactived) {
+                pareja_4.add(7);
+                pareja4 = true;
+                cv_c1f2_desactivado = true;
+                txt_c1f3_desactivado = true;
+                ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            } else if (cv_c1f2_isactived && txt_c1f4_isactived) {
+                pareja_4.add(8);
+                pareja4 = true;
+                cv_c1f2_desactivado = true;
+                txt_c1f4_desactivado = true;
+                ll_cv_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            } else if (cv_c1f3_isactived && txt_c1f1_isactived) {// **************************************************** c3
+
+                pareja_4.add(9);
+                pareja4 = true;
+                cv_c1f3_desactivado = true;
+                txt_c1f1_desactivado = true;
+
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            } else if (cv_c1f3_isactived && txt_c1f2_isactived) {
+                pareja_4.add(10);
+                pareja4 = true;
+                cv_c1f3_desactivado = true;
+                txt_c1f2_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            } else if (cv_c1f3_isactived && txt_c1f3_isactived) {
+                pareja_4.add(11);
+                pareja4 = true;
+                cv_c1f3_desactivado = true;
+                txt_c1f3_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            } else if (cv_c1f3_isactived && txt_c1f4_isactived) {
+                pareja_4.add(12);
+                pareja4 = true;
+                cv_c1f3_desactivado = true;
+                txt_c1f4_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            } else if (cv_c1f4_isactived && txt_c1f1_isactived) {// **************************************************** c4
+
+                pareja_4.add(13);
+                pareja4 = true;
+                cv_c1f4_desactivado = true;
+                txt_c1f1_desactivado = true;
+
+                ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ll_txt_c1f1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            } else if (cv_c1f4_isactived && txt_c1f2_isactived) {
+                pareja_4.add(14);
+                pareja4 = true;
+                cv_c1f4_desactivado = true;
+                txt_c1f2_desactivado = true;
+                ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ll_txt_c1f2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            } else if (cv_c1f4_isactived && txt_c1f3_isactived) {
+                pareja_4.add(15);
+                pareja4 = true;
+                cv_c1f4_desactivado = true;
+                txt_c1f3_desactivado = true;
+                ll_cv_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ll_txt_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            } else if (cv_c1f4_isactived && txt_c1f4_isactived) {
+                pareja_4.add(16);
+                pareja4 = true;
+                cv_c1f4_desactivado = true;
+                txt_c1f4_desactivado = true;
+                ll_cv_c1f3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ll_txt_c1f4.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            }
+            //****************************************************
+        }//***************************************************************************if pareja 4 false
 
 
     }//******************crear parejas
