@@ -33,7 +33,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +52,8 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
     Spinner spinner;
     Spinner spinnerEjercicios;
     Integer idgrupo;
+    Calendar calendar;
+    SimpleDateFormat simpleDateFormat;
 
     //******** CONEXIÓN CON WEBSERVICE
     //RequestQueue request;
@@ -87,6 +91,9 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
         });
         listarEstudiantes();
         listarEjerciciosDocente();
+        calendar = Calendar.getInstance();
+        simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        System.out.println("fecha actual: " + simpleDateFormat.format(calendar.getTime()));
         //listar_Ejercicios_Docente();
     }
 
@@ -142,17 +149,17 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                             listaStringEstudiantes.add("Seleccione Id Estudiante");
                             for (int i = 0; i < listaEstudiantes.size(); i++) {
                                 listaStringEstudiantes.add(listaEstudiantes.get(i).getIdestudiante().toString());
-                                listaStringId_Name.add(listaEstudiantes.get(i).getIdestudiante().toString()+" - "+listaEstudiantes.get(i).getNameestudiante().toString());
+                                listaStringId_Name.add(listaEstudiantes.get(i).getIdestudiante().toString() + " - " + listaEstudiantes.get(i).getNameestudiante().toString());
                             }
-                            System.out.println("lista estudiantes: "+listaStringId_Name.toString());
-                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, listaStringId_Name);
+                            System.out.println("lista estudiantes: " + listaStringId_Name.toString());
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, listaStringEstudiantes);
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             spinner.setAdapter(adapter);
                             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                 @Override
                                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                     if (position != 0) {
-                                        edt_idEstudiante.setText(listaStringEstudiantes.get(position+1));
+                                        edt_idEstudiante.setText(listaStringEstudiantes.get(position));
                                     } else {
 
                                     }
@@ -244,17 +251,17 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                             for (int i = 0; i < listaEjercicios.size(); i++) {
                                 listaStringEjercicios.add(listaEjercicios.get(i).getIdEjercicio().toString());
                                 listaStringNombres.add(listaEjercicios.get(i).getNameEjercicio());
-                                listaStringId_Nombre.add(listaEjercicios.get(i).getIdEjercicio().toString()+" - " + listaEjercicios.get(i).getNameEjercicio());
-                               // listaStringId_Nombre.add();
+                                listaStringId_Nombre.add(listaEjercicios.get(i).getIdEjercicio().toString() + " - " + listaEjercicios.get(i).getNameEjercicio());
+                                // listaStringId_Nombre.add();
                             }
-                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, listaStringId_Nombre);
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, listaStringEjercicios);
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             spinnerEjercicios.setAdapter(adapter);
                             spinnerEjercicios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                 @Override
                                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                     if (position != 0) {
-                                        edt_idEjercicio.setText(listaStringEjercicios.get(position+1));
+                                        edt_idEjercicio.setText(listaStringEjercicios.get(position));
                                     } else {
 
                                     }
@@ -333,28 +340,23 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                 String idestudiante = edt_idEstudiante.getText().toString();
                 String idejercicio = edt_idEjercicio.getText().toString();
                 String iddocente1 = String.valueOf(iddocente);
+                String fecha = simpleDateFormat.format(calendar.getTime());
 
 
                 Map<String, String> parametros = new HashMap<>();
                 parametros.put("estudiante_idestudiante", idestudiante);
                 parametros.put("docente_iddocente", iddocente1);
-                parametros.put("EjercicioG1_idEjercicioG2", idejercicio);
+                parametros.put("EjercicioG1_idEjercicioG1", idejercicio);
+                parametros.put("fechaestudiante_has_Deber", fecha);
 
 
                 return parametros;
             }
         };
-        //request.add(stringRequest);
-        //p25 duplicar tiempo x defecto
+
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getIntanciaVolley(getApplicationContext()).addToRequestQueue(stringRequest);//p21
 
-        //reemplazar espacios en blanco del nombre por %20
-        // url = url.replace(" ", "%20");
-
-        //hace el llamado a la url,no usa en p12
-        /*jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-        request.add(jsonObjectRequest);*/
     }
 
 
