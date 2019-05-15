@@ -42,7 +42,7 @@ public class NewEjercicioSilabicoDocenteActivity extends AppCompatActivity
 
         showToolbar("Nuevo Ejercicio Fónico, Docente: " + nameDocente, true);
         bottomBar = findViewById(R.id.bottombar_CED_activity);
-        //cargarBottombar();
+        cargarBottombar();
     }
 
     //método que permite volver al padre conservando las variables
@@ -82,7 +82,7 @@ public class NewEjercicioSilabicoDocenteActivity extends AppCompatActivity
                         args.putString("namedocente", nameDocente);
                         args.putInt("iddocente", idDocente);
 
-                        tipo1SilabicoFragment = new Tipo1SilabicoFragment());
+                        tipo1SilabicoFragment = new Tipo1SilabicoFragment();
                         tipo1SilabicoFragment.setArguments(args);
 
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_Tipos_C_SIL, tipo1SilabicoFragment)
