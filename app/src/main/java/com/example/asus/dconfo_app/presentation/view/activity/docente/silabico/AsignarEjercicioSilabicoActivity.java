@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -46,6 +47,8 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
     Button btn_asignar;
     ProgressDialog progreso;
 
+    TextView txterror;
+
     ArrayList<Estudiante> listaEstudiantes;
     ArrayList<EjercicioG1> listaEjercicios;
 
@@ -71,6 +74,8 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
 
         iddocente = datos.getInt("iddocente");
         idgrupo = datos.getInt("idgrupo");
+
+        txterror=(TextView)findViewById(R.id.txt_error);
 
         this.setTitle("id docente:" + iddocente);
         progreso = new ProgressDialog(getApplicationContext());
@@ -171,7 +176,7 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                                 }
                             });
 
-                            Toast.makeText(getApplicationContext(), "lista estudiantes" + listaStringEstudiantes, Toast.LENGTH_LONG).show();
+                           // Toast.makeText(getApplicationContext(), "lista estudiantes" + listaStringEstudiantes, Toast.LENGTH_LONG).show();
                             System.out.println("estudiantes size: " + listaEstudiantes.size());
                             System.out.println("estudiantes: " + listaEstudiantes.get(0).getIdestudiante());
 
@@ -202,6 +207,8 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
         // final String password = etPass.getText().toString();
 
         // INICIAR LA CONEXION CON VOLLEY
+
+        Toast.makeText(getApplicationContext(), "MIS EJERCICIOS FUNCION: " , Toast.LENGTH_LONG).show();
 
         String url_lh = Globals.url;
 
@@ -273,8 +280,8 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                                 }
                             });
 
-                           /* Toast.makeText(getApplicationContext(), "lista estudiantes" + listaStringEstudiantes, Toast.LENGTH_LONG).show();
-                            System.out.println("estudiantes size: " + listaEstudiantes.size());
+                           Toast.makeText(getApplicationContext(), "lista EJERCICIOS: " + listaStringEjercicios.toString(), Toast.LENGTH_LONG).show();
+                           /* System.out.println("estudiantes size: " + listaEstudiantes.size());
                             System.out.println("estudiantes: " + listaEstudiantes.get(0).getIdestudiante());*/
 
                         } catch (JSONException e) {
@@ -287,7 +294,9 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         // Do something when error occurred
                         System.out.println();
+                        txterror.setText(error.toString());
                         Log.d("ERROR Ejercicios: ", error.toString());
+                        Toast.makeText(getApplicationContext(), "ERROR" + error.toString(), Toast.LENGTH_LONG).show();
                     }
                 }
         );
@@ -324,14 +333,14 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
 
                     // Toast.makeText(getContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
                 } else {
-                    // Toast.makeText(getContext(), "No se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                     Toast.makeText(getApplicationContext(), "No se ha cargado con éxito", Toast.LENGTH_LONG).show();
                     Log.i("ERROR", "RESPONSE" + response.toString());
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // Toast.makeText(getContext(), "No se ha podido conectar", Toast.LENGTH_LONG).show();
+                 Toast.makeText(getApplicationContext(), "No se ha podido conectar", Toast.LENGTH_LONG).show();
                 //  progreso.hide();
             }
         }) {//enviar para metros a webservice, mediante post
@@ -341,7 +350,7 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                 String idejercicio = edt_idEjercicio.getText().toString();
                 String iddocente1 = String.valueOf(iddocente);
                 String fecha = simpleDateFormat.format(calendar.getTime());
-
+                Toast.makeText(getApplicationContext(), "La fecha de hoy: " + fecha, Toast.LENGTH_SHORT).show();
 
                 Map<String, String> parametros = new HashMap<>();
                 parametros.put("estudiante_idestudiante", idestudiante);
