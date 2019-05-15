@@ -158,7 +158,8 @@ public class HomeDocenteActivity extends AppCompatActivity
             parametros.putInt("iddocente", iddocente);
             parametros.putString("namedocente", namedocente);
 
-            intentCED = new Intent(HomeDocenteActivity.this, ManageEjercicioDocenteActivity.class);
+            //intentCED = new Intent(HomeDocenteActivity.this, ManageEjercicioDocenteActivity.class);
+            intentCED = new Intent(HomeDocenteActivity.this, NewEjercicioDocenteActivity.class);
             intentCED.putExtras(parametros);
             startActivity(intentCED);
 

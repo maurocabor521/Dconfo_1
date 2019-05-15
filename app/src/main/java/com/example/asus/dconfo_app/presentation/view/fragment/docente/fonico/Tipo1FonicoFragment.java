@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputFilter;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -210,6 +211,10 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         ejercicioG2HasImagen = new EjercicioG2HasImagen();
 
         edt_letra = (EditText) view.findViewById(R.id.edt_fonico_tipo1_vocal);
+        edt_letra.setFilters(new InputFilter[]
+                {new InputFilter.AllCaps(),
+                        new InputFilter.LengthFilter(1)}
+        );
 
         edt_nameEjercicio = (EditText) view.findViewById(R.id.edt_fonico_nameEjercicio);
 

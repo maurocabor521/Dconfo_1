@@ -44,6 +44,7 @@
                         android:digits="abcdefghijlklmnñopqrstuvwxyz
                              ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
                         android:maxLength="1"
+                        android:inputType="textCapSentences"
                         android:textSize="50dp" />
 
                     <TextView
