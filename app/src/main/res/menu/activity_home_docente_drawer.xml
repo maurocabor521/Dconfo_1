@@ -77,6 +77,29 @@
             android:icon="@drawable/ic_conciencia_silabica"
             android:title="Conciencia Silábica" />
         <item
+            android:id="@+id/nav_con_silabica_actividades"
+            android:icon="@drawable/ic_flecha_der_20dp"
+            android:title="Actividades"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_con_silabica_ejercicios"
+            android:icon="@drawable/ic_flecha_der_20dp"
+            android:title="Ejercicios"
+            android:gravity="center"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_con_silabica_asignar"
+            android:icon="@drawable/ic_flecha_der_20dp"
+            android:title="Asignar Actividad"
+            android:gravity="center"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_con_silabica_estudiantes"
+            android:icon="@drawable/ic_flecha_der_20dp"
+            android:title="Estudiantes"
+            android:gravity="center"
+            android:visible="false" />
+        <item
             android:id="@+id/nav_asignardeber"
             android:icon="@drawable/ic_menu_manage"
             android:title="Asignar Deberes" />
