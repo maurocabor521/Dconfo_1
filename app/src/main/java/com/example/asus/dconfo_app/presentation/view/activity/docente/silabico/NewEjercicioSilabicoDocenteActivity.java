@@ -40,7 +40,7 @@ public class NewEjercicioSilabicoDocenteActivity extends AppCompatActivity
         nameDocente = extra.getString("namedocente");
         idDocente = extra.getInt("iddocente");
 
-        showToolbar("Nuevo Ejercicio Fónico, Docente: " + nameDocente, true);
+        showToolbar("Nuevo Ejercicio Silábico, Docente: " + nameDocente, true);
         bottomBar = findViewById(R.id.bottombar_CED_activity);
         cargarBottombar();
     }

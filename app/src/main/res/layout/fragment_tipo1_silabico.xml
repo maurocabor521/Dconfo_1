@@ -1,14 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".presentation.view.fragment.docente.silabico.Tipo1SilabicoFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Sílabico Tipo 1" />
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Sílabico Tipo 1 Docente"
+        android:textSize="10dp"
+        android:textStyle="bold" />
 
-</FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ic_no_foto_80dp"
+                android:layout_margin="20dp"/>
+
+
+            <EditText
+                android:id="@+id/edt_silabica_t1_oracion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese Oración a trabajar" />
+
+            <EditText
+                android:id="@+id/edt_silabica_t1_cant_silabas"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:digits="123456789"
+                android:maxLength="1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Ingrese la cantidad de sílabas"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_silabico_t1_crear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Crear"
+                android:textStyle="bold"
+                android:theme="@style/RaisedButtonDark"
+                android:layout_marginTop="20dp"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
