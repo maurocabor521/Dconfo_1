@@ -47,7 +47,7 @@
                 android:id="@+id/edt_loginMain_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Contraseña"
+                android:hint="Contraseña-"
                 android:inputType="numberPassword">
 
             </android.support.design.widget.TextInputEditText>
@@ -58,6 +58,7 @@
             android:id="@+id/btn_LoginMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ingresar" />
+            android:text="Ingresar"
+            android:theme="@style/RaisedButtonDark"/>
     </LinearLayout>
 </LinearLayout>

@@ -755,6 +755,8 @@ public class Tipo1FonicoFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    //**********************************************************************************************
+
     private void cargarImagenWebService(String rutaImagen, final String nameImagen, final int idImagen) {
 
         // String ip = context.getString(R.string.ip);

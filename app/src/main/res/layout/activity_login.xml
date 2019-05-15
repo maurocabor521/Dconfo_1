@@ -58,6 +58,7 @@
             android:id="@+id/btn_Login_Docente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ingresar" />
+            android:text="Ingresar"
+            android:theme="@style/RaisedButtonDark"/>
     </LinearLayout>
 </LinearLayout>
