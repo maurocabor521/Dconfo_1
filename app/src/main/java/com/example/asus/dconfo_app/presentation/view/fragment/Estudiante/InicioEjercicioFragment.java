@@ -33,6 +33,8 @@ import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
 import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.fonico.Tipo1FonicoFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.fonico.Tipo2FonicoFragment;
+import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.silabico.Tipo1silabicoEstudianteFragment;
+import com.example.asus.dconfo_app.presentation.view.fragment.docente.silabico.Tipo1SilabicoFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -124,7 +126,9 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
         View view = inflater.inflate(R.layout.fragment_inicio_ejercicio, container, false);
 
         idEjercicio = getArguments().getInt("idejercicio");
+        System.out.println("inicio ejercicio idejercicio: "+idEjercicio);
         grupo = getArguments().getString("grupo");
+        System.out.println("inicio ejercicio idejercicio: "+idEjercicio+" grupo inicio: "+grupo);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("id Ejercicio: " + idEjercicio + " - " + grupo);
 
@@ -226,6 +230,7 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
 
                 Tipo1EstudianteFragment tipo1EstudianteFragment = new Tipo1EstudianteFragment();
                 Tipo2EstudianteFragment tipo2EstudianteFragment = new Tipo2EstudianteFragment();
+                Tipo1silabicoEstudianteFragment tipo1silabicoEstudianteFragment=new Tipo1silabicoEstudianteFragment();
                 //InicioEjercicioFragment inicioEjercicioFragment = new InicioEjercicioFragment();
 
                 Bundle bundle = new Bundle();
@@ -245,6 +250,13 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
                     tipo2EstudianteFragment.setArguments(bundle);
                     //getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo1EstudianteFragment)
                     getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo2EstudianteFragment)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                            .addToBackStack(null).commit();
+                } else if (tipoEjercicio == 5) {
+                    //tipo1EstudianteFragment.setArguments(bundle);
+                    tipo1silabicoEstudianteFragment.setArguments(bundle);
+                    //getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo1EstudianteFragment)
+                    getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo1silabicoEstudianteFragment)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .addToBackStack(null).commit();
                 }
