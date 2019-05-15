@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.asus.dconfo_app.R;
@@ -130,9 +132,20 @@ public class Tipo1SilabicoFragment extends Fragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.fragment_tipo1_silabico, container, false);
 
         civ_imagen = (CircleImageView) view.findViewById(R.id.civ_silabico_doc_t1);
+        civ_imagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarDialogOpciones();
+            }
+        });
+
         edt_cant_silabas = (EditText) view.findViewById(R.id.edt_silabica_doc_t1_cant_silabas);
         edt_oracion = (EditText) view.findViewById(R.id.edt_silabica_doc_t1_oracion);
+
         rv_silabico_doc_img = (RecyclerView) view.findViewById(R.id.rv_silabico_doc_img);
+        rv_silabico_doc_img.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_silabico_doc_img.setHasFixedSize(true);
+        rv_silabico_doc_img.setVisibility(View.GONE);
 
         listaidImagenes = new ArrayList<>();
         listaImagenes = new ArrayList<>();
@@ -219,7 +232,7 @@ public class Tipo1SilabicoFragment extends Fragment implements View.OnClickListe
                     int idImagen = listaImagenes.get(rv_silabico_doc_img.
                             getChildAdapterPosition(v)).getIdImagen();
 
-                   // cargarImagenWebService(rutaImagen, nameImagen, idImagen);
+                    cargarImagenWebService(rutaImagen, nameImagen, idImagen);
 
                     //Toast.makeText(getApplicationContext(), "on click: " + rutaImagen, Toast.LENGTH_LONG).show();
                     System.out.println("on click: " + rutaImagen);
@@ -243,6 +256,56 @@ public class Tipo1SilabicoFragment extends Fragment implements View.OnClickListe
             //progreso.hide();
         }
     }
+
+    //**********************************************************************************************
+
+    private void cargarImagenWebService(String rutaImagen, final String nameImagen, final int idImagen) {
+
+        // String ip = context.getString(R.string.ip);
+
+        String url_lh = Globals.url;
+
+        String urlImagen = "http://" + url_lh + "/proyecto_dconfo/" + rutaImagen;
+        urlImagen = urlImagen.replace(" ", "%20");
+
+        ImageRequest imageRequest = new ImageRequest(urlImagen, new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap response) {
+              //  if (btn_1Activo) {
+                    civ_imagen.setBackground(null);
+                    civ_imagen.setImageBitmap(response);
+                    rv_silabico_doc_img.setVisibility(View.GONE);
+                   /* btn_1Activo = false;
+                    rv_tipo1Fonico.setVisibility(View.GONE);
+                    txt_id_img1.setText(nameImagen);*/
+
+                    int fila = 1;
+                    int columna = 1;
+
+                   /* ejercicioG2HasImagen.setIdImagen(idImagen);
+                    ejercicioG2HasImagen.setFilaImagen(fila);
+                    ejercicioG2HasImagen.setColumnaImagen(columna);
+
+                    listaidImagenes.add(idImagen);
+                    listafilaImagen.add(fila);
+                    listacolumnaImagen.add(columna);*/
+
+              //  }
+                // iv_bank_prueba.setBackground(null);
+                // iv_bank_prueba.setImageBitmap(response);
+            }
+        }, 0, 0, ImageView.ScaleType.CENTER, null, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "Error al cargar la imagen", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //request.add(imageRequest);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(imageRequest);
+    }
+
+
+    //----------------------------------------------------------------------------------------------
 
     //**********************************************************************************************
 
@@ -308,7 +371,7 @@ public class Tipo1SilabicoFragment extends Fragment implements View.OnClickListe
 
     private void cargarImagen() {
         Drawable drawable = imgFoto.getDrawable();
-        civ_imagen.setBackground(drawable);
+        civ_imagen.setImageDrawable(drawable);
 
     }
 
