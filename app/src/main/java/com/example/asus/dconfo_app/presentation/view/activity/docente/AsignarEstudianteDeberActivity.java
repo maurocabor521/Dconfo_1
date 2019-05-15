@@ -91,7 +91,8 @@ public class AsignarEstudianteDeberActivity extends AppCompatActivity {
         });
 
 
-        listarEjerciciosDocente();
+       // listarEjerciciosDocente();
+        listarEjercicios_Docente();
         listarEstudiantes();
         //cargarEjercicios();
     }
@@ -207,6 +208,104 @@ public class AsignarEstudianteDeberActivity extends AppCompatActivity {
 
     //***********************************
     public void listarEjerciciosDocente() {
+        // final String usuario = etUsuario.getText().toString();
+        // final String password = etPass.getText().toString();
+
+        // INICIAR LA CONEXION CON VOLLEY
+
+        String url_lh = Globals.url;
+
+        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjerciciosDocente.php?iddocente=" + iddocente;
+        //String url = "http://" + url_lh + "/proyecto_dconfo/wsJSON1ConsultarListaEjercicios.php";
+
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+        // Initialize a new JsonObjectRequest instance
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // Do something with response
+
+                        listaEjercicios = new ArrayList<>();
+
+                        EjercicioG1 ejercicioG1 = null;
+
+
+                        try {
+                            JSONArray json = response.optJSONArray("ejerciciog1");
+                            for (int i = 0; i < json.length(); i++) {
+                                ejercicioG1 = new EjercicioG1();
+                                JSONObject jsonObject = null;
+                                jsonObject = json.getJSONObject(i);
+                                ejercicioG1.setIdEjercicio(jsonObject.optInt("idEjercicioG1"));
+                                ejercicioG1.setNameEjercicio(jsonObject.optString("nameEjercicioG1"));
+                                ejercicioG1.setIdDocente(jsonObject.optInt("docente_iddocente"));
+                                ejercicioG1.setIdTipo(jsonObject.optInt("Tipo_idTipo"));
+                                ejercicioG1.setIdActividad(jsonObject.optInt("Tipo_Actividad_idActividad"));
+
+                                listaEjercicios.add(ejercicioG1);
+                            }
+
+                            final List<String> listaStringEjercicios = new ArrayList<>();
+                            listaStringEjercicios.add("Seleccione Id Ejercicio");
+                            for (int i = 0; i < listaEjercicios.size(); i++) {
+                                listaStringEjercicios.add(listaEjercicios.get(i).getIdEjercicio().toString());
+                            }
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, listaStringEjercicios);
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spinnerEjercicios.setAdapter(adapter);
+                            spinnerEjercicios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    if (position != 0) {
+                                        edt_idEjercicio.setText(listaStringEjercicios.get(position));
+                                    } else {
+
+                                    }
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                }
+                            });
+
+                           /* Toast.makeText(getApplicationContext(), "lista estudiantes" + listaStringEstudiantes, Toast.LENGTH_LONG).show();
+                            System.out.println("estudiantes size: " + listaEstudiantes.size());
+                            System.out.println("estudiantes: " + listaEstudiantes.get(0).getIdestudiante());*/
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Do something when error occurred
+                        System.out.println();
+                        Log.d("ERROR Ejercicios: ", error.toString());
+                    }
+                }
+        );
+        final int MY_DEFAULT_TIMEOUT = 15000;
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_DEFAULT_TIMEOUT,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        requestQueue.add(jsonObjectRequest);
+        //stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //VolleySingleton.getIntanciaVolley(getApplicationContext()).addToRequestQueue(stringRequest);//p21
+    }
+    //***********************************
+
+    public void listarEjercicios_Docente() {
         // final String usuario = etUsuario.getText().toString();
         // final String password = etPass.getText().toString();
 

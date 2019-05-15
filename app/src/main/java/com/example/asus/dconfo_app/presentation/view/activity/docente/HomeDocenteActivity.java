@@ -20,6 +20,7 @@ import com.example.asus.dconfo_app.R;
 import com.example.asus.dconfo_app.presentation.view.activity.docente.fonico.AsignarEjercicioFonicoActivity;
 import com.example.asus.dconfo_app.presentation.view.activity.docente.fonico.NewEjercicioFonicoActivity;
 import com.example.asus.dconfo_app.presentation.view.activity.docente.fonico.NewEjercicioFonicoDocenteActivity;
+import com.example.asus.dconfo_app.presentation.view.activity.docente.silabico.AsignarEjercicioSilabicoActivity;
 import com.example.asus.dconfo_app.presentation.view.activity.docente.silabico.NewEjercicioSilabicoDocenteActivity;
 
 public class HomeDocenteActivity extends AppCompatActivity
@@ -208,6 +209,19 @@ public class HomeDocenteActivity extends AppCompatActivity
             intentCreateEjercicioFonico = new Intent(HomeDocenteActivity.this, NewEjercicioSilabicoDocenteActivity.class);
             intentCreateEjercicioFonico.putExtras(parametros1);
             startActivity(intentCreateEjercicioFonico);
+            String TAG = "TAG";
+            Log.i(TAG, "iddocente: " + iddocente);
+            Log.i(TAG, "namedocente: " + namedocente);
+
+        } else if (id == R.id.nav_con_silabica_asignar) {
+            Bundle parametros1 = new Bundle();
+            parametros1.putInt("iddocente", iddocente);
+            parametros1.putString("namedocente", namedocente);
+            parametros1.putInt("idgrupo", idgrupo);
+
+            intentAsignarDeberFonico = new Intent(HomeDocenteActivity.this, AsignarEjercicioSilabicoActivity.class);
+            intentAsignarDeberFonico.putExtras(parametros1);
+            startActivity(intentAsignarDeberFonico);
             String TAG = "TAG";
             Log.i(TAG, "iddocente: " + iddocente);
             Log.i(TAG, "namedocente: " + namedocente);
