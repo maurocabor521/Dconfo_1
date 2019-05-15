@@ -1,5 +1,6 @@
 package com.example.asus.dconfo_app.presentation.view.fragment.docente.silabico;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -41,8 +44,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -65,14 +71,19 @@ public class Tipo1SilabicoFragment extends Fragment implements View.OnClickListe
     private String mParam1;
     private String mParam2;
 
+    private String ruta_Imagen;
+
     private EditText edt_oracion;
     private EditText edt_cant_silabas;
+    private EditText edt_nombre_ejercicio;
     private CircleImageView civ_imagen;
     private Button btn_crear_silabico_t1_doc;
     private RecyclerView rv_silabico_doc_img;
 
     ArrayList<Integer> listaidImagenes;
     ArrayList<Imagen> listaImagenes;
+
+    private boolean isGalleryChoise = false;
 
     private Bitmap bitmap;
     private ImageView imgFoto;
@@ -91,6 +102,10 @@ public class Tipo1SilabicoFragment extends Fragment implements View.OnClickListe
     JsonObjectRequest jsonObjectRequest;
 
     StringRequest stringRequest;
+
+    ProgressDialog progreso;
+    String nameDocente = "";
+    int idDocente = 0;
 
     private OnFragmentInteractionListener mListener;
 
@@ -131,6 +146,10 @@ public class Tipo1SilabicoFragment extends Fragment implements View.OnClickListe
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tipo1_silabico, container, false);
 
+        nameDocente = getArguments().getString("namedocente");
+
+        idDocente = getArguments().getInt("iddocente");
+
         civ_imagen = (CircleImageView) view.findViewById(R.id.civ_silabico_doc_t1);
         civ_imagen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +160,7 @@ public class Tipo1SilabicoFragment extends Fragment implements View.OnClickListe
 
         edt_cant_silabas = (EditText) view.findViewById(R.id.edt_silabica_doc_t1_cant_silabas);
         edt_oracion = (EditText) view.findViewById(R.id.edt_silabica_doc_t1_oracion);
+        edt_nombre_ejercicio = (EditText) view.findViewById(R.id.edt_silabica_doc_t1_nameejercicio);
 
         rv_silabico_doc_img = (RecyclerView) view.findViewById(R.id.rv_silabico_doc_img);
         rv_silabico_doc_img.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -150,16 +170,126 @@ public class Tipo1SilabicoFragment extends Fragment implements View.OnClickListe
         listaidImagenes = new ArrayList<>();
         listaImagenes = new ArrayList<>();
 
+        imgFoto = new ImageView(getContext());
+
         btn_crear_silabico_t1_doc = (Button) view.findViewById(R.id.btn_silabico_doc_t1_crear);
         btn_crear_silabico_t1_doc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                cargarWebService();
             }
         });
         consultarListaImagenes();
 
         return view;
+    }
+
+    // ----------------------------------------------------------------------------------------------
+
+    private void cargarWebService() {
+        progreso = new ProgressDialog(getContext());
+        progreso.setMessage("Cargando...");
+        progreso.show();
+        String ip = Globals.url;
+        String url = "http://" + ip + "/proyecto_dconfo/wsJSONRegistroTipo1Sil.php";//p12.buena
+
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {//recibe respuesta del webservice,cuando esta correcto
+                progreso.hide();
+                if (response.trim().equalsIgnoreCase("registra")) {
+                    edt_oracion.setText("");
+                    edt_cant_silabas.setText("");
+                    edt_nombre_ejercicio.setText("");
+                    civ_imagen.setImageDrawable(null);
+                    Toast.makeText(getContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "No se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "No se ha podido conectar", Toast.LENGTH_LONG).show();
+                String ERROR = "error";
+                Log.d(ERROR, error.toString());
+                System.out.println("error" + error.toString());
+                progreso.hide();
+            }
+        }) {//enviar para metros a webservice, mediante post
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //String idejercicio = edt_CodigoEjercicio.getText().toString();
+                //String idejercicio = "";
+                String nameejercicio = edt_nombre_ejercicio.getText().toString();
+                String iddocente = String.valueOf(idDocente);
+                String idactividad = "3";
+                String idtipo = "5";
+                String imagen = null;
+                String de_galeria;
+                String rutaImagen = "";
+
+                if (isGalleryChoise == true) {
+                    de_galeria = "si";
+                    imagen = convertirImgString(bitmap);
+                    System.out.println("dconfo imagen: " + imagen);
+                } else {
+                    de_galeria = "no";
+                }
+                String cantidadValida = edt_cant_silabas.getText().toString();
+                String oracion = edt_oracion.getText().toString();
+                //System.out.println("cantidadvalida"+cantidadValida);
+                //System.out.println("oracion"+oracion);
+
+                Map<String, String> parametros = new HashMap<>();
+                // parametros.put("idEjercicio", idejercicio);
+                parametros.put("nameEjercicio", nameejercicio);
+                parametros.put("docente_iddocente", iddocente);
+                parametros.put("Actividad_idActividad", idactividad);
+                parametros.put("Tipo_idTipo", idtipo);
+
+                if (isGalleryChoise == true) {
+                    parametros.put("imagen", imagen);
+                    parametros.put("de_galeria", de_galeria);
+                    parametros.put("rutaImagen", rutaImagen);
+                    isGalleryChoise = false;
+                } else {
+                    parametros.put("imagen", "");
+                    parametros.put("de_galeria", de_galeria);
+                    parametros.put("rutaImagen", ruta_Imagen);
+                }
+
+                parametros.put("cantidadValidaEG1", cantidadValida);
+                parametros.put("oracion", oracion);
+                // parametros.put("imagen", imagen);
+
+                return parametros;
+            }
+        };
+        //request.add(stringRequest);
+        //p25 duplicar tiempo x defecto
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(stringRequest);//p21
+
+        //reemplazar espacios en blanco del nombre por %20
+        // url = url.replace(" ", "%20");
+
+        //hace el llamado a la url,no usa en p12
+        /*jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        request.add(jsonObjectRequest);*/
+    }
+
+    // ----------------------------------------------------------------------------------------------
+
+    private String convertirImgString(Bitmap bitmap) {
+        //recibe un bitmap
+        ByteArrayOutputStream array = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, array);
+        byte[] imagenByte = array.toByteArray();
+        //codifica a base64
+        String imagenString = Base64.encodeToString(imagenByte, Base64.DEFAULT);
+
+        return imagenString;
     }
 
     // ----------------------------------------------------------------------------------------------
@@ -218,6 +348,7 @@ public class Tipo1SilabicoFragment extends Fragment implements View.OnClickListe
 //idgrupo,namegrupo,curso_idcurso,curso_Instituto_idInstituto
             }
 
+
             ImagenUrlAdapter imagenUrlAdapter = new ImagenUrlAdapter(listaImagenes, getContext());
             imagenUrlAdapter.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -225,6 +356,9 @@ public class Tipo1SilabicoFragment extends Fragment implements View.OnClickListe
 
                     String rutaImagen = listaImagenes.get(rv_silabico_doc_img.
                             getChildAdapterPosition(v)).getRutaImagen();
+
+                    ruta_Imagen = rutaImagen;
+                    System.out.println("ruta imagen escogida: " + ruta_Imagen);
 
                     String nameImagen = listaImagenes.get(rv_silabico_doc_img.
                             getChildAdapterPosition(v)).getNameImagen();
@@ -271,16 +405,16 @@ public class Tipo1SilabicoFragment extends Fragment implements View.OnClickListe
         ImageRequest imageRequest = new ImageRequest(urlImagen, new Response.Listener<Bitmap>() {
             @Override
             public void onResponse(Bitmap response) {
-              //  if (btn_1Activo) {
-                    civ_imagen.setBackground(null);
-                    civ_imagen.setImageBitmap(response);
-                    rv_silabico_doc_img.setVisibility(View.GONE);
+                //  if (btn_1Activo) {
+                civ_imagen.setBackground(null);
+                civ_imagen.setImageBitmap(response);
+                rv_silabico_doc_img.setVisibility(View.GONE);
                    /* btn_1Activo = false;
                     rv_tipo1Fonico.setVisibility(View.GONE);
                     txt_id_img1.setText(nameImagen);*/
 
-                    int fila = 1;
-                    int columna = 1;
+                int fila = 1;
+                int columna = 1;
 
                    /* ejercicioG2HasImagen.setIdImagen(idImagen);
                     ejercicioG2HasImagen.setFilaImagen(fila);
@@ -290,7 +424,7 @@ public class Tipo1SilabicoFragment extends Fragment implements View.OnClickListe
                     listafilaImagen.add(fila);
                     listacolumnaImagen.add(columna);*/
 
-              //  }
+                //  }
                 // iv_bank_prueba.setBackground(null);
                 // iv_bank_prueba.setImageBitmap(response);
             }
@@ -323,6 +457,7 @@ public class Tipo1SilabicoFragment extends Fragment implements View.OnClickListe
                         /*Intent intent = new Intent(Intent.ACTION_GET_CONTENT,
                                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);*/
                         //directamente de galeria
+                        isGalleryChoise = true;
                         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         intent.setType("image/");
                         startActivityForResult(intent.createChooser(intent, "Seleccione"), COD_SELECCIONA);
