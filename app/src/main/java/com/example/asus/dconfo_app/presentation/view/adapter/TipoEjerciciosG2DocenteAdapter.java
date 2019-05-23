@@ -56,7 +56,7 @@ public class TipoEjerciciosG2DocenteAdapter extends RecyclerView.Adapter<TipoEje
             holder.txtnameEjercicio.setText(listaEjerciciosG2.get(position).getNameEjercicioG2().toString());
             holder.txtidActividad.setText(listaEjerciciosG2.get(position).getIdActividad().toString());
             holder.txtidTipo.setText(listaEjerciciosG2.get(position).getIdTipo().toString());
-            holder.ll_item_ejercicio.setBackground(ContextCompat.getDrawable(context, R.color.green));
+            holder.ll_item_ejercicio.setBackground(ContextCompat.getDrawable(context, R.color.colorAccent));
 
         } else {
 
