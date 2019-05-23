@@ -51,12 +51,21 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
 
     ArrayList<Estudiante> listaEstudiantes;
     ArrayList<EjercicioG1> listaEjercicios;
+    ArrayList<EjercicioG2> listaEjerciciosT2;
 
     Spinner spinner;
     Spinner spinnerEjercicios;
     Integer idgrupo;
     Calendar calendar;
     SimpleDateFormat simpleDateFormat;
+
+    List<String> listaStringEjercicios = new ArrayList<>();
+
+    EjercicioG1 ejercicioG1 = null;
+    EjercicioG2 ejercicioG2 = null;
+
+    EjercicioG1 ejercicio_G1 = null;
+    EjercicioG2 ejercicio_G2 = null;
 
     //******** CONEXIÓN CON WEBSERVICE
     //RequestQueue request;
@@ -75,7 +84,7 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
         iddocente = datos.getInt("iddocente");
         idgrupo = datos.getInt("idgrupo");
 
-        txterror=(TextView)findViewById(R.id.txt_error);
+        txterror = (TextView) findViewById(R.id.txt_error);
 
         this.setTitle("id docente:" + iddocente);
         progreso = new ProgressDialog(getApplicationContext());
@@ -96,6 +105,7 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
         });
         listarEstudiantes();
         listarEjerciciosDocente();
+        listarEjerciciosDocenteT2();
         calendar = Calendar.getInstance();
         simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         System.out.println("fecha actual: " + simpleDateFormat.format(calendar.getTime()));
@@ -165,6 +175,7 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                     if (position != 0) {
                                         edt_idEstudiante.setText(listaStringEstudiantes.get(position));
+
                                     } else {
 
                                     }
@@ -176,7 +187,7 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                                 }
                             });
 
-                           // Toast.makeText(getApplicationContext(), "lista estudiantes" + listaStringEstudiantes, Toast.LENGTH_LONG).show();
+                            // Toast.makeText(getApplicationContext(), "lista estudiantes" + listaStringEstudiantes, Toast.LENGTH_LONG).show();
                             System.out.println("estudiantes size: " + listaEstudiantes.size());
                             System.out.println("estudiantes: " + listaEstudiantes.get(0).getIdestudiante());
 
@@ -208,7 +219,7 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
 
         // INICIAR LA CONEXION CON VOLLEY
 
-        Toast.makeText(getApplicationContext(), "MIS EJERCICIOS FUNCION: " , Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "MIS EJERCICIOS FUNCION: ", Toast.LENGTH_LONG).show();
 
         String url_lh = Globals.url;
 
@@ -232,7 +243,7 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
 
                         listaEjercicios = new ArrayList<>();
 
-                        EjercicioG1 ejercicioG1 = null;
+                        // EjercicioG1 ejercicioG1 = null;
 
 
                         try {
@@ -250,7 +261,7 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                                 listaEjercicios.add(ejercicioG1);
                             }
 
-                            final List<String> listaStringEjercicios = new ArrayList<>();
+                            // final List<String> listaStringEjercicios = new ArrayList<>();
                             final List<String> listaStringNombres = new ArrayList<>();
                             final List<String> listaStringId_Nombre = new ArrayList<>();
 
@@ -269,6 +280,8 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                     if (position != 0) {
                                         edt_idEjercicio.setText(listaStringEjercicios.get(position));
+                                        ejercicio_G1=new EjercicioG1();
+                                        ejercicio_G1.setIdTipo(listaEjercicios.get(position).getIdTipo());
                                     } else {
 
                                     }
@@ -280,7 +293,123 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                                 }
                             });
 
-                           Toast.makeText(getApplicationContext(), "lista EJERCICIOS: " + listaStringEjercicios.toString(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "lista EJERCICIOS: " + listaStringEjercicios.toString(), Toast.LENGTH_LONG).show();
+                           /* System.out.println("estudiantes size: " + listaEstudiantes.size());
+                            System.out.println("estudiantes: " + listaEstudiantes.get(0).getIdestudiante());*/
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Do something when error occurred
+                        System.out.println();
+                        txterror.setText(error.toString());
+                        Log.d("ERROR Ejercicios: ", error.toString());
+                        Toast.makeText(getApplicationContext(), "ERROR" + error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
+        final int MY_DEFAULT_TIMEOUT = 15000;
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_DEFAULT_TIMEOUT,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        requestQueue.add(jsonObjectRequest);
+        //stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //VolleySingleton.getIntanciaVolley(getApplicationContext()).addToRequestQueue(stringRequest);//p21
+    }
+
+    //***********************************
+    public void listarEjerciciosDocenteT2() {
+        // final String usuario = etUsuario.getText().toString();
+        // final String password = etPass.getText().toString();
+
+        // INICIAR LA CONEXION CON VOLLEY
+
+        //Toast.makeText(getApplicationContext(), "MIS EJERCICIOS FUNCION: ", Toast.LENGTH_LONG).show();
+
+        String url_lh = Globals.url;
+
+        System.out.println("Ejercicio Silábico docente buscar: " + iddocente);
+
+        //String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaEjerciciosDocente.php?iddocente=" + iddocente;
+        String url = "http://" + url_lh + "/proyecto_dconfo/wsJSON_T2_ConsultarListaEjercicios_Silabico_A3_Docente.php?iddocente=" + iddocente + "& idactividad=" + 3;
+
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+        // Initialize a new JsonObjectRequest instance
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // Do something with response
+
+                        listaEjerciciosT2 = new ArrayList<>();
+
+                        // EjercicioG2 ejercicioG2 = null;
+
+
+                        try {
+                            JSONArray json = response.optJSONArray("ejerciciog2");
+                            for (int i = 0; i < json.length(); i++) {
+                                ejercicioG2 = new EjercicioG2();
+                                JSONObject jsonObject = null;
+                                jsonObject = json.getJSONObject(i);
+                                ejercicioG2.setIdEjercicioG2(jsonObject.optInt("idEjercicioG2"));
+                                ejercicioG2.setNameEjercicioG2(jsonObject.optString("nameEjercicioG2"));
+                                ejercicioG2.setIdDocente(jsonObject.optInt("docente_iddocente"));
+                                ejercicioG2.setIdTipo(jsonObject.optInt("Tipo_idTipo"));
+                                ejercicioG2.setIdActividad(jsonObject.optInt("Tipo_Actividad_idActividad"));
+
+                                listaEjerciciosT2.add(ejercicioG2);
+                            }
+
+                            // final List<String> listaStringEjercicios = new ArrayList<>();
+                            final List<String> listaStringNombres = new ArrayList<>();
+                            final List<String> listaStringId_Nombre = new ArrayList<>();
+
+                            // listaStringEjercicios.add("Seleccione  Ejercicio Tipo 2: ");
+                            for (int i = 0; i < listaEjerciciosT2.size(); i++) {
+                                listaStringEjercicios.add(listaEjerciciosT2.get(i).getIdEjercicioG2().toString());
+                                listaStringNombres.add(listaEjerciciosT2.get(i).getNameEjercicioG2());
+                                listaStringId_Nombre.add(listaEjerciciosT2.get(i).getIdEjercicioG2().toString() + " - " + listaEjerciciosT2.get(i).getNameEjercicioG2());
+                                // listaStringId_Nombre.add();
+                            }
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, listaStringEjercicios);
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spinnerEjercicios.setAdapter(adapter);
+                            spinnerEjercicios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    if (position != 0) {
+                                        edt_idEjercicio.setText(listaStringEjercicios.get(position));
+                                        // ejercicio_G2.setIdTipo(listaEjerciciosT2.get(position - listaStringEjercicios.size()).getIdTipo());
+                                        System.out.println("id ejercicio G2 size---: " + listaStringEjercicios.size());
+                                        System.out.println("id ejercicio G2 position---: " + position);
+                                        System.out.println("posicion en lista G2 ---: " + (listaStringEjercicios.size() - position));
+                                        Toast.makeText(getApplicationContext(), "spinner g2: ", Toast.LENGTH_LONG).show();
+                                    } else {
+
+                                    }
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                }
+                            });
+
+
+                            Toast.makeText(getApplicationContext(), "lista EJERCICIOS: " + listaStringEjercicios.toString(), Toast.LENGTH_LONG).show();
                            /* System.out.println("estudiantes size: " + listaEstudiantes.size());
                             System.out.println("estudiantes: " + listaEstudiantes.get(0).getIdestudiante());*/
 
@@ -312,8 +441,6 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
     }
     //***********************************
 
-    //***********************************
-
 
     private void cargarWebService() {
 
@@ -333,14 +460,14 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
 
                     // Toast.makeText(getContext(), "Se ha cargado con éxito", Toast.LENGTH_LONG).show();
                 } else {
-                     Toast.makeText(getApplicationContext(), "No se ha cargado con éxito", Toast.LENGTH_LONG).show();
-                    Log.i("ERROR", "RESPONSE" + response.toString());
+                    Toast.makeText(getApplicationContext(), "No se ha cargado con éxito", Toast.LENGTH_LONG).show();
+                    Log.i("ERROR", "RESPONSE: " + response.toString());
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                 Toast.makeText(getApplicationContext(), "No se ha podido conectar", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "No se ha podido conectar", Toast.LENGTH_LONG).show();
                 //  progreso.hide();
             }
         }) {//enviar para metros a webservice, mediante post
@@ -348,14 +475,26 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 String idestudiante = edt_idEstudiante.getText().toString();
                 String idejercicio = edt_idEjercicio.getText().toString();
+                System.out.println("id ejercicio: " + idejercicio);
                 String iddocente1 = String.valueOf(iddocente);
                 String fecha = simpleDateFormat.format(calendar.getTime());
-                Toast.makeText(getApplicationContext(), "La fecha de hoy: " + fecha, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "La fecha de hoy: " + fecha, Toast.LENGTH_SHORT).show();
 
                 Map<String, String> parametros = new HashMap<>();
                 parametros.put("estudiante_idestudiante", idestudiante);
                 parametros.put("docente_iddocente", iddocente1);
-                parametros.put("EjercicioG1_idEjercicioG1", idejercicio);
+
+                if (ejercicio_G1!=null) {
+                   /* if (ejercicio_G1.getIdTipo() == 5) {
+                        parametros.put("EjercicioG1_idEjercicioG1", idejercicio);
+                        System.out.println("id ejercicio G1: " + ejercicio_G1.getNameEjercicio());
+                    }*/
+                    System.out.println("id ejercicio G1 null: no es null " );
+                } else if (ejercicio_G2.getIdTipo() == 6) {
+                    parametros.put("EjercicioG1_idEjercicioG2", idejercicio);
+                    System.out.println("id ejercicio G2: " + ejercicio_G2.getNameEjercicioG2());
+                }
+
                 parametros.put("fechaestudiante_has_Deber", fecha);
 
 
