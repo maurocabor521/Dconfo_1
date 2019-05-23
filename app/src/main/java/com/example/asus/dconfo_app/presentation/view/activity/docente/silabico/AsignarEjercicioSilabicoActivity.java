@@ -108,13 +108,13 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
         btn_asignar = findViewById(R.id.btn_silabico_asignarDeber_deber);
 
         rv_listaEjercicios = findViewById(R.id.rv_docente_sil2_asignar);
-       // rv_listaEjercicios.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        rv_listaEjercicios.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+        rv_listaEjercicios.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        //rv_listaEjercicios.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
         rv_listaEjercicios.setHasFixedSize(true);
 
         rv_listaEjercicios_E2 = findViewById(R.id.rv_docente_sil2_asignar_E2);
-       // rv_listaEjercicios_E2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        rv_listaEjercicios_E2.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+        rv_listaEjercicios_E2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        //rv_listaEjercicios_E2.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
         rv_listaEjercicios_E2.setHasFixedSize(true);
 
         spinner = (Spinner) findViewById(R.id.sp_docente_silabico_estudiantes);
@@ -480,7 +480,7 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                             rv_listaEjercicios_E2.setVisibility(View.VISIBLE);
 
 
-                           // Toast.makeText(getApplicationContext(), "lista EJERCICIOS: " + listaStringEjercicios.toString(), Toast.LENGTH_LONG).show();
+                            // Toast.makeText(getApplicationContext(), "lista EJERCICIOS: " + listaStringEjercicios.toString(), Toast.LENGTH_LONG).show();
                            /* System.out.println("estudiantes size: " + listaEstudiantes.size());
                             System.out.println("estudiantes: " + listaEstudiantes.get(0).getIdestudiante());*/
 
@@ -545,7 +545,7 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 String idestudiante = edt_idEstudiante.getText().toString();
-               // String idejercicio = edt_idEjercicio.getText().toString();
+                // String idejercicio = edt_idEjercicio.getText().toString();
                 String idejercicio = String.valueOf(ID_ejercicio);
                 System.out.println("id ejercicio: " + idejercicio);
                 String iddocente1 = String.valueOf(iddocente);
@@ -556,7 +556,7 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                 parametros.put("estudiante_idestudiante", idestudiante);
                 parametros.put("docente_iddocente", iddocente1);
 
-                if (tipo_ejercicio==5) {
+                if (tipo_ejercicio == 5) {
                     parametros.put("EjercicioG1_idEjercicioG1", idejercicio);
                     //parametros.put("EjercicioG1_idEjercicioG2", "");
                    /* if (ejercicio_G1.getIdTipo() == 5) {
@@ -564,10 +564,10 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                         System.out.println("id ejercicio G1: " + ejercicio_G1.getNameEjercicio());
                     }*/
                     System.out.println("id ejercicio G1 null: no es null ");
-                } else if (tipo_ejercicio==6) {
+                } else if (tipo_ejercicio == 6) {
                     parametros.put("EjercicioG1_idEjercicioG2", idejercicio);
                     //parametros.put("EjercicioG1_idEjercicioG1", "");
-                   // System.out.println("id ejercicio G2: " + ejercicio_G2.getNameEjercicioG2());
+                    // System.out.println("id ejercicio G2: " + ejercicio_G2.getNameEjercicioG2());
                 }
 
                 parametros.put("fechaestudiante_has_Deber", fecha);
