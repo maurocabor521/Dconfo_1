@@ -3,6 +3,9 @@ package com.example.asus.dconfo_app.presentation.view.activity.docente.silabico;
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,6 +32,8 @@ import com.example.asus.dconfo_app.domain.model.EjercicioG2;
 import com.example.asus.dconfo_app.domain.model.Estudiante;
 import com.example.asus.dconfo_app.domain.model.VolleySingleton;
 import com.example.asus.dconfo_app.helpers.Globals;
+import com.example.asus.dconfo_app.presentation.view.adapter.TipoEjerciciosDocenteAdapter;
+import com.example.asus.dconfo_app.presentation.view.adapter.TipoEjerciciosG2DocenteAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,6 +58,9 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
     ArrayList<EjercicioG1> listaEjercicios;
     ArrayList<EjercicioG2> listaEjerciciosT2;
 
+    RecyclerView rv_listaEjercicios;
+    RecyclerView rv_listaEjercicios_E2;
+
     Spinner spinner;
     Spinner spinnerEjercicios;
     Integer idgrupo;
@@ -66,6 +74,12 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
 
     EjercicioG1 ejercicio_G1 = null;
     EjercicioG2 ejercicio_G2 = null;
+
+    TipoEjerciciosDocenteAdapter tipoEjerciciosDocenteAdapter;
+    TipoEjerciciosG2DocenteAdapter tipoEjerciciosG2DocenteAdapter;
+
+    int tipo_ejercicio;
+    int ID_ejercicio;
 
     //******** CONEXIÓN CON WEBSERVICE
     //RequestQueue request;
@@ -92,6 +106,16 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
         edt_idEstudiante = findViewById(R.id.edt_id_silabico_estudiate_deber);
         edt_idEjercicio = findViewById(R.id.edt_id_silabico_ejercicio_deber);
         btn_asignar = findViewById(R.id.btn_silabico_asignarDeber_deber);
+
+        rv_listaEjercicios = findViewById(R.id.rv_docente_sil2_asignar);
+       // rv_listaEjercicios.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rv_listaEjercicios.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+        rv_listaEjercicios.setHasFixedSize(true);
+
+        rv_listaEjercicios_E2 = findViewById(R.id.rv_docente_sil2_asignar_E2);
+       // rv_listaEjercicios_E2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rv_listaEjercicios_E2.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+        rv_listaEjercicios_E2.setHasFixedSize(true);
 
         spinner = (Spinner) findViewById(R.id.sp_docente_silabico_estudiantes);
         spinnerEjercicios = (Spinner) findViewById(R.id.sp_docente_silabico_ejercicios);
@@ -280,7 +304,7 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                     if (position != 0) {
                                         edt_idEjercicio.setText(listaStringEjercicios.get(position));
-                                        ejercicio_G1=new EjercicioG1();
+                                        ejercicio_G1 = new EjercicioG1();
                                         ejercicio_G1.setIdTipo(listaEjercicios.get(position).getIdTipo());
                                     } else {
 
@@ -292,6 +316,30 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
 
                                 }
                             });
+
+
+                            tipoEjerciciosDocenteAdapter = new TipoEjerciciosDocenteAdapter(listaEjercicios);
+                            tipoEjerciciosDocenteAdapter.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Toast.makeText(getApplicationContext(), "Seleccion rv1: " +
+                                            listaEjercicios.get(rv_listaEjercicios.
+                                                    getChildAdapterPosition(v)).getIdEjercicio(), Toast.LENGTH_SHORT).show();
+
+                                    edt_idEjercicio.setText(listaEjercicios.get(rv_listaEjercicios.
+                                            getChildAdapterPosition(v)).getIdEjercicio().toString());
+
+                                    tipo_ejercicio = listaEjercicios.get(rv_listaEjercicios.
+                                            getChildAdapterPosition(v)).getIdTipo();
+
+                                    ID_ejercicio = listaEjercicios.get(rv_listaEjercicios.
+                                            getChildAdapterPosition(v)).getIdEjercicio();
+
+                                }
+                            });
+
+                            rv_listaEjercicios.setAdapter(tipoEjerciciosDocenteAdapter);
+                            rv_listaEjercicios.setVisibility(View.VISIBLE);
 
                             Toast.makeText(getApplicationContext(), "lista EJERCICIOS: " + listaStringEjercicios.toString(), Toast.LENGTH_LONG).show();
                            /* System.out.println("estudiantes size: " + listaEstudiantes.size());
@@ -408,8 +456,31 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                                 }
                             });
 
+                            tipoEjerciciosG2DocenteAdapter = new TipoEjerciciosG2DocenteAdapter(listaEjerciciosT2, getApplicationContext());
+                            tipoEjerciciosG2DocenteAdapter.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Toast.makeText(getApplicationContext(), "Seleccion rv2: " +
+                                            listaEjerciciosT2.get(rv_listaEjercicios.
+                                                    getChildAdapterPosition(v)).getIdEjercicioG2(), Toast.LENGTH_SHORT).show();
 
-                            Toast.makeText(getApplicationContext(), "lista EJERCICIOS: " + listaStringEjercicios.toString(), Toast.LENGTH_LONG).show();
+                                    edt_idEjercicio.setText(listaEjerciciosT2.get(rv_listaEjercicios_E2.
+                                            getChildAdapterPosition(v)).getIdEjercicioG2().toString());
+
+                                    tipo_ejercicio = listaEjerciciosT2.get(rv_listaEjercicios_E2.
+                                            getChildAdapterPosition(v)).getIdTipo();
+
+                                    ID_ejercicio = listaEjerciciosT2.get(rv_listaEjercicios_E2.
+                                            getChildAdapterPosition(v)).getIdEjercicioG2();
+
+                                }
+                            });
+
+                            rv_listaEjercicios_E2.setAdapter(tipoEjerciciosG2DocenteAdapter);
+                            rv_listaEjercicios_E2.setVisibility(View.VISIBLE);
+
+
+                           // Toast.makeText(getApplicationContext(), "lista EJERCICIOS: " + listaStringEjercicios.toString(), Toast.LENGTH_LONG).show();
                            /* System.out.println("estudiantes size: " + listaEstudiantes.size());
                             System.out.println("estudiantes: " + listaEstudiantes.get(0).getIdestudiante());*/
 
@@ -474,7 +545,8 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 String idestudiante = edt_idEstudiante.getText().toString();
-                String idejercicio = edt_idEjercicio.getText().toString();
+               // String idejercicio = edt_idEjercicio.getText().toString();
+                String idejercicio = String.valueOf(ID_ejercicio);
                 System.out.println("id ejercicio: " + idejercicio);
                 String iddocente1 = String.valueOf(iddocente);
                 String fecha = simpleDateFormat.format(calendar.getTime());
@@ -484,15 +556,18 @@ public class AsignarEjercicioSilabicoActivity extends AppCompatActivity {
                 parametros.put("estudiante_idestudiante", idestudiante);
                 parametros.put("docente_iddocente", iddocente1);
 
-                if (ejercicio_G1!=null) {
+                if (tipo_ejercicio==5) {
+                    parametros.put("EjercicioG1_idEjercicioG1", idejercicio);
+                    //parametros.put("EjercicioG1_idEjercicioG2", "");
                    /* if (ejercicio_G1.getIdTipo() == 5) {
                         parametros.put("EjercicioG1_idEjercicioG1", idejercicio);
                         System.out.println("id ejercicio G1: " + ejercicio_G1.getNameEjercicio());
                     }*/
-                    System.out.println("id ejercicio G1 null: no es null " );
-                } else if (ejercicio_G2.getIdTipo() == 6) {
+                    System.out.println("id ejercicio G1 null: no es null ");
+                } else if (tipo_ejercicio==6) {
                     parametros.put("EjercicioG1_idEjercicioG2", idejercicio);
-                    System.out.println("id ejercicio G2: " + ejercicio_G2.getNameEjercicioG2());
+                    //parametros.put("EjercicioG1_idEjercicioG1", "");
+                   // System.out.println("id ejercicio G2: " + ejercicio_G2.getNameEjercicioG2());
                 }
 
                 parametros.put("fechaestudiante_has_Deber", fecha);
