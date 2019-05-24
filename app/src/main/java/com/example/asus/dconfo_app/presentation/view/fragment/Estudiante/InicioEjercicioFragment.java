@@ -34,6 +34,7 @@ import com.example.asus.dconfo_app.helpers.Globals;
 import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.fonico.Tipo1FonicoFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.fonico.Tipo2FonicoFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.silabico.Tipo1silabicoEstudianteFragment;
+import com.example.asus.dconfo_app.presentation.view.fragment.Estudiante.silabico.Tipo2silabicoEstudianteFragment;
 import com.example.asus.dconfo_app.presentation.view.fragment.docente.silabico.Tipo1SilabicoFragment;
 
 import org.json.JSONArray;
@@ -126,9 +127,9 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
         View view = inflater.inflate(R.layout.fragment_inicio_ejercicio, container, false);
 
         idEjercicio = getArguments().getInt("idejercicio");
-        System.out.println("inicio ejercicio idejercicio: "+idEjercicio);
+        System.out.println("inicio ejercicio idejercicio: " + idEjercicio);
         grupo = getArguments().getString("grupo");
-        System.out.println("inicio ejercicio idejercicio: "+idEjercicio+" grupo inicio: "+grupo);
+        System.out.println("inicio ejercicio idejercicio: " + idEjercicio + " grupo inicio: " + grupo);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("id Ejercicio: " + idEjercicio + " - " + grupo);
 
@@ -230,7 +231,7 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
 
                 Tipo1EstudianteFragment tipo1EstudianteFragment = new Tipo1EstudianteFragment();
                 Tipo2EstudianteFragment tipo2EstudianteFragment = new Tipo2EstudianteFragment();
-                Tipo1silabicoEstudianteFragment tipo1silabicoEstudianteFragment=new Tipo1silabicoEstudianteFragment();
+                Tipo1silabicoEstudianteFragment tipo1silabicoEstudianteFragment = new Tipo1silabicoEstudianteFragment();
                 //InicioEjercicioFragment inicioEjercicioFragment = new InicioEjercicioFragment();
 
                 Bundle bundle = new Bundle();
@@ -363,6 +364,8 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
                 Tipo1FonicoFragment tipo1FonicoFragment = new Tipo1FonicoFragment();
                 Tipo2FonicoFragment tipo2FonicoFragment = new Tipo2FonicoFragment();
 
+                Tipo2silabicoEstudianteFragment tipo2silabicoEstudianteFragment=new Tipo2silabicoEstudianteFragment();
+
                 // ArrayList<Integer> listaIDimagenes = new ArrayList<>();
                 //Bundle bundle = new Bundle();
                 bundle_t2 = new Bundle();
@@ -399,6 +402,14 @@ public class InicioEjercicioFragment extends Fragment implements Response.Listen
                 if (tipoEjercicioG2 == 2) {
                     grupo = "g4";
                     cargarWebService();
+                }
+                if (tipoEjercicioG2 == 6) {
+                    tipo2silabicoEstudianteFragment.setArguments(bundle_t2);
+                    // inicioEjercicioFragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, tipo2silabicoEstudianteFragment)
+                            //getFragmentManager().beginTransaction().replace(R.id.container_HomeEstudiante, inicioEjercicioFragment)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                            .addToBackStack(null).commit();
                 }
 
               /*  if (tipoEjercicioG2 == 2) {
