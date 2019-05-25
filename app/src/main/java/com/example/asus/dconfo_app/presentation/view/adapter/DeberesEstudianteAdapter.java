@@ -1,12 +1,14 @@
 package com.example.asus.dconfo_app.presentation.view.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,6 +30,9 @@ public class DeberesEstudianteAdapter extends RecyclerView.Adapter<DeberesEstudi
 
     public DeberesEstudianteAdapter(List<DeberEstudiante> listaDeberes) {
         this.listaDeberes = listaDeberes;
+        for (int i = 0; i < listaDeberes.size(); i++) {
+            System.out.println("lista deberes: " + (i + 1) + " g1: " + listaDeberes.get(i).getIdEjercicio()+" g2: "+listaDeberes.get(i).getIdEjercicio2());
+        }
     }
 
 
@@ -51,13 +56,21 @@ public class DeberesEstudianteAdapter extends RecyclerView.Adapter<DeberesEstudi
             if (listaDeberes.get(position).getIdEjercicio() != 0) {
                 holder.txtidEjercicio.setText(listaDeberes.get(position).getIdEjercicio().toString());
                 holder.txtActividad.setText("Léxico");
-               // ;
-                int c=holder.ll_ejercicio.getResources().getColor(R.color.colorAccent);
+                // ;
+                int c = holder.ll_ejercicio.getResources().getColor(R.color.colorPrimary);
                 holder.ll_ejercicio.setBackgroundColor(c);
-                ;
+                Drawable drawable = holder.ll_ejercicio.getResources().getDrawable(R.drawable.ic_conciencia_lexica);
+                holder.imageView.setBackground(drawable);
             } else if (listaDeberes.get(position).getIdEjercicio2() != 0) {
                 holder.txtidEjercicio.setText(listaDeberes.get(position).getIdEjercicio2().toString());
                 holder.txtActividad.setText("Fónico");
+                Drawable drawable = holder.ll_ejercicio.getResources().getDrawable(R.drawable.crear_fonica);
+                holder.imageView.setBackground(drawable);
+            } else if (listaDeberes.get(position).getIdEjercicio2() != 0) {
+                holder.txtidEjercicio.setText(listaDeberes.get(position).getIdEjercicio2().toString());
+                holder.txtActividad.setText("Fónico");
+                Drawable drawable = holder.ll_ejercicio.getResources().getDrawable(R.drawable.crear_fonica);
+                holder.imageView.setBackground(drawable);
             }
             holder.txtnameDeber.setText(listaDeberes.get(position).getTipoDeber().toString());
         } else {
@@ -86,6 +99,7 @@ public class DeberesEstudianteAdapter extends RecyclerView.Adapter<DeberesEstudi
     public class EjerciciosHolder extends RecyclerView.ViewHolder {
         TextView txtidEjercicio, txtnameDeber, txtActividad, txtidTipo;
         LinearLayout ll_ejercicio;
+        ImageView imageView;
 
         public EjerciciosHolder(View itemView) {
             super(itemView);
@@ -93,6 +107,7 @@ public class DeberesEstudianteAdapter extends RecyclerView.Adapter<DeberesEstudi
             txtnameDeber = (TextView) itemView.findViewById(R.id.txt_deber_tipodeber);
             txtActividad = (TextView) itemView.findViewById(R.id.txt_actividad_tipodeber);
             ll_ejercicio = (LinearLayout) itemView.findViewById(R.id.ll_item_ejercicio);
+            imageView = (ImageView) itemView.findViewById(R.id.iv_item_deber_est);
 
         }
     }
