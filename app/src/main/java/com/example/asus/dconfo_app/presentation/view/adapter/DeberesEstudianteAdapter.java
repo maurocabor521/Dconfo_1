@@ -23,7 +23,8 @@ import java.util.List;
  * Created by Andrés Cabal on 20/12/2018.
  */
 
-public class DeberesEstudianteAdapter extends RecyclerView.Adapter<DeberesEstudianteAdapter.EjerciciosHolder> implements View.OnClickListener {
+public class DeberesEstudianteAdapter extends RecyclerView.Adapter<DeberesEstudianteAdapter.EjerciciosHolder>
+        implements View.OnClickListener {
 
     List<DeberEstudiante> listaDeberes;
     private View.OnClickListener listener;
@@ -31,7 +32,7 @@ public class DeberesEstudianteAdapter extends RecyclerView.Adapter<DeberesEstudi
     public DeberesEstudianteAdapter(List<DeberEstudiante> listaDeberes) {
         this.listaDeberes = listaDeberes;
         for (int i = 0; i < listaDeberes.size(); i++) {
-            System.out.println("lista deberes: " + (i + 1) + " g1: " + listaDeberes.get(i).getIdEjercicio()+" g2: "+listaDeberes.get(i).getIdEjercicio2());
+            System.out.println("lista deberes: " + (i + 1) + " g1: " + listaDeberes.get(i).getIdEjercicio() + " g2: " + listaDeberes.get(i).getIdEjercicio2());
         }
     }
 
@@ -78,6 +79,9 @@ public class DeberesEstudianteAdapter extends RecyclerView.Adapter<DeberesEstudi
         }
 
     }
+
+
+    //*******************----------------------------////////////////------------------------
 
     public void setOnClickListener(View.OnClickListener listener) {
         this.listener = listener;

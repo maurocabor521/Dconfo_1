@@ -120,25 +120,16 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
     private void cargarWebService() {
 
         String url_lh = Globals.url;
-
         String url = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarListaDeberesEst.php?estudiante_idestudiante="
                 + idestudiante;
-     /*   String url1 = "http://" + url_lh + "/proyecto_dconfo/wsJSONConsultarEjercicio.php?estudiante_idestudiante="
-                + idEjercicio;*/
-        // + idestudiante + "&docente_iddocente=" + 220;
-
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-        //jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url1, null, this, this);
-
         final int MY_DEFAULT_TIMEOUT = 15000;
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
                 MY_DEFAULT_TIMEOUT,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        // request.add(jsonObjectRequest);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);//p21
-        Toast.makeText(getContext(), "LISTA EJERCICIOS DOC.", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getContext(), "LISTA EJERCICIOS DOC.", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -197,7 +188,7 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
                     int ejerpos1 = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio();
                     int ejerpos2 = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio2();
 
-                    System.out.println("idejerciciog2"+ejerpos2);
+                    System.out.println("idejerciciog2" + ejerpos2);
 
                     idEjercicio = listaDeberes.get(rv_misDeberes.getChildAdapterPosition(v)).getIdEjercicio();
                     // cargarWebService1();
@@ -215,13 +206,14 @@ public class CasaHomeEstudianteFragment extends Fragment implements Response.Lis
 
                     Bundle bundle = new Bundle();
                     //if (!tipo1.equals("NULL")) {//primera que se uso y funciona solo para ejerciciog1
-                    if (ejerpos1!=0) {
+                    if (ejerpos1 != 0) {
                         bundle.putInt("idejercicio", ejerpos1);
                         bundle.putString("grupo", g1);
                         Log.i("tipo1 :", tipo1);
                         Log.i("tipo2 :", tipo2);
-                    //} else if (!tipo2.equals("NULL")) {
-                    }  if (ejerpos2!=0) {
+                        //} else if (!tipo2.equals("NULL")) {
+                    }
+                    if (ejerpos2 != 0) {
                         // bundle.putInt("idejercicio", ejerpos1);
                         bundle.putInt("idejercicio", ejerpos2);
                         bundle.putString("grupo", g2);
